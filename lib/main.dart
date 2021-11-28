@@ -1,10 +1,16 @@
 import 'package:checklist/routing/router.gr.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
-  runApp(App());
+  runApp(EasyLocalization(
+      path: 'assets/translations',
+      supportedLocales: const [Locale("en"), Locale("pl")],
+      fallbackLocale: const Locale("en"),
+      child: App()));
 }
 
 class App extends StatelessWidget {
@@ -17,6 +23,9 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       routerDelegate: _router.delegate(),
       routeInformationParser: _router.defaultRouteParser(),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }
