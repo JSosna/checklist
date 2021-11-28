@@ -34,7 +34,7 @@ class _SplashPageState extends State<SplashPage> {
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
         if (state is OpenHome) {
-          context.router.replace(const TabRoute());
+          context.router.replace(const OnboardingRoute());
         }
       },
       child: const Scaffold(body: Center(child: ChecklistLoadingIndicator())),
