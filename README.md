@@ -1,6 +1,7 @@
 # checklist
 
 Projekt inżynierski - Jakub Sosna
+
 Wieloplatformowa aplikacja mobilna do tworzenia wspólnych list
 
 ## FVM
