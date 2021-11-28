@@ -1,17 +1,22 @@
-import 'package:checklist/presentation/authorization/splash/splash_page.dart';
-import 'package:checklist/presentation/home/home_page.dart';
+import 'package:checklist/routing/router.gr.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const App());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(App());
 }
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  final _router = AppRouter();
+
+  App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        home: SplashPage());
+    return MaterialApp.router(
+      routerDelegate: _router.delegate(),
+      routeInformationParser: _router.defaultRouteParser(),
+    );
   }
 }
