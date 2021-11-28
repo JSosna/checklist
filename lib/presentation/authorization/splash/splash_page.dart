@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/authorization/splash/cubit/splash_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
+import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +37,7 @@ class _SplashPageState extends State<SplashPage> {
           context.router.replace(const HomeRoute());
         }
       },
-      child: const Scaffold(body: Center(child: Text("Splash page"))),
+      child: const Scaffold(body: Center(child: ChecklistLoadingIndicator())),
     );
   }
 }
