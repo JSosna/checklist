@@ -1,3 +1,6 @@
 {
-    
+    "tab": {
+        "home": "start",
+        "settings": "ustawienia"
+    }
 }

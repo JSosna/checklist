@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/injection/cubit_factory.dart';
-import 'package:checklist/presentation/authorization/splash/cubit/splash_cubit.dart';
+import 'package:checklist/presentation/splash/cubit/splash_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class _SplashPageState extends State<SplashPage> {
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
         if (state is OpenHome) {
-          context.router.replace(const HomeRoute());
+          context.router.replace(const TabRoute());
         }
       },
       child: const Scaffold(body: Center(child: ChecklistLoadingIndicator())),

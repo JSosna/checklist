@@ -1,10 +1,12 @@
+import 'package:checklist/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 class ChecklistLoadingIndicator extends StatefulWidget {
   final double size;
 
-  const ChecklistLoadingIndicator({Key? key, this.size = 100}) : super(key: key);
+  const ChecklistLoadingIndicator({Key? key, this.size = 100})
+      : super(key: key);
 
   @override
   _ChecklistLoadingIndicatorState createState() =>
@@ -13,8 +15,8 @@ class ChecklistLoadingIndicator extends StatefulWidget {
 
 class _ChecklistLoadingIndicatorState extends State<ChecklistLoadingIndicator> {
   late RiveAnimationController _controller;
-  final animationLight = "assets/animations/checklist_loader_light.riv";
-  final animationDark = "assets/animations/checklist_loader_dark.riv";
+  final lightAnimation = "assets/animations/checklist_loader_light.riv";
+  final darkAnimation = "assets/animations/checklist_loader_dark.riv";
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _ChecklistLoadingIndicatorState extends State<ChecklistLoadingIndicator> {
     return SizedBox(
         height: widget.size,
         width: widget.size,
-        child: RiveAnimation.asset(animationDark));
+        child: RiveAnimation.asset(
+            context.isDarkTheme ? lightAnimation : darkAnimation));
   }
 }
