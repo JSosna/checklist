@@ -1,3 +1,4 @@
+import 'package:checklist/presentation/authorization/splash/splash_page.dart';
 import 'package:checklist/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,6 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        home: HomePage());
+        home: SplashPage());
   }
 }
