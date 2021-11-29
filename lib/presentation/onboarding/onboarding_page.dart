@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extension.dart';
+import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/colors.dart';
 import 'package:checklist/widgets/rounded_button.dart';
 import 'package:checklist/widgets/vertical_page_indicators.dart';
@@ -11,12 +13,30 @@ class OnboardingPage extends StatefulWidget {
   _OnboardingPageState createState() => _OnboardingPageState();
 }
 
-class _OnboardingPageState extends State<OnboardingPage> {
+class _OnboardingPageState extends State<OnboardingPage>
+    with SingleTickerProviderStateMixin {
   final _pageController = PageController();
+
+  late AnimationController _animationController;
+
+  bool reachedLastPage = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+      value: 1.0,
+      lowerBound: 0.0,
+      upperBound: 1.0,
+    );
+  }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -41,7 +61,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
       physics: const BouncingScrollPhysics(),
       controller: _pageController,
       onPageChanged: (page) {
-        setState(() {});
+        setState(() {
+          if (page == 2) {
+            reachedLastPage = true;
+            _animationController.reverse();
+          } else {
+            reachedLastPage = false;
+            _animationController.forward();
+          }
+        });
       },
       children: [
         _buildFirstPage(),
@@ -70,17 +98,29 @@ class _OnboardingPageState extends State<OnboardingPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
           children: [
-            const SizedBox(width: 18.0),
-            TextButton(
-                onPressed: () {},
-                child: Text(
-                  "skip",
-                  style: context.typo.main(color: AppColors.blue),
-                )),
+            ScaleTransition(
+              scale: _animationController,
+              child: TextButton(
+                  onPressed: () {
+                    context.router.replace(const TabRoute());
+                  },
+                  child: Text(
+                    "skip",
+                    style: context.typo.main(color: AppColors.blue),
+                  )),
+            ),
             Expanded(
               child: RoundedButton(
-                text: "next",
-                onPressed: () {},
+                text: reachedLastPage ? "start" : "next",
+                onPressed: () {
+                  if (reachedLastPage) {
+                    context.router.replace(const TabRoute());
+                  } else {
+                    _pageController.nextPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut);
+                  }
+                },
               ),
             ),
           ],
