@@ -1,8 +1,11 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extension.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/colors.dart';
-import 'package:checklist/widgets/rounded_button.dart';
+import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_rounded_button.dart';
+import 'package:checklist/widgets/checklist_switch.dart';
 import 'package:checklist/widgets/vertical_page_indicators.dart';
 import 'package:flutter/material.dart';
 
@@ -80,15 +83,81 @@ class _OnboardingPageState extends State<OnboardingPage>
   }
 
   Widget _buildFirstPage() {
-    return Center(child: Text("1"));
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("LISTS", style: context.typo.largeBold()),
+        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(width: Dimens.kMarginMedium),
+            Text(
+              'create',
+              style: context.typo.medium(),
+            ),
+            const SizedBox(width: Dimens.kMarginMedium),
+            SizedBox(
+              width: 130,
+              height: 40,
+              child: AnimatedTextKit(
+                repeatForever: true,
+                pause: const Duration(milliseconds: 400),
+                animatedTexts: [
+                  RotateAnimatedText('shopping list',
+                      alignment: Alignment.centerLeft,
+                      textStyle: context.typo.mediumBold()),
+                  RotateAnimatedText('learning plan',
+                      alignment: Alignment.centerLeft,
+                      textStyle: context.typo.mediumBold()),
+                  RotateAnimatedText('todo list',
+                      alignment: Alignment.centerLeft,
+                      textStyle: context.typo.mediumBold()),
+                  RotateAnimatedText('any list',
+                      alignment: Alignment.centerLeft,
+                      textStyle: context.typo.mediumBold()),
+                ],
+                onTap: () {
+                  print("Tap Event");
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    ));
   }
 
   Widget _buildSecondPage() {
-    return Center(child: Text("2"));
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("GROUPS", style: context.typo.largeBold()),
+        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+        Text("create lists together!", style: context.typo.medium()),
+      ],
+    ));
   }
 
   Widget _buildThirdPage() {
-    return Center(child: Text("3"));
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("WELCOME", style: context.typo.largeBold()),
+        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+        SizedBox(
+            width: 240,
+            child: ChecklistSwitch(
+                label: "dark mode", value: false, onChanged: (value) {})),
+        SizedBox(
+            width: 240,
+            child: ChecklistSwitch(
+                label: "biometrics", value: false, onChanged: (value) {})),
+      ],
+    ));
   }
 
   Widget _buildControls() {
@@ -106,11 +175,11 @@ class _OnboardingPageState extends State<OnboardingPage>
                   },
                   child: Text(
                     "skip",
-                    style: context.typo.main(color: AppColors.blue),
+                    style: context.typo.medium(color: AppColors.blue),
                   )),
             ),
             Expanded(
-              child: RoundedButton(
+              child: ChecklistRoundedButton(
                 text: reachedLastPage ? "start" : "next",
                 onPressed: () {
                   if (reachedLastPage) {

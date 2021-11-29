@@ -3,12 +3,12 @@ import 'package:checklist/style/dimens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RoundedButton extends StatelessWidget {
+class ChecklistRoundedButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final Color color;
 
-  const RoundedButton({
+  const ChecklistRoundedButton({
     Key? key,
     required this.text,
     required this.onPressed,
@@ -32,7 +32,7 @@ class RoundedButton extends StatelessWidget {
         child: Text(
           text,
           overflow: TextOverflow.ellipsis,
-          style: context.typo.main(color: Colors.white),
+          style: context.typo.medium(color: Colors.white),
         ),
       ),
     );
