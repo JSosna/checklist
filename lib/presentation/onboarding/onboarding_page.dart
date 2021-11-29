@@ -1,3 +1,6 @@
+import 'package:checklist/extension/context_extension.dart';
+import 'package:checklist/style/colors.dart';
+import 'package:checklist/widgets/rounded_button.dart';
 import 'package:checklist/widgets/vertical_page_indicators.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +28,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
         children: [
           _buildPageView(),
           VerticalPageIndicators(
-              controller: _pageController, indicatorsCount: 3)
-          // _buildControls(),
+              controller: _pageController, indicatorsCount: 3),
+          _buildControls(),
         ],
       ),
     ));
@@ -58,5 +61,31 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Widget _buildThirdPage() {
     return Center(child: Text("3"));
+  }
+
+  Widget _buildControls() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Row(
+          children: [
+            const SizedBox(width: 18.0),
+            TextButton(
+                onPressed: () {},
+                child: Text(
+                  "skip",
+                  style: context.typo.main(color: AppColors.blue),
+                )),
+            Expanded(
+              child: RoundedButton(
+                text: "next",
+                onPressed: () {},
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

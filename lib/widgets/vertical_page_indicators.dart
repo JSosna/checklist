@@ -24,7 +24,7 @@ class _VerticalPageIndicatorsState extends State<VerticalPageIndicators> {
           children: List.generate(
               widget.indicatorsCount,
               (index) =>
-                  _buildIndicator(index == widget.controller.page?.round(), () {
+                  _buildIndicator(index == (widget.controller.page?.round() ?? 0), () {
                     setState(() {
                       widget.controller.animateToPage(index,
                           duration: const Duration(milliseconds: 400),
