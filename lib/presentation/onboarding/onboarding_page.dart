@@ -1,8 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/domain/theme/theme_mode.dart' as checkbox_theme_mode;
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
+import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/colors.dart';
 import 'package:checklist/style/dimens.dart';
@@ -10,6 +12,7 @@ import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_switch.dart';
 import 'package:checklist/widgets/vertical_page_indicators.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -157,8 +160,13 @@ class _OnboardingPageState extends State<OnboardingPage>
             width: 240,
             child: ChecklistSwitch(
                 label: translate(LocaleKeys.onboarding_dark_mode),
-                value: false,
-                onChanged: (value) {})),
+                value: context.isDarkTheme,
+                onChanged: (value) {
+                  BlocProvider.of<ThemeCubit>(context).changeThemeMode(
+                      theme: context.isDarkTheme
+                          ? checkbox_theme_mode.ThemeMode.light
+                          : checkbox_theme_mode.ThemeMode.dark);
+                })),
         SizedBox(
             width: 240,
             child: ChecklistSwitch(
