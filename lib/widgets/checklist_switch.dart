@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'package:checklist/extension/context_extension.dart';
-import 'package:checklist/style/colors.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

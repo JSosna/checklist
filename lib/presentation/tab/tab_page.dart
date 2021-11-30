@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:checklist/extension/context_extension.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
