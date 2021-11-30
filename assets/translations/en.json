@@ -2,5 +2,21 @@
     "tab": {
         "home": "home",
         "settings": "settings"
+    },
+    "onboarding": {
+        "lists": "LISTY",
+        "create": "stwórz",
+        "shopping_list": "listę zakupów",
+        "learning_plan": "plan nauki",
+        "todo_list": "listę zadań",
+        "any_list": "jakąkolwiek listę",
+        "groups": "GRUPY",
+        "create_lists_together": "twórz listy razem!",
+        "welcome": "WITAJ",
+        "dark_mode": "ciemny tryb",
+        "biometrics": "biometryka",
+        "skip": "pomiń",
+        "start": "zacznij",
+        "next": "dalej"
     }
 }

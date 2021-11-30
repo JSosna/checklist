@@ -1,6 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extension.dart';
+import 'package:checklist/localization/keys.g.dart';
+import 'package:checklist/localization/utils.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/colors.dart';
 import 'package:checklist/style/dimens.dart';
@@ -87,14 +89,15 @@ class _OnboardingPageState extends State<OnboardingPage>
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("LISTS", style: context.typo.largeBold()),
+        Text(translate(LocaleKeys.onboarding_lists),
+            style: context.typo.largeBold()),
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(width: Dimens.kMarginMedium),
             Text(
-              'create',
+              translate(LocaleKeys.onboarding_create),
               style: context.typo.medium(),
             ),
             const SizedBox(width: Dimens.kMarginMedium),
@@ -105,22 +108,21 @@ class _OnboardingPageState extends State<OnboardingPage>
                 repeatForever: true,
                 pause: const Duration(milliseconds: 400),
                 animatedTexts: [
-                  RotateAnimatedText('shopping list',
+                  RotateAnimatedText(
+                      translate(LocaleKeys.onboarding_shopping_list),
                       alignment: Alignment.centerLeft,
                       textStyle: context.typo.mediumBold()),
-                  RotateAnimatedText('learning plan',
+                  RotateAnimatedText(
+                      translate(LocaleKeys.onboarding_learning_plan),
                       alignment: Alignment.centerLeft,
                       textStyle: context.typo.mediumBold()),
-                  RotateAnimatedText('todo list',
+                  RotateAnimatedText(translate(LocaleKeys.onboarding_todo_list),
                       alignment: Alignment.centerLeft,
                       textStyle: context.typo.mediumBold()),
-                  RotateAnimatedText('any list',
+                  RotateAnimatedText(translate(LocaleKeys.onboarding_any_list),
                       alignment: Alignment.centerLeft,
                       textStyle: context.typo.mediumBold()),
                 ],
-                onTap: () {
-                  print("Tap Event");
-                },
               ),
             ),
           ],
@@ -134,9 +136,11 @@ class _OnboardingPageState extends State<OnboardingPage>
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("GROUPS", style: context.typo.largeBold()),
+        Text(translate(LocaleKeys.onboarding_groups),
+            style: context.typo.largeBold()),
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
-        Text("create lists together!", style: context.typo.medium()),
+        Text(translate(LocaleKeys.onboarding_create_lists_together),
+            style: context.typo.medium()),
       ],
     ));
   }
@@ -146,16 +150,21 @@ class _OnboardingPageState extends State<OnboardingPage>
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("WELCOME", style: context.typo.largeBold()),
+        Text(translate(LocaleKeys.onboarding_welcome),
+            style: context.typo.largeBold()),
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         SizedBox(
             width: 240,
             child: ChecklistSwitch(
-                label: "dark mode", value: false, onChanged: (value) {})),
+                label: translate(LocaleKeys.onboarding_dark_mode),
+                value: false,
+                onChanged: (value) {})),
         SizedBox(
             width: 240,
             child: ChecklistSwitch(
-                label: "biometrics", value: false, onChanged: (value) {})),
+                label: translate(LocaleKeys.onboarding_biometrics),
+                value: false,
+                onChanged: (value) {})),
       ],
     ));
   }
@@ -174,13 +183,15 @@ class _OnboardingPageState extends State<OnboardingPage>
                     context.router.replace(const TabRoute());
                   },
                   child: Text(
-                    "skip",
+                    translate(LocaleKeys.onboarding_skip),
                     style: context.typo.medium(color: AppColors.blue),
                   )),
             ),
             Expanded(
               child: ChecklistRoundedButton(
-                text: reachedLastPage ? "start" : "next",
+                text: reachedLastPage
+                    ? translate(LocaleKeys.onboarding_start)
+                    : translate(LocaleKeys.onboarding_next),
                 onPressed: () {
                   if (reachedLastPage) {
                     context.router.replace(const TabRoute());
