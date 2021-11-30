@@ -1,8 +1,10 @@
 import 'package:checklist/injection/bloc_module.dart';
+import 'package:checklist/injection/hive_initializer.dart';
 import 'package:checklist/injection/repository_module.dart';
 import 'package:get_it/get_it.dart';
 
-void registerModules(GetIt injector) {
+Future<void> registerModules(GetIt injector) async {
+  await setupHive(injector);
   registerRepositoryModule(injector);
   registerBlocModule(injector);
 }

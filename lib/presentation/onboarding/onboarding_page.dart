@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:checklist/extension/context_extension.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
 import 'package:checklist/routing/router.gr.dart';
