@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashPage extends StatefulWidget implements AutoRouteWrapper {
-  const SplashPage({Key? key}) : super(key: key);
-
   @override
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
