@@ -93,7 +93,7 @@ class _OnboardingPageState extends State<OnboardingPage>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(translate(LocaleKeys.onboarding_lists),
-            style: context.typo.largeBold()),
+            style: context.typo.largeBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +101,7 @@ class _OnboardingPageState extends State<OnboardingPage>
             const SizedBox(width: Dimens.kMarginMedium),
             Text(
               translate(LocaleKeys.onboarding_create),
-              style: context.typo.medium(),
+              style: context.typo.medium(color: context.isDarkTheme ? Colors.white : Colors.black),
             ),
             const SizedBox(width: Dimens.kMarginMedium),
             SizedBox(
@@ -114,17 +114,17 @@ class _OnboardingPageState extends State<OnboardingPage>
                   RotateAnimatedText(
                       translate(LocaleKeys.onboarding_shopping_list),
                       alignment: Alignment.centerLeft,
-                      textStyle: context.typo.mediumBold()),
+                      textStyle: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
                   RotateAnimatedText(
                       translate(LocaleKeys.onboarding_learning_plan),
                       alignment: Alignment.centerLeft,
-                      textStyle: context.typo.mediumBold()),
+                      textStyle: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
                   RotateAnimatedText(translate(LocaleKeys.onboarding_todo_list),
                       alignment: Alignment.centerLeft,
-                      textStyle: context.typo.mediumBold()),
+                      textStyle: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
                   RotateAnimatedText(translate(LocaleKeys.onboarding_any_list),
                       alignment: Alignment.centerLeft,
-                      textStyle: context.typo.mediumBold()),
+                      textStyle: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
                 ],
               ),
             ),
@@ -140,10 +140,10 @@ class _OnboardingPageState extends State<OnboardingPage>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(translate(LocaleKeys.onboarding_groups),
-            style: context.typo.largeBold()),
+            style: context.typo.largeBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         Text(translate(LocaleKeys.onboarding_create_lists_together),
-            style: context.typo.medium()),
+            style: context.typo.medium(color: context.isDarkTheme ? Colors.white : Colors.black)),
       ],
     ));
   }
@@ -154,7 +154,7 @@ class _OnboardingPageState extends State<OnboardingPage>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(translate(LocaleKeys.onboarding_welcome),
-            style: context.typo.largeBold()),
+            style: context.typo.largeBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         SizedBox(
             width: 240,
