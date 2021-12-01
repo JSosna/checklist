@@ -25,7 +25,7 @@ class AppRouter extends _i6.RootStackRouter {
   final Map<String, _i6.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i1.SplashPage());
+          routeData: routeData, child: _i1.SplashPage());
     },
     OnboardingRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
