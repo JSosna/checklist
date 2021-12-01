@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "637336728420",
+    "project_id": "checkbox-e8449",
+    "storage_bucket": "checkbox-e8449.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637336728420:android:4f1a3de5585f5ff7ca8071",
+        "android_client_info": {
+          "package_name": "com.jsosna.checklist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637336728420-cb9l8lgfl1pemacoasus61j5d6m4in3m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjty7fYFusTQyTjbjHjC7IOE0kaZ09b4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637336728420-cb9l8lgfl1pemacoasus61j5d6m4in3m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "637336728420-oofe1ivj49hd0qc4jh96h7ibga988h5o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jsosna.checklist"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
