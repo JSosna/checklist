@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/presentation/authentication/login/login_page.dart';
 import 'package:checklist/presentation/home/home_page.dart';
 import 'package:checklist/presentation/onboarding/onboarding_page.dart';
 import 'package:checklist/presentation/settings/settings_page.dart';
@@ -10,6 +11,7 @@ import 'package:checklist/presentation/tab/tab_page.dart';
   routes: [
     AutoRoute(page: SplashPage, initial: true),
     AutoRoute(page: OnboardingPage),
+    AutoRoute(page: LoginPage),
     AutoRoute(page: TabPage, children: [
       AutoRoute(page: HomePage, initial: true),
       AutoRoute(page: SettingsPage),

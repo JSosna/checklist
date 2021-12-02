@@ -1,22 +1,35 @@
 {
+    "general": {
+        "login": "login",
+        "register": "register",
+        "email": "email",
+        "password": "password"
+    },
     "tab": {
         "home": "home",
         "settings": "settings"
     },
     "onboarding": {
-        "lists": "LISTY",
-        "create": "stwórz",
-        "shopping_list": "listę zakupów",
-        "learning_plan": "plan nauki",
-        "todo_list": "listę zadań",
-        "any_list": "jakąkolwiek listę",
-        "groups": "GRUPY",
-        "create_lists_together": "twórz listy razem!",
-        "welcome": "WITAJ",
-        "dark_mode": "ciemny tryb",
-        "biometrics": "biometryka",
-        "skip": "pomiń",
-        "start": "zacznij",
-        "next": "dalej"
+        "lists": "LISTS",
+        "create": "create",
+        "shopping_list": "shopping list",
+        "learning_plan": "learning plan",
+        "todo_list": "todo list",
+        "any_list": "any list",
+        "groups": "GROUPS",
+        "create_lists_together": "create lists together!",
+        "welcome": "WELCOME",
+        "dark_mode": "dark mode",
+        "biometrics": "biometrics",
+        "skip": "skip",
+        "start": "start",
+        "next": "next"
+    },
+    "authentication_errors": {
+        "invalid_email": "invalid email",
+        "invalid_password": "invalid password",
+        "user_not_found": "user not found",
+        "user_disabled": "user disabled",
+        "unknown_error": "error, please try again later"
     }
 }

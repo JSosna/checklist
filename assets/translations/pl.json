@@ -1,22 +1,35 @@
 {
+    "general": {
+        "login": "zaloguj się",
+        "register": "zarejestruj się",
+        "email": "email",
+        "password": "hasło"
+    },
     "tab": {
         "home": "start",
         "settings": "ustawienia"
     },
     "onboarding": {
-        "lists": "LISTS",
-        "create": "create",
-        "shopping_list": "shopping list",
-        "learning_plan": "learning plan",
-        "todo_list": "todo list",
-        "any_list": "any list",
-        "groups": "GROUPS",
-        "create_lists_together": "create lists together!",
-        "welcome": "WELCOME",
-        "dark_mode": "dark mode",
-        "biometrics": "biometrics",
-        "skip": "skip",
-        "start": "start",
-        "next": "next"
+        "lists": "LISTY",
+        "create": "stwórz",
+        "shopping_list": "listę zakupów",
+        "learning_plan": "plan nauki",
+        "todo_list": "listę zadań",
+        "any_list": "jakąkolwiek listę",
+        "groups": "GRUPY",
+        "create_lists_together": "twórz listy razem!",
+        "welcome": "WITAJ",
+        "dark_mode": "ciemny tryb",
+        "biometrics": "biometryka",
+        "skip": "pomiń",
+        "start": "zacznij",
+        "next": "dalej"
+    },
+    "authentication_errors": {
+        "invalid_email": "nieprawidłowy email",
+        "invalid_password": "nieprawidłowe hasło",
+        "user_not_found": "nie znaleziono użytkownika",
+        "user_disabled": "użytkownik zablokowany",
+        "unknown_error": "wystąpił błąd, spróbuj ponownie później"
     }
 }
