@@ -59,6 +59,26 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         authenticationError: AuthenticationErrorType.unknown_error);
   }
 
+  @override
+  Stream<User?> userStream() async* {
+    yield* firebase.FirebaseAuth.instance.authStateChanges().map((user) {
+      if (user == null) {
+        return null;
+      } else {
+        return User(uid: user.uid, email: user.email, name: user.displayName);
+      }
+    });
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await firebase.FirebaseAuth.instance.signOut();
+    } catch (e, stack) {
+      Fimber.e("Logout error", ex: e, stacktrace: stack);
+    }
+  }
+
   AuthenticationErrorType _mapErrorCode(String errorCode) {
     switch (errorCode) {
       case "invalid-email":

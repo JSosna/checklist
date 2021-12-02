@@ -1,4 +1,5 @@
 import 'package:checklist/domain/authentication/authentication_result.dart';
+import 'package:checklist/domain/authentication/user.dart';
 
 abstract class AuthenticationRepository {
   Future<AuthenticationResponse> login(
@@ -8,4 +9,8 @@ abstract class AuthenticationRepository {
       {required String username,
       required String email,
       required String password});
+
+  Stream<User?> userStream();
+
+  Future<void> logout();
 }
