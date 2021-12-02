@@ -32,9 +32,26 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
 
   @override
   Future<AuthenticationResponse> register(
-      {required String email, required String password}) {
-    // TODO: implement register
-    throw UnimplementedError();
+      {required String email, required String password}) async {
+    try {
+      final user = await firebase.FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      if (user.user != null) {
+        return AuthenticationSuccess(
+            user: User(
+                uid: user.user?.uid,
+                email: user.user?.email,
+                name: user.user?.displayName));
+      }
+    } on firebase.FirebaseAuthException catch (e) {
+      return AuthenticationError(authenticationError: _mapErrorCode(e.code));
+    } catch (e, stack) {
+      Fimber.e("Register error", ex: e, stacktrace: stack);
+    }
+
+    return const AuthenticationError(
+        authenticationError: AuthenticationErrorType.unknown_error);
   }
 
   AuthenticationErrorType _mapErrorCode(String errorCode) {
@@ -47,6 +64,10 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         return AuthenticationErrorType.user_not_found;
       case "wrong-password":
         return AuthenticationErrorType.wrong_password;
+      case "email-already-in-use":
+        return AuthenticationErrorType.email_already_in_use;
+      case "weak-password":
+        return AuthenticationErrorType.weak_password;
       default:
         return AuthenticationErrorType.unknown_error;
     }

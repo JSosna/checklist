@@ -1,10 +1,4 @@
 {
-    "general": {
-        "login": "zaloguj się",
-        "register": "zarejestruj się",
-        "email": "email",
-        "password": "hasło"
-    },
     "tab": {
         "home": "start",
         "settings": "ustawienia"
@@ -24,6 +18,14 @@
         "skip": "pomiń",
         "start": "zacznij",
         "next": "dalej"
+    },
+    "authentication": {
+        "login": "zaloguj się",
+        "register": "zarejestruj się",
+        "email": "email",
+        "password": "hasło",
+        "confirm_password": "potwierdź hasło",
+        "username": "nazwa użytkownika"
     },
     "authentication_errors": {
         "invalid_email": "nieprawidłowy email",

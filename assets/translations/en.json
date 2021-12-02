@@ -1,10 +1,4 @@
 {
-    "general": {
-        "login": "login",
-        "register": "register",
-        "email": "email",
-        "password": "password"
-    },
     "tab": {
         "home": "home",
         "settings": "settings"
@@ -24,6 +18,14 @@
         "skip": "skip",
         "start": "start",
         "next": "next"
+    },
+    "authentication": {
+        "login": "login",
+        "register": "register",
+        "email": "email",
+        "password": "password",
+        "confirm_password": "confirm password",
+        "username": "username"
     },
     "authentication_errors": {
         "invalid_email": "invalid email",

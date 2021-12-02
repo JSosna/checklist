@@ -4,4 +4,6 @@ enum AuthenticationErrorType {
   user_not_found,
   wrong_password,
   unknown_error,
+  email_already_in_use,
+  weak_password,
 }

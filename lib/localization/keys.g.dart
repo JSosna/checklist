@@ -1,11 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
 abstract class  LocaleKeys {
-  static const general_login = 'general.login';
-  static const general_register = 'general.register';
-  static const general_email = 'general.email';
-  static const general_password = 'general.password';
-  static const general = 'general';
   static const tab_home = 'tab.home';
   static const tab_settings = 'tab.settings';
   static const tab = 'tab';
@@ -24,6 +19,13 @@ abstract class  LocaleKeys {
   static const onboarding_start = 'onboarding.start';
   static const onboarding_next = 'onboarding.next';
   static const onboarding = 'onboarding';
+  static const authentication_login = 'authentication.login';
+  static const authentication_register = 'authentication.register';
+  static const authentication_email = 'authentication.email';
+  static const authentication_password = 'authentication.password';
+  static const authentication_confirm_password = 'authentication.confirm_password';
+  static const authentication_username = 'authentication.username';
+  static const authentication = 'authentication';
   static const authentication_errors_invalid_email = 'authentication_errors.invalid_email';
   static const authentication_errors_invalid_password = 'authentication_errors.invalid_password';
   static const authentication_errors_user_not_found = 'authentication_errors.user_not_found';
