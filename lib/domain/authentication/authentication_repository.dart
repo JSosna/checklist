@@ -10,6 +10,8 @@ abstract class AuthenticationRepository {
       required String email,
       required String password});
 
+  User? getCurrentUser();
+
   Stream<User?> userStream();
 
   Future<void> logout();

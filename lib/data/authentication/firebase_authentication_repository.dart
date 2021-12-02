@@ -60,6 +60,17 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
+  User? getCurrentUser() {
+    final user = firebase.FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      return User(uid: user.uid, email: user.email, name: user.displayName);
+    } else {
+      return null;
+    }
+  }
+
+  @override
   Stream<User?> userStream() async* {
     yield* firebase.FirebaseAuth.instance.authStateChanges().map((user) {
       if (user == null) {
