@@ -91,15 +91,15 @@ class _LoginPageState extends State<LoginPage> {
   String _mapLoginError(AuthenticationErrorType authenticationError) {
     switch (authenticationError) {
       case AuthenticationErrorType.invalid_email:
-        return "invalid email";
+        return translate(LocaleKeys.authentication_errors_invalid_email);
       case AuthenticationErrorType.wrong_password:
-        return "invalid password";
+        return translate(LocaleKeys.authentication_errors_invalid_password);
       case AuthenticationErrorType.user_not_found:
-        return "user not found";
+        return translate(LocaleKeys.authentication_errors_user_not_found);
       case AuthenticationErrorType.user_disabled:
-        return "user disabled";
+        return translate(LocaleKeys.authentication_errors_user_disabled);
       case AuthenticationErrorType.unknown_error:
-        return "unknown error, please try again later";
+        return translate(LocaleKeys.authentication_errors_unknown_error);
     }
   }
 }
