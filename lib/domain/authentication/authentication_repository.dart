@@ -5,5 +5,7 @@ abstract class AuthenticationRepository {
       {required String email, required String password});
 
   Future<AuthenticationResponse> register(
-      {required String email, required String password});
+      {required String username,
+      required String email,
+      required String password});
 }

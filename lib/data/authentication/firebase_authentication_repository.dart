@@ -32,12 +32,17 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
 
   @override
   Future<AuthenticationResponse> register(
-      {required String email, required String password}) async {
+      {required String username,
+      required String email,
+      required String password}) async {
     try {
       final user = await firebase.FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
       if (user.user != null) {
+        await firebase.FirebaseAuth.instance.currentUser
+            ?.updateDisplayName(username);
+
         return AuthenticationSuccess(
             user: User(
                 uid: user.user?.uid,

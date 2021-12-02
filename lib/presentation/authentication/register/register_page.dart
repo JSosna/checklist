@@ -10,6 +10,7 @@ import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class RegisterPage extends StatefulWidget implements AutoRouteWrapper {
   @override
@@ -26,10 +27,35 @@ class RegisterPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final usernameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  final _emailValidator = MultiValidator([
+    RequiredValidator(
+        errorText: translate(LocaleKeys.validation_email_is_required)),
+    EmailValidator(
+        errorText: translate(LocaleKeys.validation_email_is_invalid)),
+  ]);
+
+  final _usernameValidator = MultiValidator([
+    RequiredValidator(
+        errorText: translate(LocaleKeys.validation_password_is_required)),
+    MinLengthValidator(4,
+        errorText: translate(LocaleKeys.validation_username_too_short)),
+  ]);
+
+  final _passwordValidator = MultiValidator([
+    RequiredValidator(
+        errorText: translate(LocaleKeys.validation_password_is_required)),
+    MinLengthValidator(4,
+        errorText: translate(LocaleKeys.validation_password_too_short)),
+    PatternValidator(r'(?=.*?[#?!@$%^&*-])',
+        errorText: translate(LocaleKeys.validation_password_special))
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -48,61 +74,76 @@ class _RegisterPageState extends State<RegisterPage> {
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(Dimens.kMarginExtraLargeDouble),
-              child: Column(
-                children: [
-                  Text(translate(LocaleKeys.authentication_register)),
-                  const SizedBox(height: Dimens.kMarginExtraLarge),
-                  TextFormField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      labelText: translate(LocaleKeys.authentication_username),
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: Dimens.kMarginExtraLarge),
-                  TextFormField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      labelText: translate(LocaleKeys.authentication_email),
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: Dimens.kMarginExtraLarge),
-                  TextFormField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      labelText: translate(LocaleKeys.authentication_password),
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: Dimens.kMarginExtraLarge),
-                  TextFormField(
-                    controller: confirmPasswordController,
-                    decoration: InputDecoration(
-                      labelText:
-                          translate(LocaleKeys.authentication_confirm_password),
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                  ChecklistRoundedButton(
-                      text: translate(LocaleKeys.authentication_register),
-                      onPressed: () async {
-                        final email = emailController.text;
-                        final password = passwordController.text;
-                        final confirmedPassword =
-                            confirmPasswordController.text;
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimens.kMarginExtraLargeDouble),
+                  child: Column(
+                    children: [
+                      Text(translate(LocaleKeys.authentication_register)),
+                      const SizedBox(height: Dimens.kMarginExtraLarge),
+                      TextFormField(
+                        controller: _usernameController,
+                        validator: _usernameValidator,
+                        decoration: InputDecoration(
+                          labelText:
+                              translate(LocaleKeys.authentication_username),
+                          border: const OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: Dimens.kMarginExtraLarge),
+                      TextFormField(
+                        controller: _emailController,
+                        validator: _emailValidator,
+                        decoration: InputDecoration(
+                          labelText: translate(LocaleKeys.authentication_email),
+                          border: const OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: Dimens.kMarginExtraLarge),
+                      TextFormField(
+                        controller: _passwordController,
+                        validator: _passwordValidator,
+                        decoration: InputDecoration(
+                          labelText:
+                              translate(LocaleKeys.authentication_password),
+                          border: const OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: Dimens.kMarginExtraLarge),
+                      TextFormField(
+                        controller: _confirmPasswordController,
+                        validator: (val) => MatchValidator(
+                                errorText: translate(LocaleKeys
+                                    .validation_passwords_do_not_match))
+                            .validateMatch(val ?? "", _passwordController.text),
+                        decoration: InputDecoration(
+                          labelText: translate(
+                              LocaleKeys.authentication_confirm_password),
+                          border: const OutlineInputBorder(),
+                        ),
+                      ),
+                      ChecklistRoundedButton(
+                          text: translate(LocaleKeys.authentication_register),
+                          onPressed: () async {
+                            final username = _usernameController.text;
+                            final email = _emailController.text;
+                            final password = _passwordController.text;
 
-                        BlocProvider.of<RegisterCubit>(context)
-                            .login(email: email, password: password);
-                      }),
-                  ChecklistRoundedButton(
-                      text: translate(LocaleKeys.authentication_login),
-                      onPressed: () async {
-                        context.router.pop();
-                      }),
-                ],
+                            if (_formKey.currentState?.validate() == true) {
+                              BlocProvider.of<RegisterCubit>(context)
+                                  .register(username: username, email: email, password: password);
+                            }
+                          }),
+                      ChecklistRoundedButton(
+                          text: translate(LocaleKeys.authentication_login),
+                          onPressed: () async {
+                            context.router.pop();
+                          }),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

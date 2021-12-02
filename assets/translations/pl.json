@@ -33,5 +33,15 @@
         "user_not_found": "nie znaleziono użytkownika",
         "user_disabled": "użytkownik zablokowany",
         "unknown_error": "wystąpił błąd, spróbuj ponownie później"
+    },
+    "validation": {
+        "username_is_required": "nazwa uytkownika jest wymagana",
+        "password_is_required": "hasło jest wymagane",
+        "email_is_required": "email jest wymagany",
+        "email_is_invalid": "email jest nieprawidłowy",
+        "password_too_short": "hasło musi mieć przynajmniej 4 znaki długości",
+        "username_too_short": "nazwa użytkownika musi mieć przynajmniej 4 znaki długości",
+        "password_special": "hasło musi mieć przynajmniej jeden znak specjalny",
+        "passwords_do_not_match": "hasła nie są takie same"
     }
 }
