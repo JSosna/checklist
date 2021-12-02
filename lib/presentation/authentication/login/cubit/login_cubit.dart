@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:checklist/domain/authentication/authentication_error_type.dart';
 import 'package:checklist/domain/authentication/authentication_repository.dart';
 import 'package:checklist/domain/authentication/authentication_result.dart';
 import 'package:equatable/equatable.dart';
@@ -19,7 +20,7 @@ class LoginCubit extends Cubit<LoginState> {
     if (response is AuthenticationSuccess) {
       emit(LoginSuccess());
     } else if (response is AuthenticationError) {
-      emit(LoginError(message: response.message));
+      emit(LoginError(authenticationError: response.authenticationError));
     }
   }
 }

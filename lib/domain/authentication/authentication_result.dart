@@ -1,3 +1,4 @@
+import 'package:checklist/domain/authentication/authentication_error_type.dart';
 import 'package:checklist/domain/authentication/user.dart';
 import 'package:equatable/equatable.dart';
 
@@ -18,10 +19,10 @@ class AuthenticationSuccess extends AuthenticationResponse {
 }
 
 class AuthenticationError extends AuthenticationResponse {
-  final String message;
+  final AuthenticationErrorType authenticationError;
 
-  const AuthenticationError({required this.message});
+  const AuthenticationError({required this.authenticationError});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [authenticationError];
 }

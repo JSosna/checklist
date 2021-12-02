@@ -14,10 +14,10 @@ class LoginLoading extends LoginState {}
 class LoginSuccess extends LoginState {}
 
 class LoginError extends LoginState {
-  final String message;
+  final AuthenticationErrorType authenticationError;
 
-  const LoginError({required this.message});
+  const LoginError({required this.authenticationError});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [authenticationError];
 }
