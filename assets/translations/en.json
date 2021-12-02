@@ -33,5 +33,15 @@
         "user_not_found": "user not found",
         "user_disabled": "user disabled",
         "unknown_error": "error, please try again later"
+    },
+    "validation": {
+        "username_is_required": "username is required",
+        "password_is_required": "password is required",
+        "email_is_required": "email is required",
+        "email_is_invalid": "email is invalid",
+        "password_too_short": "password must be at least 4 characters long",
+        "username_too_short": "username must be at least 4 characters long",
+        "password_special": "password must have at least one special character",
+        "passwords_do_not_match": "passwords do not match"
     }
 }
