@@ -69,8 +69,13 @@ class _GroupsPageState extends State<GroupsPage> {
           // TODO: Navigate to create group page
         },
       ),
-      body: const Center(
-        child: Text("Groups page"),
+      body: Center(
+        child: ListView.builder(
+          itemCount: state.groups.length,
+          itemBuilder: (context, index) {
+            return ListTile(tileColor: Colors.grey, title: Text(state.groups[index].name ?? ""));
+          },
+        ),
       ),
     );
   }

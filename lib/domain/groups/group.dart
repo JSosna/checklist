@@ -6,6 +6,7 @@ part 'group.g.dart';
 class Group {
   final String? id;
   final String? name;
+  @JsonKey(name: "members_ids")
   final List<String>? membersIds;
 
   const Group({
