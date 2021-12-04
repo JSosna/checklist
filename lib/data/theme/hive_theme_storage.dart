@@ -3,7 +3,7 @@ import 'package:checklist/domain/theme/theme_storage.dart';
 import 'package:hive/hive.dart';
 
 class HiveThemeStorage implements ThemeStorage {
-  static const String THEME_MODE = 'THEME_MODE';
+  static const String themeMode = 'THEME_MODE';
 
   final Box themeBox;
 
@@ -11,7 +11,7 @@ class HiveThemeStorage implements ThemeStorage {
 
   @override
   Future<ThemeMode> loadThemeMode() async {
-    final theme = themeBox.get(THEME_MODE);
+    final theme = themeBox.get(themeMode);
 
     if (theme is ThemeMode) {
       return theme;
@@ -22,6 +22,6 @@ class HiveThemeStorage implements ThemeStorage {
 
   @override
   Future<void> saveThemeMode(ThemeMode theme) async {
-    await themeBox.put(THEME_MODE, theme);
+    await themeBox.put(themeMode, theme);
   }
 }

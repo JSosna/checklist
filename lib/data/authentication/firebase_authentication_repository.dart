@@ -12,18 +12,22 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   FirebaseAuthenticationRepository(this.localAuthentication);
 
   @override
-  Future<AuthenticationResponse> login(
-      {required String email, required String password}) async {
+  Future<AuthenticationResponse> login({
+    required String email,
+    required String password,
+  }) async {
     try {
       final user = await firebase.FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
       if (user.user != null) {
         return AuthenticationSuccess(
-            user: User(
-                uid: user.user?.uid,
-                email: user.user?.email,
-                name: user.user?.displayName));
+          user: User(
+            uid: user.user?.uid,
+            email: user.user?.email,
+            name: user.user?.displayName,
+          ),
+        );
       }
     } on firebase.FirebaseAuthException catch (e) {
       return AuthenticationError(authenticationError: _mapErrorCode(e.code));
@@ -32,14 +36,16 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
     }
 
     return const AuthenticationError(
-        authenticationError: AuthenticationErrorType.unknown_error);
+      authenticationError: AuthenticationErrorType.unknownError,
+    );
   }
 
   @override
-  Future<AuthenticationResponse> register(
-      {required String username,
-      required String email,
-      required String password}) async {
+  Future<AuthenticationResponse> register({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
     try {
       final user = await firebase.FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -49,10 +55,12 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
             ?.updateDisplayName(username);
 
         return AuthenticationSuccess(
-            user: User(
-                uid: user.user?.uid,
-                email: user.user?.email,
-                name: user.user?.displayName));
+          user: User(
+            uid: user.user?.uid,
+            email: user.user?.email,
+            name: user.user?.displayName,
+          ),
+        );
       }
     } on firebase.FirebaseAuthException catch (e) {
       return AuthenticationError(authenticationError: _mapErrorCode(e.code));
@@ -61,7 +69,8 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
     }
 
     return const AuthenticationError(
-        authenticationError: AuthenticationErrorType.unknown_error);
+      authenticationError: AuthenticationErrorType.unknownError,
+    );
   }
 
   @override
@@ -104,7 +113,9 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   Future<bool> authenticateUsingBiometrics(String reason) async {
     try {
       return localAuthentication.authenticate(
-          localizedReason: reason, biometricOnly: true);
+        localizedReason: reason,
+        biometricOnly: true,
+      );
     } catch (e, stack) {
       Fimber.e("Biometric auth error", ex: e, stacktrace: stack);
     }
@@ -115,19 +126,19 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   AuthenticationErrorType _mapErrorCode(String errorCode) {
     switch (errorCode) {
       case "invalid-email":
-        return AuthenticationErrorType.invalid_email;
+        return AuthenticationErrorType.invalidEmail;
       case "user-disabled":
-        return AuthenticationErrorType.user_disabled;
+        return AuthenticationErrorType.userDisabled;
       case "user-not-found":
-        return AuthenticationErrorType.user_not_found;
+        return AuthenticationErrorType.userNotFound;
       case "wrong-password":
-        return AuthenticationErrorType.wrong_password;
+        return AuthenticationErrorType.wrongPassword;
       case "email-already-in-use":
-        return AuthenticationErrorType.email_already_in_use;
+        return AuthenticationErrorType.emailAlreadyInUse;
       case "weak-password":
-        return AuthenticationErrorType.weak_password;
+        return AuthenticationErrorType.weakPassword;
       default:
-        return AuthenticationErrorType.unknown_error;
+        return AuthenticationErrorType.unknownError;
     }
   }
 }

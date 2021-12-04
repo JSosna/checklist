@@ -34,7 +34,8 @@ class LoginCubit extends Cubit<LoginState> {
         _authenticationRepository.getCurrentUser() != null) {
       final authResult =
           await _authenticationRepository.authenticateUsingBiometrics(
-              translate(LocaleKeys.authentication_biometrics_auth_reason));
+        translate(LocaleKeys.authentication_biometrics_auth_reason),
+      );
 
       if (authResult) {
         emit(BiometricAuthenticationSuccess());

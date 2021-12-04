@@ -31,13 +31,16 @@ class _LoginPageState extends State<LoginPage> {
 
   final _emailValidator = MultiValidator([
     RequiredValidator(
-        errorText: translate(LocaleKeys.validation_email_is_required)),
+      errorText: translate(LocaleKeys.validation_email_is_required),
+    ),
     EmailValidator(
-        errorText: translate(LocaleKeys.validation_email_is_invalid)),
+      errorText: translate(LocaleKeys.validation_email_is_invalid),
+    ),
   ]);
 
   final _passwordValidator = RequiredValidator(
-      errorText: translate(LocaleKeys.validation_password_is_required));
+    errorText: translate(LocaleKeys.validation_password_is_required),
+  );
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -57,9 +60,10 @@ class _LoginPageState extends State<LoginPage> {
         } else if (state is LoginError) {
           final message = _mapLoginError(state.authenticationError);
           Fluttertoast.showToast(
-              msg: message,
-              gravity: ToastGravity.TOP,
-              backgroundColor: Colors.red);
+            msg: message,
+            gravity: ToastGravity.TOP,
+            backgroundColor: Colors.red,
+          );
         }
       },
       builder: (context, state) {
@@ -93,21 +97,23 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       ChecklistRoundedButton(
-                          text: translate(LocaleKeys.authentication_login),
-                          onPressed: () async {
-                            final email = _emailController.text;
-                            final password = _passwordController.text;
+                        text: translate(LocaleKeys.authentication_login),
+                        onPressed: () async {
+                          final email = _emailController.text;
+                          final password = _passwordController.text;
 
-                            if (_formKey.currentState?.validate() == true) {
-                              BlocProvider.of<LoginCubit>(context)
-                                  .login(email: email, password: password);
-                            }
-                          }),
+                          if (_formKey.currentState?.validate() == true) {
+                            BlocProvider.of<LoginCubit>(context)
+                                .login(email: email, password: password);
+                          }
+                        },
+                      ),
                       ChecklistRoundedButton(
-                          text: translate(LocaleKeys.authentication_register),
-                          onPressed: () async {
-                            context.router.push(const RegisterRoute());
-                          }),
+                        text: translate(LocaleKeys.authentication_register),
+                        onPressed: () async {
+                          context.router.push(const RegisterRoute());
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -121,13 +127,13 @@ class _LoginPageState extends State<LoginPage> {
 
   String _mapLoginError(AuthenticationErrorType authenticationError) {
     switch (authenticationError) {
-      case AuthenticationErrorType.invalid_email:
+      case AuthenticationErrorType.invalidEmail:
         return translate(LocaleKeys.authentication_errors_invalid_email);
-      case AuthenticationErrorType.wrong_password:
+      case AuthenticationErrorType.wrongPassword:
         return translate(LocaleKeys.authentication_errors_invalid_password);
-      case AuthenticationErrorType.user_not_found:
+      case AuthenticationErrorType.userNotFound:
         return translate(LocaleKeys.authentication_errors_user_not_found);
-      case AuthenticationErrorType.user_disabled:
+      case AuthenticationErrorType.userDisabled:
         return translate(LocaleKeys.authentication_errors_user_disabled);
       default:
         return translate(LocaleKeys.authentication_errors_unknown_error);

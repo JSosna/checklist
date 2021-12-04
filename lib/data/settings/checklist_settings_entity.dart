@@ -13,5 +13,6 @@ class ChecklistSettingsEntity {
 
   ChecklistSettingsEntity copyWith({bool? isBiometricsActive}) =>
       ChecklistSettingsEntity(
-          isBiometricsActive: isBiometricsActive ?? this.isBiometricsActive);
+        isBiometricsActive: isBiometricsActive ?? this.isBiometricsActive,
+      );
 }

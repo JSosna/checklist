@@ -20,17 +20,21 @@ class _VerticalPageIndicatorsState extends State<VerticalPageIndicators> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-              widget.indicatorsCount,
-              (index) =>
-                  _buildIndicator(index == (widget.controller.page?.round() ?? 0), () {
-                    setState(() {
-                      widget.controller.animateToPage(index,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut);
-                    });
-                  }))),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          widget.indicatorsCount,
+          (index) => _buildIndicator(
+              index == (widget.controller.page?.round() ?? 0), () {
+            setState(() {
+              widget.controller.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+              );
+            });
+          }),
+        ),
+      ),
     );
   }
 
@@ -44,9 +48,10 @@ class _VerticalPageIndicatorsState extends State<VerticalPageIndicators> {
           width: 11.0,
           height: isActive ? 42.0 : 11.0,
           decoration: BoxDecoration(
-              color: isActive ? Colors.blue.shade400 : Colors.blue[50],
-              borderRadius: BorderRadius.circular(6),
-              border: Border.all(color: Colors.blue.shade400, width: 2)),
+            color: isActive ? Colors.blue.shade400 : Colors.blue[50],
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: Colors.blue.shade400, width: 2),
+          ),
         ),
       ),
     );

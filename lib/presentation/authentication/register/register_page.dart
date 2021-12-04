@@ -36,25 +36,35 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _emailValidator = MultiValidator([
     RequiredValidator(
-        errorText: translate(LocaleKeys.validation_email_is_required)),
+      errorText: translate(LocaleKeys.validation_email_is_required),
+    ),
     EmailValidator(
-        errorText: translate(LocaleKeys.validation_email_is_invalid)),
+      errorText: translate(LocaleKeys.validation_email_is_invalid),
+    ),
   ]);
 
   final _usernameValidator = MultiValidator([
     RequiredValidator(
-        errorText: translate(LocaleKeys.validation_password_is_required)),
-    MinLengthValidator(4,
-        errorText: translate(LocaleKeys.validation_username_too_short)),
+      errorText: translate(LocaleKeys.validation_password_is_required),
+    ),
+    MinLengthValidator(
+      4,
+      errorText: translate(LocaleKeys.validation_username_too_short),
+    ),
   ]);
 
   final _passwordValidator = MultiValidator([
     RequiredValidator(
-        errorText: translate(LocaleKeys.validation_password_is_required)),
-    MinLengthValidator(4,
-        errorText: translate(LocaleKeys.validation_password_too_short)),
-    PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-        errorText: translate(LocaleKeys.validation_password_special))
+      errorText: translate(LocaleKeys.validation_password_is_required),
+    ),
+    MinLengthValidator(
+      4,
+      errorText: translate(LocaleKeys.validation_password_too_short),
+    ),
+    PatternValidator(
+      r'(?=.*?[#?!@$%^&*-])',
+      errorText: translate(LocaleKeys.validation_password_special),
+    )
   ]);
 
   @override
@@ -66,9 +76,10 @@ class _RegisterPageState extends State<RegisterPage> {
         } else if (state is RegisterError) {
           final message = _mapLoginError(state.authenticationError);
           Fluttertoast.showToast(
-              msg: message,
-              gravity: ToastGravity.TOP,
-              backgroundColor: Colors.red);
+            msg: message,
+            gravity: ToastGravity.TOP,
+            backgroundColor: Colors.red,
+          );
         }
       },
       builder: (context, state) {
@@ -115,32 +126,39 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFormField(
                         controller: _confirmPasswordController,
                         validator: (val) => MatchValidator(
-                                errorText: translate(LocaleKeys
-                                    .validation_passwords_do_not_match))
-                            .validateMatch(val ?? "", _passwordController.text),
+                          errorText: translate(
+                            LocaleKeys.validation_passwords_do_not_match,
+                          ),
+                        ).validateMatch(val ?? "", _passwordController.text),
                         decoration: InputDecoration(
                           labelText: translate(
-                              LocaleKeys.authentication_confirm_password),
+                            LocaleKeys.authentication_confirm_password,
+                          ),
                           border: const OutlineInputBorder(),
                         ),
                       ),
                       ChecklistRoundedButton(
-                          text: translate(LocaleKeys.authentication_register),
-                          onPressed: () async {
-                            final username = _usernameController.text;
-                            final email = _emailController.text;
-                            final password = _passwordController.text;
+                        text: translate(LocaleKeys.authentication_register),
+                        onPressed: () async {
+                          final username = _usernameController.text;
+                          final email = _emailController.text;
+                          final password = _passwordController.text;
 
-                            if (_formKey.currentState?.validate() == true) {
-                              BlocProvider.of<RegisterCubit>(context)
-                                  .register(username: username, email: email, password: password);
-                            }
-                          }),
+                          if (_formKey.currentState?.validate() == true) {
+                            BlocProvider.of<RegisterCubit>(context).register(
+                              username: username,
+                              email: email,
+                              password: password,
+                            );
+                          }
+                        },
+                      ),
                       ChecklistRoundedButton(
-                          text: translate(LocaleKeys.authentication_login),
-                          onPressed: () async {
-                            context.router.pop();
-                          }),
+                        text: translate(LocaleKeys.authentication_login),
+                        onPressed: () async {
+                          context.router.pop();
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -154,11 +172,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   String _mapLoginError(AuthenticationErrorType authenticationError) {
     switch (authenticationError) {
-      case AuthenticationErrorType.invalid_email:
+      case AuthenticationErrorType.invalidEmail:
         return translate(LocaleKeys.authentication_errors_invalid_email);
-      case AuthenticationErrorType.email_already_in_use:
+      case AuthenticationErrorType.emailAlreadyInUse:
         return translate(LocaleKeys.authentication_errors_invalid_password);
-      case AuthenticationErrorType.weak_password:
+      case AuthenticationErrorType.weakPassword:
         return translate(LocaleKeys.authentication_errors_user_not_found);
       default:
         return translate(LocaleKeys.authentication_errors_unknown_error);

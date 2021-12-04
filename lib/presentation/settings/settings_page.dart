@@ -37,21 +37,23 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Center(
+      body: SafeArea(
+        child: Center(
           child: BlocBuilder<SettingsCubit, SettingsState>(
-        buildWhen: (previous, current) {
-          return current is! SettingsUpdating;
-        },
-        builder: (context, state) {
-          if (state is SettingsLoaded) {
-            return _buildContent(context, state);
-          } else {
-            return _buildLoader();
-          }
-        },
-      )),
-    ));
+            buildWhen: (previous, current) {
+              return current is! SettingsUpdating;
+            },
+            builder: (context, state) {
+              if (state is SettingsLoaded) {
+                return _buildContent(context, state);
+              } else {
+                return _buildLoader();
+              }
+            },
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildLoader() {
@@ -64,28 +66,32 @@ class _SettingsPageState extends State<SettingsPage> {
       children: [
         const SizedBox(height: Dimens.kMarginLarge),
         ChecklistSwitch(
-            label: "dark mode",
-            value: context.isDarkTheme,
-            onChanged: (value) {
-              BlocProvider.of<ThemeCubit>(context).changeThemeMode(
-                  theme: context.isDarkTheme
-                      ? checklist_theme_mode.ThemeMode.light
-                      : checklist_theme_mode.ThemeMode.dark);
-            }),
+          label: "dark mode",
+          value: context.isDarkTheme,
+          onChanged: (value) {
+            BlocProvider.of<ThemeCubit>(context).changeThemeMode(
+              theme: context.isDarkTheme
+                  ? checklist_theme_mode.ThemeMode.light
+                  : checklist_theme_mode.ThemeMode.dark,
+            );
+          },
+        ),
         const SizedBox(height: Dimens.kMarginMedium),
         ChecklistSwitch(
-            label: "biometric authentication",
-            value: state.settings.isBiometricsActive,
-            onChanged: (value) async {
-              await BlocProvider.of<SettingsCubit>(context)
-                  .toggleBiometricsOption();
-            }),
+          label: "biometric authentication",
+          value: state.settings.isBiometricsActive,
+          onChanged: (value) async {
+            await BlocProvider.of<SettingsCubit>(context)
+                .toggleBiometricsOption();
+          },
+        ),
         const Spacer(),
         ChecklistRoundedButton(
-            text: "logout",
-            onPressed: () {
-              BlocProvider.of<SettingsCubit>(context).logout();
-            })
+          text: "logout",
+          onPressed: () {
+            BlocProvider.of<SettingsCubit>(context).logout();
+          },
+        )
       ],
     );
   }

@@ -7,6 +7,6 @@ import 'package:get_it/get_it.dart';
 Future<void> registerModules(GetIt injector) async {
   await setupHive(injector);
   registerRepositoryModule(injector);
-  registerBlocModule(injector);
+  await registerBlocModule(injector);
   registerInitializers(injector);
 }

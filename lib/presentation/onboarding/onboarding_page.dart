@@ -36,8 +36,6 @@ class _OnboardingPageState extends State<OnboardingPage>
       vsync: this,
       duration: const Duration(milliseconds: 200),
       value: 1.0,
-      lowerBound: 0.0,
-      upperBound: 1.0,
     );
   }
 
@@ -51,16 +49,19 @@ class _OnboardingPageState extends State<OnboardingPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Stack(
-        children: [
-          _buildPageView(),
-          VerticalPageIndicators(
-              controller: _pageController, indicatorsCount: 3),
-          _buildControls(),
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            _buildPageView(),
+            VerticalPageIndicators(
+              controller: _pageController,
+              indicatorsCount: 3,
+            ),
+            _buildControls(),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _buildPageView() {
@@ -89,92 +90,136 @@ class _OnboardingPageState extends State<OnboardingPage>
 
   Widget _buildFirstPage() {
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(translate(LocaleKeys.onboarding_lists),
-            style: context.typo.largeBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
-        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: Dimens.kMarginMedium),
-            Text(
-              translate(LocaleKeys.onboarding_create),
-              style: context.typo.medium(color: context.isDarkTheme ? Colors.white : Colors.black),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            translate(LocaleKeys.onboarding_lists),
+            style: context.typo.largeBold(
+              color: context.isDarkTheme ? Colors.white : Colors.black,
             ),
-            const SizedBox(width: Dimens.kMarginMedium),
-            SizedBox(
-              width: 130,
-              height: 40,
-              child: AnimatedTextKit(
-                repeatForever: true,
-                pause: const Duration(milliseconds: 400),
-                animatedTexts: [
-                  RotateAnimatedText(
+          ),
+          const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: Dimens.kMarginMedium),
+              Text(
+                translate(LocaleKeys.onboarding_create),
+                style: context.typo.medium(
+                  color: context.isDarkTheme ? Colors.white : Colors.black,
+                ),
+              ),
+              const SizedBox(width: Dimens.kMarginMedium),
+              SizedBox(
+                width: 130,
+                height: 40,
+                child: AnimatedTextKit(
+                  repeatForever: true,
+                  pause: const Duration(milliseconds: 400),
+                  animatedTexts: [
+                    RotateAnimatedText(
                       translate(LocaleKeys.onboarding_shopping_list),
                       alignment: Alignment.centerLeft,
-                      textStyle: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
-                  RotateAnimatedText(
+                      textStyle: context.typo.mediumBold(
+                        color:
+                            context.isDarkTheme ? Colors.white : Colors.black,
+                      ),
+                    ),
+                    RotateAnimatedText(
                       translate(LocaleKeys.onboarding_learning_plan),
                       alignment: Alignment.centerLeft,
-                      textStyle: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
-                  RotateAnimatedText(translate(LocaleKeys.onboarding_todo_list),
+                      textStyle: context.typo.mediumBold(
+                        color:
+                            context.isDarkTheme ? Colors.white : Colors.black,
+                      ),
+                    ),
+                    RotateAnimatedText(
+                      translate(LocaleKeys.onboarding_todo_list),
                       alignment: Alignment.centerLeft,
-                      textStyle: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
-                  RotateAnimatedText(translate(LocaleKeys.onboarding_any_list),
+                      textStyle: context.typo.mediumBold(
+                        color:
+                            context.isDarkTheme ? Colors.white : Colors.black,
+                      ),
+                    ),
+                    RotateAnimatedText(
+                      translate(LocaleKeys.onboarding_any_list),
                       alignment: Alignment.centerLeft,
-                      textStyle: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
-                ],
+                      textStyle: context.typo.mediumBold(
+                        color:
+                            context.isDarkTheme ? Colors.white : Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
-    ));
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildSecondPage() {
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(translate(LocaleKeys.onboarding_groups),
-            style: context.typo.largeBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
-        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
-        Text(translate(LocaleKeys.onboarding_create_lists_together),
-            style: context.typo.medium(color: context.isDarkTheme ? Colors.white : Colors.black)),
-      ],
-    ));
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            translate(LocaleKeys.onboarding_groups),
+            style: context.typo.largeBold(
+              color: context.isDarkTheme ? Colors.white : Colors.black,
+            ),
+          ),
+          const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+          Text(
+            translate(LocaleKeys.onboarding_create_lists_together),
+            style: context.typo.medium(
+              color: context.isDarkTheme ? Colors.white : Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildThirdPage() {
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(translate(LocaleKeys.onboarding_welcome),
-            style: context.typo.largeBold(color: context.isDarkTheme ? Colors.white : Colors.black)),
-        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
-        SizedBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            translate(LocaleKeys.onboarding_welcome),
+            style: context.typo.largeBold(
+              color: context.isDarkTheme ? Colors.white : Colors.black,
+            ),
+          ),
+          const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+          SizedBox(
             width: 240,
             child: ChecklistSwitch(
-                label: translate(LocaleKeys.onboarding_dark_mode),
-                value: context.isDarkTheme,
-                onChanged: (value) {
-                  BlocProvider.of<ThemeCubit>(context).changeThemeMode(
-                      theme: context.isDarkTheme
-                          ? checkbox_theme_mode.ThemeMode.light
-                          : checkbox_theme_mode.ThemeMode.dark);
-                })),
-        SizedBox(
+              label: translate(LocaleKeys.onboarding_dark_mode),
+              value: context.isDarkTheme,
+              onChanged: (value) {
+                BlocProvider.of<ThemeCubit>(context).changeThemeMode(
+                  theme: context.isDarkTheme
+                      ? checkbox_theme_mode.ThemeMode.light
+                      : checkbox_theme_mode.ThemeMode.dark,
+                );
+              },
+            ),
+          ),
+          SizedBox(
             width: 240,
             child: ChecklistSwitch(
-                label: translate(LocaleKeys.onboarding_biometrics),
-                value: false,
-                onChanged: (value) {})),
-      ],
-    ));
+              label: translate(LocaleKeys.onboarding_biometrics),
+              value: false,
+              onChanged: (value) {},
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildControls() {
@@ -187,13 +232,14 @@ class _OnboardingPageState extends State<OnboardingPage>
             ScaleTransition(
               scale: _animationController,
               child: TextButton(
-                  onPressed: () {
-                    context.router.replace(const TabRoute());
-                  },
-                  child: Text(
-                    translate(LocaleKeys.onboarding_skip),
-                    style: context.typo.medium(color: AppColors.blue),
-                  )),
+                onPressed: () {
+                  context.router.replace(const TabRoute());
+                },
+                child: Text(
+                  translate(LocaleKeys.onboarding_skip),
+                  style: context.typo.medium(color: AppColors.blue),
+                ),
+              ),
             ),
             Expanded(
               child: ChecklistRoundedButton(
@@ -205,8 +251,9 @@ class _OnboardingPageState extends State<OnboardingPage>
                     context.router.replace(const TabRoute());
                   } else {
                     _pageController.nextPage(
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeInOut);
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                    );
                   }
                 },
               ),

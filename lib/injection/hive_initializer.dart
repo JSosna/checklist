@@ -4,8 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-const String THEME_BOX = "THEME_BOX";
-const String SETTINGS_BOX = "SETTINGS_BOX";
+const String themeBox = "THEME_BOX";
+const String settingsBox = "SETTINGS_BOX";
 
 Future<void> setupHive(GetIt injector) async {
   await Hive.initFlutter();
@@ -13,12 +13,15 @@ Future<void> setupHive(GetIt injector) async {
   Hive.registerAdapter(ThemeModeAdapter());
   Hive.registerAdapter(ChecklistSettingsEntityAdapter());
 
-  await Hive.openBox(THEME_BOX);
-  await Hive.openBox(SETTINGS_BOX);
+  await Hive.openBox(themeBox);
+  await Hive.openBox(settingsBox);
 
-  injector.registerLazySingleton<Box>(() => Hive.box(THEME_BOX),
-      instanceName: THEME_BOX);
-  injector.registerLazySingleton<Box>(() => Hive.box(SETTINGS_BOX),
-      instanceName: SETTINGS_BOX);
-
+  injector.registerLazySingleton<Box>(
+    () => Hive.box(themeBox),
+    instanceName: themeBox,
+  );
+  injector.registerLazySingleton<Box>(
+    () => Hive.box(settingsBox),
+    instanceName: settingsBox,
+  );
 }

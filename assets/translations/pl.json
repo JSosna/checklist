@@ -1,4 +1,7 @@
 {
+    "general": {
+        "checklist": "CHECKLIST"
+    },
     "tab": {
         "home": "start",
         "settings": "ustawienia"

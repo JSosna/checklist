@@ -14,10 +14,13 @@ import 'package:checklist/presentation/tab/tab_page.dart';
     AutoRoute(page: OnboardingPage),
     AutoRoute(page: LoginPage),
     AutoRoute(page: RegisterPage),
-    AutoRoute(page: TabPage, children: [
-      AutoRoute(page: HomePage, initial: true),
-      AutoRoute(page: SettingsPage),
-    ])
+    AutoRoute(
+      page: TabPage,
+      children: [
+        AutoRoute(page: HomePage, initial: true),
+        AutoRoute(page: SettingsPage),
+      ],
+    )
   ],
 )
 class $AppRouter {}

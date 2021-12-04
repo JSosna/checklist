@@ -19,15 +19,19 @@ class ChecklistRoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: Dimens.kMarginLargeDouble, vertical: Dimens.kMarginLarge),
+        horizontal: Dimens.kMarginLargeDouble,
+        vertical: Dimens.kMarginLarge,
+      ),
       child: TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all<Size?>(
-              const Size(double.infinity, 60.0)),
+            const Size(double.infinity, 60.0),
+          ),
           backgroundColor: MaterialStateProperty.all<Color>(color),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+          ),
         ),
         child: Text(
           text,

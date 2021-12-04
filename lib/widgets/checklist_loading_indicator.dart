@@ -33,9 +33,11 @@ class _ChecklistLoadingIndicatorState extends State<ChecklistLoadingIndicator> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: widget.size,
-        width: widget.size,
-        child: RiveAnimation.asset(
-            context.isDarkTheme ? lightAnimation : darkAnimation));
+      height: widget.size,
+      width: widget.size,
+      child: RiveAnimation.asset(
+        context.isDarkTheme ? lightAnimation : darkAnimation,
+      ),
+    );
   }
 }

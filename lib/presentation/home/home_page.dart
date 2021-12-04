@@ -7,9 +7,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child: ElevatedButton(onPressed: () {
-              FirebaseCrashlytics.instance.crash();
-            }, child: const Text("Crash"))));
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            FirebaseCrashlytics.instance.crash();
+          },
+          child: const Text("Crash"),
+        ),
+      ),
+    );
   }
 }

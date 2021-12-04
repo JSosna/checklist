@@ -9,12 +9,12 @@ class ChecklistSwitch extends StatelessWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const ChecklistSwitch(
-      {Key? key,
-      required this.label,
-      required this.value,
-      required this.onChanged})
-      : super(key: key);
+  const ChecklistSwitch({
+    Key? key,
+    required this.label,
+    required this.value,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,14 @@ class ChecklistSwitch extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Text(label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: context.typo.medium(
-                    color: context.isDarkTheme ? Colors.white : Colors.black)),
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: context.typo.medium(
+                color: context.isDarkTheme ? Colors.white : Colors.black,
+              ),
+            ),
           ),
           SizedBox(height: 40.0, child: _buildSwitch()),
         ],
@@ -45,10 +48,11 @@ class ChecklistSwitch extends StatelessWidget {
 
   Widget _buildCupertinoSwitch() {
     return CupertinoSwitch(
-        value: value,
-        onChanged: onChanged,
-        activeColor: Colors.green,
-        trackColor: Colors.red);
+      value: value,
+      onChanged: onChanged,
+      activeColor: Colors.green,
+      trackColor: Colors.red,
+    );
   }
 
   Widget _buildMaterialSwitch() {

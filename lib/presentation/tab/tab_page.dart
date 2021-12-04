@@ -14,10 +14,15 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
 
-    return MultiBlocProvider(providers: [
-      BlocProvider<AuthenticationCubit>(create: (context) => cubitFactory.get()),
-      BlocProvider<HomeCubit>(create: (context) => cubitFactory.get()),
-    ], child: this);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationCubit>(
+          create: (context) => cubitFactory.get(),
+        ),
+        BlocProvider<HomeCubit>(create: (context) => cubitFactory.get()),
+      ],
+      child: this,
+    );
   }
 
   @override
@@ -30,25 +35,28 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
       },
       child: AutoTabsScaffold(
         lazyLoad: false,
-        animationDuration: const Duration(seconds: 0),
+        animationDuration: Duration.zero,
         routes: const [HomeRoute(), SettingsRoute()],
         bottomNavigationBuilder: (_, tabsRouter) {
           return BottomNavigationBar(
-              selectedItemColor:
-                  context.isDarkTheme ? Colors.white : Colors.black,
-              unselectedItemColor: Colors.grey[600],
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              currentIndex: tabsRouter.activeIndex,
-              onTap: tabsRouter.setActiveIndex,
-              items: [
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.home),
-                    label: translate(LocaleKeys.tab_home)),
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.settings),
-                    label: translate(LocaleKeys.tab_settings)),
-              ]);
+            selectedItemColor:
+                context.isDarkTheme ? Colors.white : Colors.black,
+            unselectedItemColor: Colors.grey[600],
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            currentIndex: tabsRouter.activeIndex,
+            onTap: tabsRouter.setActiveIndex,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.home),
+                label: translate(LocaleKeys.tab_home),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.settings),
+                label: translate(LocaleKeys.tab_settings),
+              ),
+            ],
+          );
         },
       ),
     );

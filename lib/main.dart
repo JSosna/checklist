@@ -17,7 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
@@ -25,24 +25,29 @@ void main() async {
 
   final GetIt injector = GetIt.instance;
   await registerModules(injector);
-  
+
   final AppInitializer initializer = injector.get();
   await initializer.init();
 
   runZonedGuarded(() {
-    runApp(MultiProvider(
-      providers: [
-        Provider<BlocFactory>(
-            create: (context) => BlocFactory(injector: injector)),
-        Provider<CubitFactory>(
-            create: (context) => CubitFactory(injector: injector)),
-      ],
-      child: EasyLocalization(
+    runApp(
+      MultiProvider(
+        providers: [
+          Provider<BlocFactory>(
+            create: (context) => BlocFactory(injector: injector),
+          ),
+          Provider<CubitFactory>(
+            create: (context) => CubitFactory(injector: injector),
+          ),
+        ],
+        child: EasyLocalization(
           path: 'assets/translations',
           supportedLocales: const [Locale("en"), Locale("pl")],
           fallbackLocale: const Locale("en"),
-          child: App()),
-    ));
+          child: App(),
+        ),
+      ),
+    );
   }, (e, s) {
     FirebaseCrashlytics.instance.recordError(e, s);
   });
@@ -63,9 +68,10 @@ class App extends StatelessWidget {
       child: BlocConsumer<ThemeCubit, ThemeState>(
         listener: (context, state) {
           SystemChrome.setSystemUIOverlayStyle(
-              state.theme == checklist_theme_mode.ThemeMode.dark
-                  ? SystemUiOverlayStyle.light
-                  : SystemUiOverlayStyle.dark);
+            state.theme == checklist_theme_mode.ThemeMode.dark
+                ? SystemUiOverlayStyle.light
+                : SystemUiOverlayStyle.dark,
+          );
         },
         builder: (context, state) {
           return MaterialApp.router(

@@ -9,7 +9,7 @@ import 'package:checklist/presentation/tab/cubit/authentication_cubit.dart';
 import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
 import 'package:get_it/get_it.dart';
 
-void registerBlocModule(GetIt injector) async {
+Future<void> registerBlocModule(GetIt injector) async {
   final initialTheme = await injector.get<ThemeStorage>().loadThemeMode();
 
   injector.registerFactory(() => ThemeCubit(initialTheme, injector.get()));

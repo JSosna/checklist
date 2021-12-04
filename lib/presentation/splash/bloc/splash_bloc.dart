@@ -12,7 +12,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   SplashBloc(this._authenticationRepository, this._settingsStorage)
       : super(Loading()) {
-    on<InitializeApplication>((event, emit) {
+    on<InitializeApplication>((event, emit) async {
       emit(Loading());
 
       final isBiometricsActive = _settingsStorage.isBiometricsActive();

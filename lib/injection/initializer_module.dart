@@ -11,7 +11,7 @@ void registerInitializers(GetIt injector) {
   injector.registerFactory<List<AppInitializer>>(() => [
         injector.get<LocalizationInitializer>(),
         injector.get<FimberInitializer>(),
-      ]);
+      ],);
       
   injector.registerFactory<AppInitializer>(() => AppInitializerContainer(injector.get()));
 }

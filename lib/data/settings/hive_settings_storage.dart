@@ -4,7 +4,7 @@ import 'package:checklist/domain/settings/settings_storage.dart';
 import 'package:hive/hive.dart';
 
 class HiveSettingsStorage implements SettingsStorage {
-  static const String CHECKLIST_SETTINGS = 'CHECKLIST_SETTINGS';
+  static const String checklistSettings = 'CHECKLIST_SETTINGS';
 
   final Box _settingsBox;
 
@@ -12,7 +12,7 @@ class HiveSettingsStorage implements SettingsStorage {
 
   @override
   ChecklistSettings getAppSettings() {
-    final response = _settingsBox.get(CHECKLIST_SETTINGS);
+    final response = _settingsBox.get(checklistSettings);
 
     ChecklistSettingsEntity? settings;
 
@@ -21,16 +21,18 @@ class HiveSettingsStorage implements SettingsStorage {
     }
 
     return ChecklistSettings(
-        isBiometricsActive: settings?.isBiometricsActive ?? false);
+      isBiometricsActive: settings?.isBiometricsActive ?? false,
+    );
   }
 
   @override
   Future<void> saveAppSettings(ChecklistSettings fineanceSettings) async {
     final settings = ChecklistSettingsEntity(
-        isBiometricsActive: fineanceSettings.isBiometricsActive);
+      isBiometricsActive: fineanceSettings.isBiometricsActive,
+    );
 
     await _settingsBox.clear();
-    await _settingsBox.put(CHECKLIST_SETTINGS, settings);
+    await _settingsBox.put(checklistSettings, settings);
   }
 
   @override
@@ -38,7 +40,8 @@ class HiveSettingsStorage implements SettingsStorage {
     final settings = getAppSettings();
 
     await saveAppSettings(
-        settings.copyWith(isBiometricsActive: !settings.isBiometricsActive));
+      settings.copyWith(isBiometricsActive: !settings.isBiometricsActive),
+    );
 
     return getAppSettings();
   }
