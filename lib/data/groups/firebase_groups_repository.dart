@@ -7,8 +7,8 @@ class FirebaseGroupsRepository implements GroupsRepository {
       FirebaseFirestore.instance.collection('groups');
 
   @override
-  Future<Group?> getGroup(String id) async {
-    final response = await groups.doc(id).get();
+  Future<Group?> getGroup({required String groupId}) async {
+    final response = await groups.doc(groupId).get();
     final data = response.data();
 
     if (response.exists && data is Map<String, dynamic>) {
@@ -31,7 +31,7 @@ class FirebaseGroupsRepository implements GroupsRepository {
     required String groupId,
     required String userId,
   }) async {
-    final group = await getGroup(groupId);
+    final group = await getGroup(groupId: groupId);
 
     final membersIds = group?.membersIds ?? [];
     membersIds.add(userId);
@@ -44,7 +44,7 @@ class FirebaseGroupsRepository implements GroupsRepository {
     required String groupId,
     required String userId,
   }) async {
-    final group = await getGroup(groupId);
+    final group = await getGroup(groupId: groupId);
 
     final membersIds = group?.membersIds ?? [];
     membersIds.remove(userId);

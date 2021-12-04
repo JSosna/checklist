@@ -1,4 +1,3 @@
-import 'package:checklist/domain/authentication/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'group.g.dart';
