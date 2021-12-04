@@ -30,6 +30,11 @@
 .pub-cache/
 .pub/
 /build/
+pubspec.lock
+*.g.dart
+*.gr.dart
+.fvm/flutter_sdk/
+/android/local.properties
 
 # Web related
 lib/generated_plugin_registrant.dart

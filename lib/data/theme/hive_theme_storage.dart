@@ -2,7 +2,7 @@ import 'package:checklist/data/theme/theme_mode.dart';
 import 'package:checklist/domain/theme/theme_storage.dart';
 import 'package:hive/hive.dart';
 
-class HiveThemeStorage extends ThemeStorage {
+class HiveThemeStorage implements ThemeStorage {
   static const String THEME_MODE = 'THEME_MODE';
 
   final Box themeBox;

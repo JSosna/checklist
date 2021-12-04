@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'checklist_settings_entity.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 2)
 class ChecklistSettingsEntity {
   @HiveField(0)
   final bool isBiometricsActive;
