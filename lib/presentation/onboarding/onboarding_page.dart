@@ -233,7 +233,7 @@ class _OnboardingPageState extends State<OnboardingPage>
               scale: _animationController,
               child: TextButton(
                 onPressed: () {
-                  context.router.replace(const TabRoute());
+                  context.router.replace(const TabRouter());
                 },
                 child: Text(
                   translate(LocaleKeys.onboarding_skip),
@@ -248,7 +248,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                     : translate(LocaleKeys.onboarding_next),
                 onPressed: () {
                   if (reachedLastPage) {
-                    context.router.replace(const TabRoute());
+                    context.router.replace(const TabRouter());
                   } else {
                     _pageController.nextPage(
                       duration: const Duration(milliseconds: 400),
