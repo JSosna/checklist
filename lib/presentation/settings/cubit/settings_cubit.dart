@@ -3,6 +3,7 @@ import 'package:checklist/domain/authentication/authentication_repository.dart';
 import 'package:checklist/domain/authentication/user.dart';
 import 'package:checklist/domain/settings/checklist_settings.dart';
 import 'package:checklist/domain/settings/settings_storage.dart';
+import 'package:checklist/domain/users/change_username_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'settings_state.dart';
@@ -10,9 +11,13 @@ part 'settings_state.dart';
 class SettingsCubit extends Cubit<SettingsState> {
   final AuthenticationRepository _authenticationRepository;
   final SettingsStorage _settingsStorage;
+  final ChangeUsernameUseCase _changeUsernameUseCase;
 
-  SettingsCubit(this._authenticationRepository, this._settingsStorage)
-      : super(SettingsInitializing());
+  SettingsCubit(
+    this._authenticationRepository,
+    this._settingsStorage,
+    this._changeUsernameUseCase,
+  ) : super(SettingsInitializing());
 
   Future<void> initializeSettings() async {
     final settings = _settingsStorage.getAppSettings();
@@ -32,7 +37,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     _authenticationRepository.logout();
   }
 
-  Future<void> changeUsername(String newValue) async {
-    await _authenticationRepository.changeUsername(newValue);
+  Future<void> changeUsername(String newUsername) async {
+    await _changeUsernameUseCase.changeUsername(username: newUsername);
   }
 }

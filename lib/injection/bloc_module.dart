@@ -1,6 +1,7 @@
 import 'package:checklist/domain/theme/theme_storage.dart';
 import 'package:checklist/presentation/authentication/login/cubit/login_cubit.dart';
 import 'package:checklist/presentation/authentication/register/cubit/register_cubit.dart';
+import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/home/cubit/home_cubit.dart';
 import 'package:checklist/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:checklist/presentation/settings/cubit/settings_cubit.dart';
@@ -19,5 +20,6 @@ Future<void> registerBlocModule(GetIt injector) async {
   injector.registerFactory(() => RegisterCubit(injector.get()));
   injector.registerFactory(() => OnboardingCubit());
   injector.registerFactory(() => HomeCubit());
-  injector.registerFactory(() => SettingsCubit(injector.get(), injector.get()));
+  injector.registerFactory(() => GroupsCubit(injector.get()));
+  injector.registerFactory(() => SettingsCubit(injector.get(), injector.get(), injector.get()));
 }

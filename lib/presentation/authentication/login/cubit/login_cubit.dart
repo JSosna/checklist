@@ -25,7 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
     if (response is AuthenticationSuccess) {
       emit(LoginSuccess());
     } else if (response is AuthenticationError) {
-      emit(LoginError(authenticationError: response.authenticationError));
+      emit(LoginError(authenticationError: response.authenticationErrorType));
     }
   }
 
