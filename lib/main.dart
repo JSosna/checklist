@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:checklist/app_initializers/app_initializer.dart';
-import 'package:checklist/domain/theme/theme_mode.dart' as checklist_theme_mode;
+import 'package:checklist/data/theme/theme_mode.dart' as checklist_theme_mode;
 import 'package:checklist/injection/bloc_factory.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/injection/modules.dart';

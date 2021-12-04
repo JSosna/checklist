@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:checklist/domain/theme/theme_mode.dart' as checkbox_theme_mode;
+import 'package:checklist/data/theme/theme_mode.dart' as checkbox_theme_mode;
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';

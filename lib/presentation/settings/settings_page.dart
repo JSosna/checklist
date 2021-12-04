@@ -1,7 +1,8 @@
-import 'package:checklist/domain/theme/theme_mode.dart' as checklist_theme_mode;
+import 'package:checklist/data/theme/theme_mode.dart' as checklist_theme_mode;
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/presentation/settings/cubit/settings_cubit.dart';
 import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
+import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_switch.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-          child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+      child: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: Dimens.kMarginLarge),
           ChecklistSwitch(
               label: "dark mode",
               value: context.isDarkTheme,
@@ -27,13 +29,24 @@ class SettingsPage extends StatelessWidget {
                         ? checklist_theme_mode.ThemeMode.light
                         : checklist_theme_mode.ThemeMode.dark);
               }),
+          const SizedBox(height: Dimens.kMarginMedium),
+          ChecklistSwitch(
+              label: "biometric authentication",
+              value: context.isDarkTheme,
+              onChanged: (value) {
+                BlocProvider.of<ThemeCubit>(context).changeThemeMode(
+                    theme: context.isDarkTheme
+                        ? checklist_theme_mode.ThemeMode.light
+                        : checklist_theme_mode.ThemeMode.dark);
+              }),
+          const Spacer(),
           ChecklistRoundedButton(
               text: "logout",
               onPressed: () {
                 BlocProvider.of<SettingsCubit>(context).logout();
               })
-              ],
-            )),
-        ));
+        ],
+      )),
+    ));
   }
 }

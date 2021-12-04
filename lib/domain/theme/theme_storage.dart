@@ -1,4 +1,4 @@
-import 'package:checklist/domain/theme/theme_mode.dart';
+import 'package:checklist/data/theme/theme_mode.dart';
 
 abstract class ThemeStorage {
   Future<ThemeMode> loadThemeMode();
