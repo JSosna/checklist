@@ -12,15 +12,20 @@ class FirebaseUsersRepository implements UsersRepository {
   }
 
   @override
-  Future<void> deleteUser(User user) async {
-    // TODO: implement deleteUser
-    throw UnimplementedError();
+  Future<void> deleteUser(String uid) async {
+    await users.doc(uid).delete();
   }
 
   @override
-  Future<User> getUser(String uid) async {
-    // TODO: implement getUser
-    throw UnimplementedError();
+  Future<User?> getUser(String uid) async {
+    final response = await users.doc(uid).get();
+    final data = response.data();
+
+    if (response.exists && data is Map<String, dynamic>) {
+      return User.fromJson(data);
+    }
+
+    return null;
   }
 
   @override
