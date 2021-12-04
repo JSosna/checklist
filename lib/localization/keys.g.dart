@@ -5,6 +5,7 @@ abstract class  LocaleKeys {
   static const general_submit = 'general.submit';
   static const general = 'general';
   static const tab_home = 'tab.home';
+  static const tab_groups = 'tab.groups';
   static const tab_settings = 'tab.settings';
   static const tab = 'tab';
   static const onboarding_lists = 'onboarding.lists';

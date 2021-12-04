@@ -36,7 +36,7 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
       child: AutoTabsScaffold(
         lazyLoad: false,
         animationDuration: Duration.zero,
-        routes: const [HomeRoute(), SettingsRoute()],
+        routes: const [HomeRoute(), GroupsRoute(), SettingsRoute()],
         bottomNavigationBuilder: (_, tabsRouter) {
           return BottomNavigationBar(
             selectedItemColor:
@@ -50,6 +50,10 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
               BottomNavigationBarItem(
                 icon: const Icon(Icons.home),
                 label: translate(LocaleKeys.tab_home),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.groups),
+                label: translate(LocaleKeys.tab_groups),
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Icons.settings),
