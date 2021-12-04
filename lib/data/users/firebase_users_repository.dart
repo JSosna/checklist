@@ -8,18 +8,23 @@ class FirebaseUsersRepository implements UsersRepository {
 
   @override
   Future<void> addUser(User user) async {
-    await users.add(user.toJson());
+    await users.doc(user.uid).set(user.toJson());
   }
 
   @override
-  Future<void> deleteUser(User user) {
+  Future<void> deleteUser(User user) async {
     // TODO: implement deleteUser
     throw UnimplementedError();
   }
 
   @override
-  Future<User> getUser(String uid) {
+  Future<User> getUser(String uid) async {
     // TODO: implement getUser
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> changeUsername(User user, String username) async {
+    await users.doc(user.uid).set(user.copyWith(name: username).toJson());
   }
 }
