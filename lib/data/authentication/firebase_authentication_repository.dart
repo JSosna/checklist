@@ -102,8 +102,14 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
 
   @override
   Future<bool> authenticateUsingBiometrics(String reason) async {
-    return localAuthentication.authenticate(
-        localizedReason: reason, biometricOnly: true);
+    try {
+      return localAuthentication.authenticate(
+          localizedReason: reason, biometricOnly: true);
+    } catch (e, stack) {
+      Fimber.e("Biometric auth error", ex: e, stacktrace: stack);
+    }
+
+    return false;
   }
 
   AuthenticationErrorType _mapErrorCode(String errorCode) {

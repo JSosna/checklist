@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
-        if (state is LoginSuccess) {
+        if (state is LoginSuccess || state is BiometricAuthenticationSuccess) {
           context.router.replace(const TabRoute());
         } else if (state is LoginError) {
           final message = _mapLoginError(state.authenticationError);
