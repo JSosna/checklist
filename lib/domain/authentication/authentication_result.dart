@@ -1,5 +1,5 @@
 import 'package:checklist/domain/authentication/authentication_error_type.dart';
-import 'package:checklist/domain/authentication/user.dart';
+import 'package:checklist/domain/users/user.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AuthenticationResponse extends Equatable {

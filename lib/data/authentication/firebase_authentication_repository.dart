@@ -1,7 +1,7 @@
 import 'package:checklist/domain/authentication/authentication_error_type.dart';
 import 'package:checklist/domain/authentication/authentication_repository.dart';
 import 'package:checklist/domain/authentication/authentication_result.dart';
-import 'package:checklist/domain/authentication/user.dart';
+import 'package:checklist/domain/users/user.dart';
 import 'package:fimber/fimber.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:local_auth/local_auth.dart';

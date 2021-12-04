@@ -1,4 +1,4 @@
-import 'package:checklist/domain/authentication/user.dart';
+import 'package:checklist/domain/users/user.dart';
 
 abstract class UsersRepository {
   Future<void> addUser({required User user});

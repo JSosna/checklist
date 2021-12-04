@@ -1,4 +1,4 @@
-import 'package:checklist/domain/authentication/user.dart';
+import 'package:checklist/domain/users/user.dart';
 import 'package:checklist/domain/users/users_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
