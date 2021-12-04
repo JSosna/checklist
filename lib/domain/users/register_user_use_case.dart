@@ -30,7 +30,7 @@ class RegisterUserUseCase {
 
       if (user != null) {
         try {
-          await _usersRepository.addUser(user);
+          await _usersRepository.addUser(user: user);
           return AuthenticationSuccess(user: user);
         } catch (e, stack) {
           _authenticationRepository.logout();

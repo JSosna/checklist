@@ -16,7 +16,7 @@ class ChangeUsernameUseCase {
       final user = _authenticationRepository.getCurrentUser();
 
       if (user != null) {
-        await _usersRepository.changeUsername(user, username);
+        await _usersRepository.changeUsername(user: user, username: username);
       }
     } catch (e, stack) {
       Fimber.e("Change username error", ex: e, stacktrace: stack);

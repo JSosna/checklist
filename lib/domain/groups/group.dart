@@ -7,12 +7,12 @@ part 'group.g.dart';
 class Group {
   final String? id;
   final String? name;
-  final List<User>? members;
+  final List<String>? membersIds;
 
   const Group({
     this.id,
     this.name,
-    this.members,
+    this.membersIds,
   });
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
@@ -22,11 +22,11 @@ class Group {
   Group copyWith({
     String? id,
     String? name,
-    List<User>? members,
+    List<String>? membersIds,
   }) =>
       Group(
         id: id ?? this.id,
         name: name ?? this.name,
-        members: members ?? this.members,
+        membersIds: membersIds ?? this.membersIds,
       );
 }

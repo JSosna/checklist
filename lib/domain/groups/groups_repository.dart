@@ -1,15 +1,19 @@
-import 'package:checklist/domain/authentication/user.dart';
 import 'package:checklist/domain/groups/group.dart';
 
 abstract class GroupsRepository {
-  Future<List<Group>> getUserGroups({required User user});
+  Future<Group?> getGroup(String id);
 
   Future<void> createGroup({
-    required User founder,
-    required String name,
+    required Group group,
   });
 
-  Future<void> joinGroup({required String groupId});
+  Future<void> addUserToGroup({
+    required String groupId,
+    required String userId,
+  });
 
-  Future<void> leaveGroup({required String groupId});
+  Future<void> removeUserFromGroup({
+    required String groupId,
+    required String userId,
+  });
 }

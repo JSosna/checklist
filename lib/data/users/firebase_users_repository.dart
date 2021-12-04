@@ -1,4 +1,5 @@
 import 'package:checklist/domain/authentication/user.dart';
+import 'package:checklist/domain/groups/group.dart';
 import 'package:checklist/domain/users/users_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -7,17 +8,17 @@ class FirebaseUsersRepository implements UsersRepository {
       FirebaseFirestore.instance.collection('users');
 
   @override
-  Future<void> addUser(User user) async {
+  Future<void> addUser({required User user}) async {
     await users.doc(user.uid).set(user.toJson());
   }
 
   @override
-  Future<void> deleteUser(String uid) async {
+  Future<void> deleteUser({required String uid}) async {
     await users.doc(uid).delete();
   }
 
   @override
-  Future<User?> getUser(String uid) async {
+  Future<User?> getUser({required String uid}) async {
     final response = await users.doc(uid).get();
     final data = response.data();
 
@@ -29,7 +30,8 @@ class FirebaseUsersRepository implements UsersRepository {
   }
 
   @override
-  Future<void> changeUsername(User user, String username) async {
+  Future<void> changeUsername(
+      {required User user, required String username}) async {
     await users.doc(user.uid).set(user.copyWith(name: username).toJson());
   }
 }
