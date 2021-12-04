@@ -25,7 +25,8 @@
         "email": "email",
         "password": "hasło",
         "confirm_password": "potwierdź hasło",
-        "username": "nazwa użytkownika"
+        "username": "nazwa użytkownika",
+        "biometrics_auth_reason": "Potwierdź dane biometryczne, aby przejść dalej"
     },
     "authentication_errors": {
         "invalid_email": "nieprawidłowy email",

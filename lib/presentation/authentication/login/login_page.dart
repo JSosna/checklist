@@ -43,6 +43,12 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<LoginCubit>(context).tryToAuthenticateUsingBiometrics();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {

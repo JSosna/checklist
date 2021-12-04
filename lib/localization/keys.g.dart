@@ -25,6 +25,7 @@ abstract class  LocaleKeys {
   static const authentication_password = 'authentication.password';
   static const authentication_confirm_password = 'authentication.confirm_password';
   static const authentication_username = 'authentication.username';
+  static const authentication_biometrics_auth_reason = 'authentication.biometrics_auth_reason';
   static const authentication = 'authentication';
   static const authentication_errors_invalid_email = 'authentication_errors.invalid_email';
   static const authentication_errors_invalid_password = 'authentication_errors.invalid_password';

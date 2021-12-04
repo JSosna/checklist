@@ -15,4 +15,8 @@ abstract class AuthenticationRepository {
   Stream<User?> userStream();
 
   Future<void> logout();
+
+  Future<bool> canDeviceAuthenticateUsingBiometrics();
+
+  Future<bool> authenticateUsingBiometrics(String reason);
 }

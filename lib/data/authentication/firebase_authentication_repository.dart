@@ -4,8 +4,13 @@ import 'package:checklist/domain/authentication/authentication_result.dart';
 import 'package:checklist/domain/authentication/user.dart';
 import 'package:fimber/fimber.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:local_auth/local_auth.dart';
 
 class FirebaseAuthenticationRepository extends AuthenticationRepository {
+  final LocalAuthentication localAuthentication;
+
+  FirebaseAuthenticationRepository(this.localAuthentication);
+
   @override
   Future<AuthenticationResponse> login(
       {required String email, required String password}) async {
@@ -88,6 +93,17 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
     } catch (e, stack) {
       Fimber.e("Logout error", ex: e, stacktrace: stack);
     }
+  }
+
+  @override
+  Future<bool> canDeviceAuthenticateUsingBiometrics() async {
+    return localAuthentication.canCheckBiometrics;
+  }
+
+  @override
+  Future<bool> authenticateUsingBiometrics(String reason) async {
+    return localAuthentication.authenticate(
+        localizedReason: reason, biometricOnly: true);
   }
 
   AuthenticationErrorType _mapErrorCode(String errorCode) {
