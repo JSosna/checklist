@@ -7,4 +7,15 @@ abstract class GroupsState extends Equatable {
   List<Object> get props => [];
 }
 
-class GroupsInitial extends GroupsState {}
+class GroupsLoading extends GroupsState {}
+
+class GroupsLoaded extends GroupsState {
+  final List<Group> groups;
+
+  const GroupsLoaded(this.groups);
+
+  @override
+  List<Object> get props => [groups];
+}
+
+class GroupsError extends GroupsState {}

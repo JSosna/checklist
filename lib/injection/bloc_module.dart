@@ -20,6 +20,6 @@ Future<void> registerBlocModule(GetIt injector) async {
   injector.registerFactory(() => RegisterCubit(injector.get()));
   injector.registerFactory(() => OnboardingCubit());
   injector.registerFactory(() => HomeCubit());
-  injector.registerFactory(() => GroupsCubit());
+  injector.registerFactory(() => GroupsCubit(injector.get()));
   injector.registerFactory(() => SettingsCubit(injector.get(), injector.get(), injector.get()));
 }
