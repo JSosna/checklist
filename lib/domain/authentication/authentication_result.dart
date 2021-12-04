@@ -19,10 +19,10 @@ class AuthenticationSuccess extends AuthenticationResponse {
 }
 
 class AuthenticationError extends AuthenticationResponse {
-  final AuthenticationErrorType authenticationError;
+  final AuthenticationErrorType authenticationErrorType;
 
-  const AuthenticationError({required this.authenticationError});
+  const AuthenticationError({required this.authenticationErrorType});
 
   @override
-  List<Object> get props => [authenticationError];
+  List<Object> get props => [authenticationErrorType];
 }

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/authentication/login/login_page.dart';
 import 'package:checklist/presentation/authentication/register/register_page.dart';
-import 'package:checklist/presentation/favorites/favorites_page.dart';
 import 'package:checklist/presentation/groups/list/groups_page.dart';
 import 'package:checklist/presentation/home/home_page.dart';
 import 'package:checklist/presentation/onboarding/onboarding_page.dart';
@@ -21,7 +20,6 @@ import 'package:checklist/presentation/tab/tab_page.dart';
       children: [
         AutoRoute(page: HomePage, initial: true),
         AutoRoute(page: GroupsPage),
-        AutoRoute(page: FavoritesPage),
         AutoRoute(page: SettingsPage),
       ],
     )

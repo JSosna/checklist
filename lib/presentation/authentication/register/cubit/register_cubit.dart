@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:checklist/domain/authentication/authentication_error_type.dart';
-import 'package:checklist/domain/authentication/authentication_repository.dart';
 import 'package:checklist/domain/authentication/authentication_result.dart';
+import 'package:checklist/domain/users/register_user_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  final AuthenticationRepository _authenticationRepository;
+  final RegisterUserUseCase _registerUserUseCase;
 
-  RegisterCubit(this._authenticationRepository) : super(RegisterInitial());
+  RegisterCubit(this._registerUserUseCase) : super(RegisterInitial());
 
   Future<void> register({
     required String username,
@@ -18,7 +18,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   }) async {
     emit(RegisterLoading());
 
-    final response = await _authenticationRepository.register(
+    final response = await _registerUserUseCase.registerUser(
       username: username,
       email: email,
       password: password,
@@ -27,7 +27,11 @@ class RegisterCubit extends Cubit<RegisterState> {
     if (response is AuthenticationSuccess) {
       emit(RegisterSuccess());
     } else if (response is AuthenticationError) {
-      emit(RegisterError(authenticationError: response.authenticationError));
+      emit(
+        RegisterError(
+          authenticationError: response.authenticationErrorType,
+        ),
+      );
     }
   }
 }

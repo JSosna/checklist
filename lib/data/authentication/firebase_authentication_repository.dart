@@ -30,13 +30,13 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         );
       }
     } on firebase.FirebaseAuthException catch (e) {
-      return AuthenticationError(authenticationError: _mapErrorCode(e.code));
+      return AuthenticationError(authenticationErrorType: _mapErrorCode(e.code));
     } catch (e, stack) {
       Fimber.e("Login error", ex: e, stacktrace: stack);
     }
 
     return const AuthenticationError(
-      authenticationError: AuthenticationErrorType.unknownError,
+      authenticationErrorType: AuthenticationErrorType.unknownError,
     );
   }
 
@@ -63,13 +63,13 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         );
       }
     } on firebase.FirebaseAuthException catch (e) {
-      return AuthenticationError(authenticationError: _mapErrorCode(e.code));
+      return AuthenticationError(authenticationErrorType: _mapErrorCode(e.code));
     } catch (e, stack) {
       Fimber.e("Register error", ex: e, stacktrace: stack);
     }
 
     return const AuthenticationError(
-      authenticationError: AuthenticationErrorType.unknownError,
+      authenticationErrorType: AuthenticationErrorType.unknownError,
     );
   }
 
