@@ -6,6 +6,7 @@
     "tab": {
         "home": "start",
         "groups": "grupy",
+        "favorites": "ulubione",
         "settings": "ustawienia"
     },
     "onboarding": {
