@@ -5,7 +5,7 @@ abstract class SettingsStorage {
 
   ChecklistSettings getAppSettings();
 
-  void saveBiometricsOption(bool enableBiometrics);
+  Future<ChecklistSettings> toggleBiometricsOption();
 
   bool isBiometricsActive();
 }

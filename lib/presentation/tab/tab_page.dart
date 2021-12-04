@@ -4,7 +4,6 @@ import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/home/cubit/home_cubit.dart';
-import 'package:checklist/presentation/settings/cubit/settings_cubit.dart';
 import 'package:checklist/presentation/tab/cubit/authentication_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +13,10 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
+
     return MultiBlocProvider(providers: [
-      BlocProvider<AuthenticationCubit>(
-          create: (context) => cubitFactory.get()),
+      BlocProvider<AuthenticationCubit>(create: (context) => cubitFactory.get()),
       BlocProvider<HomeCubit>(create: (context) => cubitFactory.get()),
-      BlocProvider<SettingsCubit>(create: (context) => cubitFactory.get()),
     ], child: this);
   }
 

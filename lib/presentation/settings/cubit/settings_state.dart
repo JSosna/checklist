@@ -7,4 +7,12 @@ abstract class SettingsState extends Equatable {
   List<Object> get props => [];
 }
 
-class SettingsInitial extends SettingsState {}
+class SettingsInitializing extends SettingsState {}
+
+class SettingsUpdating extends SettingsState {}
+
+class SettingsLoaded extends SettingsState {
+  final ChecklistSettings settings;
+
+  const SettingsLoaded({required this.settings});
+}

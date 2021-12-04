@@ -51,7 +51,7 @@ class AppRouter extends _i8.RootStackRouter {
     },
     SettingsRoute.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.SettingsPage());
+          routeData: routeData, child: _i7.SettingsPage());
     }
   };
 
