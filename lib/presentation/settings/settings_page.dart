@@ -3,11 +3,13 @@ import 'package:checklist/data/theme/theme_mode.dart' as checklist_theme_mode;
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/localization/keys.g.dart';
+import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/settings/cubit/settings_cubit.dart';
 import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
+import 'package:checklist/widgets/checklist_settings_text_input.dart';
 import 'package:checklist/widgets/checklist_switch.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -67,12 +69,20 @@ class _SettingsPageState extends State<SettingsPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(height: Dimens.kMarginLarge),
+        ChecklistSettingsTextInput(
+          title: translate(LocaleKeys.settings_username),
+          value: state.user?.name ?? "",
+          onChanged: (newValue) {
+            BlocProvider.of<SettingsCubit>(context).changeUsername(newValue);
+          },
+        ),
+        const SizedBox(height: Dimens.kMarginMedium),
         _buildDarkModeSwitch(),
         const SizedBox(height: Dimens.kMarginMedium),
         _buildBiometricAuthenticationSwitch(state),
         const Spacer(),
         ChecklistRoundedButton(
-          text: LocaleKeys.settings_logout.tr(),
+          text: translate(LocaleKeys.settings_logout),
           onPressed: () {
             BlocProvider.of<SettingsCubit>(context).logout();
           },
@@ -100,7 +110,7 @@ class _SettingsPageState extends State<SettingsPage> {
       label: LocaleKeys.settings_biometric_authentication.tr(),
       value: state.settings.isBiometricsActive,
       onChanged: (value) async {
-        await BlocProvider.of<SettingsCubit>(context).toggleBiometricsOption();
+        await BlocProvider.of<SettingsCubit>(context).toggleBiometricsOption(state.user);
       },
     );
   }

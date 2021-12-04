@@ -123,6 +123,11 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
     return false;
   }
 
+  @override
+  Future<void> changeUsername(String newValue) async {
+    await firebase.FirebaseAuth.instance.currentUser?.updateDisplayName(newValue);
+  }
+
   AuthenticationErrorType _mapErrorCode(String errorCode) {
     switch (errorCode) {
       case "invalid-email":

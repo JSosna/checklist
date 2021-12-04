@@ -13,6 +13,7 @@ class SettingsUpdating extends SettingsState {}
 
 class SettingsLoaded extends SettingsState {
   final ChecklistSettings settings;
+  final User? user;
 
-  const SettingsLoaded({required this.settings});
+  const SettingsLoaded({required this.settings, required this.user});
 }

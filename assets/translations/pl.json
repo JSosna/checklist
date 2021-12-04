@@ -1,6 +1,7 @@
 {
     "general": {
-        "checklist": "CHECKLIST"
+        "checklist": "CHECKLIST",
+        "submit": "potwierdź"
     },
     "tab": {
         "home": "start",

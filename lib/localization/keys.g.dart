@@ -2,6 +2,7 @@
 
 abstract class  LocaleKeys {
   static const general_checklist = 'general.checklist';
+  static const general_submit = 'general.submit';
   static const general = 'general';
   static const tab_home = 'tab.home';
   static const tab_settings = 'tab.settings';
