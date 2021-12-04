@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/data/theme/theme_mode.dart' as checklist_theme_mode;
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/settings/cubit/settings_cubit.dart';
 import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_switch.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,34 +67,41 @@ class _SettingsPageState extends State<SettingsPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(height: Dimens.kMarginLarge),
-        ChecklistSwitch(
-          label: "dark mode",
-          value: context.isDarkTheme,
-          onChanged: (value) {
-            BlocProvider.of<ThemeCubit>(context).changeThemeMode(
-              theme: context.isDarkTheme
-                  ? checklist_theme_mode.ThemeMode.light
-                  : checklist_theme_mode.ThemeMode.dark,
-            );
-          },
-        ),
+        _buildDarkModeSwitch(),
         const SizedBox(height: Dimens.kMarginMedium),
-        ChecklistSwitch(
-          label: "biometric authentication",
-          value: state.settings.isBiometricsActive,
-          onChanged: (value) async {
-            await BlocProvider.of<SettingsCubit>(context)
-                .toggleBiometricsOption();
-          },
-        ),
+        _buildBiometricAuthenticationSwitch(state),
         const Spacer(),
         ChecklistRoundedButton(
-          text: "logout",
+          text: LocaleKeys.settings_logout.tr(),
           onPressed: () {
             BlocProvider.of<SettingsCubit>(context).logout();
           },
         )
       ],
+    );
+  }
+
+  Widget _buildDarkModeSwitch() {
+    return ChecklistSwitch(
+      value: context.isDarkTheme,
+      label: LocaleKeys.settings_dark_mode.tr(),
+      onChanged: (value) {
+        BlocProvider.of<ThemeCubit>(context).changeThemeMode(
+          theme: context.isDarkTheme
+              ? checklist_theme_mode.ThemeMode.light
+              : checklist_theme_mode.ThemeMode.dark,
+        );
+      },
+    );
+  }
+
+  Widget _buildBiometricAuthenticationSwitch(SettingsLoaded state) {
+    return ChecklistSwitch(
+      label: LocaleKeys.settings_biometric_authentication.tr(),
+      value: state.settings.isBiometricsActive,
+      onChanged: (value) async {
+        await BlocProvider.of<SettingsCubit>(context).toggleBiometricsOption();
+      },
     );
   }
 }

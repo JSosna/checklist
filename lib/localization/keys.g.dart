@@ -44,5 +44,10 @@ abstract class  LocaleKeys {
   static const validation_password_special = 'validation.password_special';
   static const validation_passwords_do_not_match = 'validation.passwords_do_not_match';
   static const validation = 'validation';
+  static const settings_dark_mode = 'settings.dark_mode';
+  static const settings_biometric_authentication = 'settings.biometric_authentication';
+  static const settings_username = 'settings.username';
+  static const settings_logout = 'settings.logout';
+  static const settings = 'settings';
 
 }

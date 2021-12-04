@@ -26,8 +26,6 @@ class ChecklistSwitch extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
               style: context.typo.medium(
                 color: context.isDarkTheme ? Colors.white : Colors.black,
               ),

@@ -47,5 +47,11 @@
         "username_too_short": "nazwa użytkownika musi mieć przynajmniej 4 znaki długości",
         "password_special": "hasło musi mieć przynajmniej jeden znak specjalny",
         "passwords_do_not_match": "hasła nie są takie same"
+    },
+    "settings": {
+        "dark_mode": "ciemny tryb",
+        "biometric_authentication": "uwierzytelnianie biometryczne",
+        "username": "nazwa użytkownika",
+        "logout": "wyloguj się"
     }
 }

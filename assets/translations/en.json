@@ -47,5 +47,11 @@
         "username_too_short": "username must be at least 4 characters long",
         "password_special": "password must have at least one special character",
         "passwords_do_not_match": "passwords do not match"
+    },
+    "settings": {
+        "dark_mode": "dark mode",
+        "biometric_authentication": "biometric authentication",
+        "username": "username",
+        "logout": "logout"
     }
 }
