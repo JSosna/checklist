@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:checklist/domain/authentication/authentication_repository.dart';
-import 'package:checklist/domain/users/user.dart';
 import 'package:checklist/domain/settings/checklist_settings.dart';
 import 'package:checklist/domain/settings/settings_storage.dart';
 import 'package:checklist/domain/users/change_username_use_case.dart';
+import 'package:checklist/domain/users/user.dart';
 import 'package:equatable/equatable.dart';
 
 part 'settings_state.dart';
