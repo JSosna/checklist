@@ -82,6 +82,13 @@ class _GroupsPageState extends State<GroupsPage> {
             return ListTile(
               tileColor: Colors.grey,
               title: Text(state.groups[index].name ?? ""),
+              onTap: () {
+                final groupId = state.groups[index].id;
+
+                if (groupId != null) {
+                  context.router.push(GroupDetailsRoute(groupId: groupId));
+                }
+              },
             );
           },
         ),
