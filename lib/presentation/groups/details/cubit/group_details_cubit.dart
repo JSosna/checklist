@@ -20,4 +20,8 @@ class GroupDetailsCubit extends Cubit<GroupDetailsState> {
       emit(GroupDetailsError());
     }
   }
+
+  Future<void> changeName(String groupId, String name) async {
+    await _groupsRepository.changeName(groupId: groupId, name: name);
+  }
 }

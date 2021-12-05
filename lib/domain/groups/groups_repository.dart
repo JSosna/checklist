@@ -18,4 +18,9 @@ abstract class GroupsRepository {
     required String groupId,
     required String userId,
   });
+
+  Future<void> changeName({
+    required String groupId,
+    required String name,
+  });
 }
