@@ -33,11 +33,13 @@ class FirebaseGroupsRepository implements GroupsRepository {
   }
 
   @override
-  Future<void> createGroup({
+  Future<Group?> createGroup({
     required Group group,
   }) async {
     final groupRef = groups.doc();
-    groupRef.set(group.toJson());
+    await groupRef.set(group.copyWith(id: groupRef.id).toJson());
+
+    return getGroup(groupId: groupRef.id);
   }
 
   @override

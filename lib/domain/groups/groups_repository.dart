@@ -5,7 +5,7 @@ abstract class GroupsRepository {
 
   Future<Group?> getGroupWithJoinCode({required String joinCode});
 
-  Future<void> createGroup({
+  Future<Group?> createGroup({
     required Group group,
   });
 

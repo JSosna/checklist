@@ -30,6 +30,14 @@ class _AddGroupPageState extends State<AddGroupPage> {
   void initState() {
     super.initState();
     joinGroupController = TextEditingController();
+    newGroupNameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    joinGroupController?.dispose();
+    newGroupNameController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -83,9 +91,9 @@ class _AddGroupPageState extends State<AddGroupPage> {
                 final joinCode = joinGroupController?.text;
 
                 // TODO: Use text form validator
-                if (joinCode?.length == 6) {
+                if (joinCode != null && joinCode.length == 6) {
                   BlocProvider.of<AddGroupCubit>(context)
-                      .joinToExistingGroup(joinCode!);
+                      .joinToExistingGroup(joinCode);
                 }
               },
               icon: const Icon(Icons.arrow_forward),
@@ -105,7 +113,17 @@ class _AddGroupPageState extends State<AddGroupPage> {
         const Text("Name"),
         TextField(controller: newGroupNameController),
         const Spacer(),
-        ChecklistRoundedButton(text: "Create", onPressed: () {}),
+        ChecklistRoundedButton(
+          text: "Create",
+          onPressed: () {
+            // TODO: Use text form validator
+            final name = newGroupNameController?.text;
+
+            if (name != null && name.length > 4) {
+              BlocProvider.of<AddGroupCubit>(context).createNewGroup(name);
+            }
+          },
+        ),
       ],
     );
   }

@@ -11,4 +11,8 @@ class AddGroupInitial extends AddGroupState {}
 
 class AddedUserToGroup extends AddGroupState {}
 
+class CreatedNewGroup extends AddGroupState {}
+
 class ErrorWhileAddingUserToGroup extends AddGroupState {}
+
+class ErrorWhileCreatingGroup extends AddGroupState {}
