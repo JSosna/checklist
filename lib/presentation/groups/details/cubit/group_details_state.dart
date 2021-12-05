@@ -8,3 +8,16 @@ abstract class GroupDetailsState extends Equatable {
 }
 
 class GroupDetailsInitial extends GroupDetailsState {}
+
+class GroupDetailsLoading extends GroupDetailsState {}
+
+class GroupDetailsLoaded extends GroupDetailsState {
+  final Group group;
+
+  const GroupDetailsLoaded({required this.group});
+
+  @override
+  List<Object> get props => [group];
+}
+
+class GroupDetailsError extends GroupDetailsState {}
