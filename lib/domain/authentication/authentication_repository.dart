@@ -1,5 +1,5 @@
 import 'package:checklist/domain/authentication/authentication_result.dart';
-import 'package:checklist/domain/authentication/user.dart';
+import 'package:checklist/domain/users/user.dart';
 
 abstract class AuthenticationRepository {
   Future<AuthenticationResponse> login({

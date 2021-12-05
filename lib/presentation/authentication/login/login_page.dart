@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess || state is BiometricAuthenticationSuccess) {
-          context.router.replace(const TabRoute());
+          context.router.replace(const TabRouter());
         } else if (state is LoginError) {
           final message = _mapLoginError(state.authenticationError);
           Fluttertoast.showToast(

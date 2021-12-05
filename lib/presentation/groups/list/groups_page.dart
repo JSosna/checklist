@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
+import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,15 +66,23 @@ class _GroupsPageState extends State<GroupsPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          // TODO: Navigate to create group page
+        onPressed: () async {
+          final shouldUpdate = await context.router.push(const AddGroupRoute());
+
+          if (shouldUpdate == true) {
+            if (!mounted) return;
+            BlocProvider.of<GroupsCubit>(context).loadGroups();
+          }
         },
       ),
       body: Center(
         child: ListView.builder(
           itemCount: state.groups.length,
           itemBuilder: (context, index) {
-            return ListTile(tileColor: Colors.grey, title: Text(state.groups[index].name ?? ""));
+            return ListTile(
+              tileColor: Colors.grey,
+              title: Text(state.groups[index].name ?? ""),
+            );
           },
         ),
       ),

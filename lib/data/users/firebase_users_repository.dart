@@ -1,4 +1,4 @@
-import 'package:checklist/domain/authentication/user.dart';
+import 'package:checklist/domain/users/user.dart';
 import 'package:checklist/domain/users/users_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -46,7 +46,7 @@ class FirebaseUsersRepository implements UsersRepository {
     final groupsIds = user?.groupsIds ?? [];
     groupsIds.add(groupId);
 
-    users.doc(userId).set(user?.copyWith(groupsIds: groupsIds));
+    users.doc(userId).set(user?.copyWith(groupsIds: groupsIds).toJson());
   }
 
   @override
@@ -59,6 +59,6 @@ class FirebaseUsersRepository implements UsersRepository {
     final groupsIds = user?.groupsIds ?? [];
     groupsIds.remove(groupId);
 
-    users.doc(userId).set(user?.copyWith(groupsIds: groupsIds));
+    users.doc(userId).set(user?.copyWith(groupsIds: groupsIds).toJson());
   }
 }

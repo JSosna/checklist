@@ -19,11 +19,27 @@ class FirebaseGroupsRepository implements GroupsRepository {
   }
 
   @override
-  Future<void> createGroup({
+  Future<Group?> getGroupWithJoinCode({required String joinCode}) async {
+    final query = await groups.where("join_code", isEqualTo: joinCode).get();
+
+    if (query.docs.isNotEmpty) {
+      final data = query.docs.first.data();
+      if (data is Map<String, dynamic>) {
+        return Group.fromJson(data);
+      }
+    }
+
+    return null;
+  }
+
+  @override
+  Future<Group?> createGroup({
     required Group group,
   }) async {
     final groupRef = groups.doc();
-    groupRef.set(group.toJson());
+    await groupRef.set(group.copyWith(id: groupRef.id).toJson());
+
+    return getGroup(groupId: groupRef.id);
   }
 
   @override
@@ -36,7 +52,7 @@ class FirebaseGroupsRepository implements GroupsRepository {
     final membersIds = group?.membersIds ?? [];
     membersIds.add(userId);
 
-    groups.doc(groupId).set(group?.copyWith(membersIds: membersIds));
+    groups.doc(groupId).set(group?.copyWith(membersIds: membersIds).toJson());
   }
 
   @override
@@ -49,6 +65,6 @@ class FirebaseGroupsRepository implements GroupsRepository {
     final membersIds = group?.membersIds ?? [];
     membersIds.remove(userId);
 
-    groups.doc(groupId).set(group?.copyWith(membersIds: membersIds));
+    groups.doc(groupId).set(group?.copyWith(membersIds: membersIds).toJson());
   }
 }

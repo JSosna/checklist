@@ -3,7 +3,9 @@ import 'package:checklist/domain/groups/group.dart';
 abstract class GroupsRepository {
   Future<Group?> getGroup({required String groupId});
 
-  Future<void> createGroup({
+  Future<Group?> getGroupWithJoinCode({required String joinCode});
+
+  Future<Group?> createGroup({
     required Group group,
   });
 
