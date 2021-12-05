@@ -33,6 +33,11 @@ class FirebaseGroupsRepository implements GroupsRepository {
   }
 
   @override
+  Future<void> deleteGroup({required String groupId}) async {
+    await groups.doc(groupId).delete();
+  }
+
+  @override
   Future<Group?> createGroup({
     required Group group,
   }) async {
@@ -52,7 +57,9 @@ class FirebaseGroupsRepository implements GroupsRepository {
     final membersIds = group?.membersIds ?? [];
     membersIds.add(userId);
 
-    groups.doc(groupId).set(group?.copyWith(membersIds: membersIds).toJson());
+    await groups
+        .doc(groupId)
+        .set(group?.copyWith(membersIds: membersIds).toJson());
   }
 
   @override
@@ -65,6 +72,18 @@ class FirebaseGroupsRepository implements GroupsRepository {
     final membersIds = group?.membersIds ?? [];
     membersIds.remove(userId);
 
-    groups.doc(groupId).set(group?.copyWith(membersIds: membersIds).toJson());
+    await groups
+        .doc(groupId)
+        .set(group?.copyWith(membersIds: membersIds).toJson());
+  }
+
+  @override
+  Future<void> changeName({
+    required String groupId,
+    required String name,
+  }) async {
+    final group = await getGroup(groupId: groupId);
+
+    await groups.doc(groupId).set(group?.copyWith(name: name).toJson());
   }
 }

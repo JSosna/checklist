@@ -5,6 +5,8 @@ abstract class GroupsRepository {
 
   Future<Group?> getGroupWithJoinCode({required String joinCode});
 
+  Future<void> deleteGroup({required String groupId});
+
   Future<Group?> createGroup({
     required Group group,
   });
@@ -17,5 +19,10 @@ abstract class GroupsRepository {
   Future<void> removeUserFromGroup({
     required String groupId,
     required String userId,
+  });
+
+  Future<void> changeName({
+    required String groupId,
+    required String name,
   });
 }

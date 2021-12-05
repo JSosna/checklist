@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:checklist/domain/groups/add_user_to_existing_group_use_case.dart';
-import 'package:checklist/domain/groups/create_group_use_case.dart';
+import 'package:checklist/domain/groups/use_case/add_user_to_existing_group_use_case.dart';
+import 'package:checklist/domain/groups/use_case/create_group_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'add_group_state.dart';

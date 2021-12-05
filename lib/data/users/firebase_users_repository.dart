@@ -46,7 +46,7 @@ class FirebaseUsersRepository implements UsersRepository {
     final groupsIds = user?.groupsIds ?? [];
     groupsIds.add(groupId);
 
-    users.doc(userId).set(user?.copyWith(groupsIds: groupsIds).toJson());
+    await users.doc(userId).set(user?.copyWith(groupsIds: groupsIds).toJson());
   }
 
   @override
@@ -59,6 +59,6 @@ class FirebaseUsersRepository implements UsersRepository {
     final groupsIds = user?.groupsIds ?? [];
     groupsIds.remove(groupId);
 
-    users.doc(userId).set(user?.copyWith(groupsIds: groupsIds).toJson());
+    await users.doc(userId).set(user?.copyWith(groupsIds: groupsIds).toJson());
   }
 }

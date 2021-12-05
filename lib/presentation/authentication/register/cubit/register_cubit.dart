@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:checklist/domain/authentication/authentication_error_type.dart';
 import 'package:checklist/domain/authentication/authentication_result.dart';
-import 'package:checklist/domain/users/register_user_use_case.dart';
+import 'package:checklist/domain/users/use_case/register_user_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'register_state.dart';
