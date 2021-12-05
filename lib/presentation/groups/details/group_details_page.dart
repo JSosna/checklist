@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/details/cubit/group_details_cubit.dart';
+import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,8 @@ class GroupDetailsPage extends StatefulWidget implements AutoRouteWrapper {
   _GroupDetailsPageState createState() => _GroupDetailsPageState();
 }
 
-class _GroupDetailsPageState extends State<GroupDetailsPage> {
+class _GroupDetailsPageState extends State<GroupDetailsPage>
+    with SingleTickerProviderStateMixin {
   bool _showMoreMenu = false;
 
   @override
@@ -68,8 +70,9 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ..._buildTopPart(state),
-            const Divider(),
-            _buildTabBar(),
+            const SizedBox(height: Dimens.kMarginLarge),
+            const Divider(height: 0),
+            Expanded(child: _buildTabs()),
           ],
         ),
       ),
@@ -148,8 +151,56 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
     );
   }
 
-  Widget _buildTabBar() {
-    return Container();
+  Widget _buildTabs() {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const TabBar(
+            tabs: [Tab(text: "lists"), Tab(text: "members")],
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                _buildListsTab(),
+                _buildMembersTab(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildListsTab() {
+    return ListView.builder(
+      itemCount: 4,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(Dimens.kMarginLarge),
+          child: ListTile(
+            tileColor: Colors.black,
+            title: Text("list $index"),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildMembersTab() {
+    return ListView.builder(
+      itemCount: 4,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(Dimens.kMarginLarge),
+          child: ListTile(
+            tileColor: Colors.black,
+            title: Text("member $index"),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildError() {
