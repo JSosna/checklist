@@ -24,6 +24,7 @@ class AddGroupPage extends StatefulWidget implements AutoRouteWrapper {
 
 class _AddGroupPageState extends State<AddGroupPage> {
   TextEditingController? joinGroupController;
+  TextEditingController? newGroupNameController;
 
   @override
   void initState() {
@@ -33,7 +34,14 @@ class _AddGroupPageState extends State<AddGroupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddGroupCubit, AddGroupState>(
+    return BlocConsumer<AddGroupCubit, AddGroupState>(
+      listener: (context, state) {
+        if (state is AddedUserToGroup) {
+          context.router.pop();
+        } else if (state is ErrorWhileAddingUserToGroup) {
+          // TODO: show error toast (maybe abstract class joinResult with - Joined, AlreadyIn, Expired, Error)
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
@@ -71,7 +79,15 @@ class _AddGroupPageState extends State<AddGroupPage> {
           children: [
             Expanded(child: TextField(controller: joinGroupController)),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                final joinCode = joinGroupController?.text;
+
+                // TODO: Use text form validator
+                if (joinCode?.length == 6) {
+                  BlocProvider.of<AddGroupCubit>(context)
+                      .joinToExistingGroup(joinCode!);
+                }
+              },
               icon: const Icon(Icons.arrow_forward),
             )
           ],
@@ -87,7 +103,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
         const Text("Create new group"),
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         const Text("Name"),
-        TextField(controller: joinGroupController),
+        TextField(controller: newGroupNameController),
         const Spacer(),
         ChecklistRoundedButton(text: "Create", onPressed: () {}),
       ],

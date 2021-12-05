@@ -8,3 +8,7 @@ abstract class AddGroupState extends Equatable {
 }
 
 class AddGroupInitial extends AddGroupState {}
+
+class AddedUserToGroup extends AddGroupState {}
+
+class ErrorWhileAddingUserToGroup extends AddGroupState {}
