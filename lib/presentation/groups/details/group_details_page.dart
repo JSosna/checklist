@@ -6,6 +6,7 @@ import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 
 class GroupDetailsPage extends StatefulWidget implements AutoRouteWrapper {
   final String groupId;
@@ -28,6 +29,8 @@ class GroupDetailsPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
+  bool _showMoreMenu = false;
+
   @override
   void initState() {
     super.initState();
@@ -64,29 +67,89 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-              onPressed: () {
-                context.router.pop(true);
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-            Align(
-              child: ChecklistEditableLabel(
-                text: state.group.name ?? "",
-                style: context.typo.largeBold(
-                  color: context.isDarkTheme ? Colors.white : Colors.black,
-                ),
-                onChanged: (newText) {
-                  BlocProvider.of<GroupDetailsCubit>(context)
-                      .changeName(widget.groupId, newText);
-                },
-              ),
-            ),
-            const Divider()
+            ..._buildTopPart(state),
+            const Divider(),
+            _buildTabBar(),
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> _buildTopPart(GroupDetailsLoaded state) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () {
+              context.router.pop(true);
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
+          _buildMoreButton(),
+        ],
+      ),
+      Align(
+        child: ChecklistEditableLabel(
+          text: state.group.name ?? "",
+          style: context.typo.largeBold(
+            color: context.isDarkTheme ? Colors.white : Colors.black,
+          ),
+          onChanged: (newText) {
+            BlocProvider.of<GroupDetailsCubit>(context)
+                .changeName(widget.groupId, newText);
+          },
+        ),
+      ),
+    ];
+  }
+
+  Widget _buildMoreButton() {
+    return PortalEntry(
+      visible: _showMoreMenu,
+      portal: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          setState(() {
+            _showMoreMenu = false;
+          });
+        },
+      ),
+      child: PortalEntry(
+        visible: _showMoreMenu,
+        portalAnchor: Alignment.topRight,
+        childAnchor: Alignment.center,
+        portal: _buildMoreMenu(),
+        child: IconButton(
+          onPressed: () {
+            setState(() {
+              _showMoreMenu = !_showMoreMenu;
+            });
+          },
+          icon: const Icon(Icons.more_vert),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMoreMenu() {
+    return Material(
+      elevation: 8,
+      child: IntrinsicWidth(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            ListTile(title: Text('leave group')),
+            ListTile(title: Text('delete group')),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabBar() {
+    return Container();
   }
 
   Widget _buildError() {
