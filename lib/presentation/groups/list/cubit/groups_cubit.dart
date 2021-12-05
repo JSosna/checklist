@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:checklist/domain/groups/group.dart';
-import 'package:checklist/domain/groups/load_groups_use_case.dart';
+import 'package:checklist/domain/groups/use_case/load_groups_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'groups_state.dart';

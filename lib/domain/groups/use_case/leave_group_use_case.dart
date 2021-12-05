@@ -31,7 +31,7 @@ class LeaveGroupUseCase {
         return true;
       }
     } catch (e, stack) {
-      Fimber.e("Loading groups error", ex: e, stacktrace: stack);
+      Fimber.e("Leaving group error", ex: e, stacktrace: stack);
     }
 
     return false;

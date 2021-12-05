@@ -157,7 +157,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             ),
             ListTile(
               title: const Text('delete group'),
-              onTap: () {},
+              onTap: () {
+                BlocProvider.of<GroupDetailsCubit>(context)
+                    .deleteGroup(widget.groupId);
+              },
             ),
           ],
         ),
