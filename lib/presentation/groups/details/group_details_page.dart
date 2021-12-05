@@ -42,7 +42,12 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GroupDetailsCubit, GroupDetailsState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is LeftGroup) {
+          context.router.pop(true);
+        }
+      },
+      buildWhen: (previous, current) => current is! LeftGroup,
       builder: (context, state) {
         if (state is GroupDetailsLoading) {
           return _buildLoading();
@@ -142,9 +147,18 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
       child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            ListTile(title: Text('leave group')),
-            ListTile(title: Text('delete group')),
+          children: [
+            ListTile(
+              title: const Text('leave group'),
+              onTap: () {
+                BlocProvider.of<GroupDetailsCubit>(context)
+                    .leaveGroup(widget.groupId);
+              },
+            ),
+            ListTile(
+              title: const Text('delete group'),
+              onTap: () {},
+            ),
           ],
         ),
       ),

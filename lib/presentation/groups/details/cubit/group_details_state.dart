@@ -20,4 +20,6 @@ class GroupDetailsLoaded extends GroupDetailsState {
   List<Object> get props => [group];
 }
 
+class LeftGroup extends GroupDetailsState {}
+
 class GroupDetailsError extends GroupDetailsState {}

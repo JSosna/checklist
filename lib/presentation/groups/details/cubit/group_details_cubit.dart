@@ -1,14 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:checklist/domain/groups/group.dart';
 import 'package:checklist/domain/groups/groups_repository.dart';
+import 'package:checklist/domain/groups/leave_group_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'group_details_state.dart';
 
 class GroupDetailsCubit extends Cubit<GroupDetailsState> {
   final GroupsRepository _groupsRepository;
+  final LeaveGroupUseCase _leaveGroupUseCase;
 
-  GroupDetailsCubit(this._groupsRepository) : super(GroupDetailsLoading());
+  GroupDetailsCubit(this._groupsRepository, this._leaveGroupUseCase)
+      : super(GroupDetailsLoading());
 
   Future<void> loadDetails(String groupId) async {
     emit(GroupDetailsLoading());
@@ -23,5 +26,16 @@ class GroupDetailsCubit extends Cubit<GroupDetailsState> {
 
   Future<void> changeName(String groupId, String name) async {
     await _groupsRepository.changeName(groupId: groupId, name: name);
+  }
+
+  Future<void> leaveGroup(String groupId) async {
+    emit(GroupDetailsLoading());
+    final successful = await _leaveGroupUseCase.leaveGroup(groupId: groupId);
+
+    if (successful) {
+      emit(LeftGroup());
+    } else {
+      emit(GroupDetailsError());
+    }
   }
 }

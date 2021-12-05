@@ -82,11 +82,17 @@ class _GroupsPageState extends State<GroupsPage> {
             return ListTile(
               tileColor: Colors.grey,
               title: Text(state.groups[index].name ?? ""),
-              onTap: () {
+              onTap: () async {
                 final groupId = state.groups[index].id;
 
                 if (groupId != null) {
-                  context.router.push(GroupDetailsRoute(groupId: groupId));
+                  final shouldUpdate = await context.router
+                      .push(GroupDetailsRoute(groupId: groupId));
+
+                  if (shouldUpdate == true) {
+                    if (!mounted) return;
+                    BlocProvider.of<GroupsCubit>(context).loadGroups();
+                  }
                 }
               },
             );
