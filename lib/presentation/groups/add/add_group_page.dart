@@ -37,7 +37,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
     return BlocConsumer<AddGroupCubit, AddGroupState>(
       listener: (context, state) {
         if (state is AddedUserToGroup) {
-          context.router.pop();
+          context.router.pop(true);
         } else if (state is ErrorWhileAddingUserToGroup) {
           // TODO: show error toast (maybe abstract class joinResult with - Joined, AlreadyIn, Expired, Error)
         }

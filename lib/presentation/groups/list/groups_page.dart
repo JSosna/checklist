@@ -66,8 +66,13 @@ class _GroupsPageState extends State<GroupsPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          context.router.push(const AddGroupRoute());
+        onPressed: () async {
+          final shouldUpdate = await context.router.push(const AddGroupRoute());
+
+          if (shouldUpdate == true) {
+            if (!mounted) return;
+            BlocProvider.of<GroupsCubit>(context).loadGroups();
+          }
         },
       ),
       body: Center(
