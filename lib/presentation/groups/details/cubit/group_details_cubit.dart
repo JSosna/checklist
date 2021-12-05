@@ -1,29 +1,32 @@
 import 'package:bloc/bloc.dart';
-import 'package:checklist/domain/groups/group.dart';
+import 'package:checklist/domain/groups/detailed_group.dart';
 import 'package:checklist/domain/groups/groups_repository.dart';
 import 'package:checklist/domain/groups/use_case/delete_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/leave_group_use_case.dart';
+import 'package:checklist/domain/groups/use_case/load_details_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'group_details_state.dart';
 
 class GroupDetailsCubit extends Cubit<GroupDetailsState> {
   final GroupsRepository _groupsRepository;
+  final LoadDetailedGroupUseCase _loadDetailsUseCase;
   final LeaveGroupUseCase _leaveGroupUseCase;
   final DeleteGroupUseCase _deleteGroupUseCase;
 
   GroupDetailsCubit(
     this._groupsRepository,
+    this._loadDetailsUseCase,
     this._leaveGroupUseCase,
     this._deleteGroupUseCase,
   ) : super(GroupDetailsLoading());
 
   Future<void> loadDetails(String groupId) async {
     emit(GroupDetailsLoading());
-    final group = await _groupsRepository.getGroup(groupId: groupId);
+    final detailedGroup = await _loadDetailsUseCase.getDetailedGroup(groupId: groupId);
 
-    if (group != null) {
-      emit(GroupDetailsLoaded(group: group));
+    if (detailedGroup != null) {
+      emit(GroupDetailsLoaded(detailedGroup: detailedGroup));
     } else {
       emit(GroupDetailsError());
     }

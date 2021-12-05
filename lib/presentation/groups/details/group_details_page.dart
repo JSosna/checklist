@@ -77,7 +77,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             ..._buildTopPart(state),
             const SizedBox(height: Dimens.kMarginLarge),
             const Divider(height: 0),
-            Expanded(child: _buildTabs()),
+            Expanded(child: _buildTabs(state)),
           ],
         ),
       ),
@@ -100,7 +100,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
       ),
       Align(
         child: ChecklistEditableLabel(
-          text: state.group.name ?? "",
+          text: state.detailedGroup.group.name ?? "",
           style: context.typo.largeBold(
             color: context.isDarkTheme ? Colors.white : Colors.black,
           ),
@@ -168,7 +168,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     );
   }
 
-  Widget _buildTabs() {
+  Widget _buildTabs(GroupDetailsLoaded state) {
     return DefaultTabController(
       length: 2,
       child: Column(
@@ -181,7 +181,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             child: TabBarView(
               children: [
                 _buildListsTab(),
-                _buildMembersTab(),
+                _buildMembersTab(state),
               ],
             ),
           ),
@@ -205,15 +205,15 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     );
   }
 
-  Widget _buildMembersTab() {
+  Widget _buildMembersTab(GroupDetailsLoaded state) {
     return ListView.builder(
-      itemCount: 4,
+      itemCount: state.detailedGroup.members.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(Dimens.kMarginLarge),
           child: ListTile(
             tileColor: Colors.black,
-            title: Text("member $index"),
+            title: Text(state.detailedGroup.members[index].name ?? ""),
           ),
         );
       },

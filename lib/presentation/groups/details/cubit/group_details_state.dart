@@ -12,12 +12,12 @@ class GroupDetailsInitial extends GroupDetailsState {}
 class GroupDetailsLoading extends GroupDetailsState {}
 
 class GroupDetailsLoaded extends GroupDetailsState {
-  final Group group;
+  final DetailedGroup detailedGroup;
 
-  const GroupDetailsLoaded({required this.group});
+  const GroupDetailsLoaded({required this.detailedGroup});
 
   @override
-  List<Object> get props => [group];
+  List<Object> get props => [detailedGroup];
 }
 
 class LeftGroup extends GroupDetailsState {}
