@@ -7,13 +7,11 @@ class Checklist {
   final String? id;
   final String? assignedGroupId;
   final String? name;
-  final List<String>? membersIds;
 
   Checklist({
     required this.id,
     required this.assignedGroupId,
     required this.name,
-    required this.membersIds,
   });
 
   factory Checklist.fromJson(Map<String, dynamic> json) =>
@@ -25,12 +23,10 @@ class Checklist {
     String? id,
     String? assignedGroupId,
     String? name,
-    List<String>? membersIds,
   }) =>
       Checklist(
         id: id ?? this.id,
         assignedGroupId: assignedGroupId ?? this.assignedGroupId,
         name: name ?? this.name,
-        membersIds: membersIds ?? this.membersIds,
       );
 }
