@@ -48,6 +48,10 @@ class _AddGroupPageState extends State<AddGroupPage> {
           context.router.pop(true);
         } else if (state is ErrorWhileAddingUserToGroup) {
           // TODO: show error toast (maybe abstract class joinResult with - Joined, AlreadyIn, Expired, Error)
+        } else if (state is CreatedNewGroup) {
+          context.router.pop(true);
+        } else if (state is ErrorWhileCreatingGroup) {
+          // TODO: show error toast
         }
       },
       builder: (context, state) {
