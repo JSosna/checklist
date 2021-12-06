@@ -14,7 +14,7 @@ class User {
     required this.uid,
     required this.email,
     required this.name,
-    this.groupsIds,
+    this.groupsIds = const [],
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

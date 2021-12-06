@@ -5,6 +5,7 @@ part 'checklist.g.dart';
 @JsonSerializable()
 class Checklist {
   final String? id;
+  @JsonKey(name: "assigned_group_id")
   final String? assignedGroupId;
   final String? name;
 

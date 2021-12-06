@@ -198,7 +198,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           padding: const EdgeInsets.all(Dimens.kMarginLarge),
           child: ListTile(
             tileColor: Colors.black,
-            title: Text(state.detailedGroup.members[index].name ?? ""),
+            title: Text(state.detailedGroup.checklists[index].name ?? ""),
           ),
         );
       },

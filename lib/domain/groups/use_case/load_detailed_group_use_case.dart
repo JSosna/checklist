@@ -21,10 +21,11 @@ class LoadDetailedGroupUseCase {
     try {
       final group = await _groupsRepository.getGroup(groupId: groupId);
       final membersIds = group?.membersIds;
+      final checklistsIds = group?.checklistsIds;
 
-      if (group != null && membersIds != null) {
+      if (group != null && membersIds != null && checklistsIds != null) {
         final members = await _getMembers(membersIds);
-        final checklists = await _getChecklists(membersIds);
+        final checklists = await _getChecklists(checklistsIds);
 
         return DetailedGroup(
           group: group,

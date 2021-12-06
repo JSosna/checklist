@@ -18,18 +18,16 @@ class DeleteGroupUseCase {
       if (group != null) {
         final membersIds = group.membersIds;
 
-        if (membersIds != null) {
-          for (var i = 0; i < membersIds.length; i++) {
-            await _usersRepository.removeGroup(
-              userId: membersIds[i],
-              groupId: groupId,
-            );
-          }
-
-          await _groupsRepository.deleteGroup(groupId: groupId);
-
-          return true;
+        for (var i = 0; i < membersIds.length; i++) {
+          await _usersRepository.removeGroup(
+            userId: membersIds[i],
+            groupId: groupId,
+          );
         }
+
+        await _groupsRepository.deleteGroup(groupId: groupId);
+
+        return true;
       }
     } catch (e, stack) {
       Fimber.e("Deleting group error", ex: e, stacktrace: stack);

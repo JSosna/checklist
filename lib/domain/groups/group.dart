@@ -9,9 +9,9 @@ class Group {
   final String? id;
   final String? name;
   @JsonKey(name: "members_ids")
-  final List<String>? membersIds;
+  final List<String> membersIds;
   @JsonKey(name: "checklists_ids")
-  final List<String>? checklistsIds;
+  final List<String> checklistsIds;
   @JsonKey(name: "join_code")
   final String? joinCode;
   @JsonKey(name: "join_code_valid_until")
@@ -21,8 +21,8 @@ class Group {
   const Group({
     this.id,
     this.name,
-    this.membersIds,
-    this.checklistsIds,
+    this.membersIds = const [],
+    this.checklistsIds = const [],
     this.joinCode,
     this.joinCodeValidUntil,
   });
