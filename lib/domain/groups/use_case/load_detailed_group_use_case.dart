@@ -1,3 +1,4 @@
+import 'package:checklist/domain/authentication/authentication_repository.dart';
 import 'package:checklist/domain/checklists/checklist.dart';
 import 'package:checklist/domain/checklists/checklists_repository.dart';
 import 'package:checklist/domain/groups/detailed_group.dart';
@@ -10,11 +11,13 @@ class LoadDetailedGroupUseCase {
   final UsersRepository _usersRepository;
   final GroupsRepository _groupsRepository;
   final ChecklistsRepository _checklistsRepository;
+  final AuthenticationRepository _authenticationRepository;
 
   LoadDetailedGroupUseCase(
     this._usersRepository,
     this._groupsRepository,
     this._checklistsRepository,
+    this._authenticationRepository,
   );
 
   Future<DetailedGroup?> getDetailedGroup({required String groupId}) async {
@@ -27,11 +30,19 @@ class LoadDetailedGroupUseCase {
         final members = await _getMembers(membersIds);
         final checklists = await _getChecklists(checklistsIds);
 
-        return DetailedGroup(
-          group: group,
-          members: members,
-          checklists: checklists,
-        );
+        final currentUserId = _authenticationRepository.getCurrentUser()?.uid;
+
+        if (currentUserId != null) {
+          final isCurrentUserAdmin = await _groupsRepository
+              .isCurrentUserAdmin(currentUserId, groupId);
+
+          return DetailedGroup(
+            group: group,
+            members: members,
+            checklists: checklists,
+            isCurrentUserAdmin: isCurrentUserAdmin,
+          );
+        }
       }
     } catch (e, stack) {
       Fimber.e("Loading group details error", ex: e, stacktrace: stack);

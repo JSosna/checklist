@@ -17,6 +17,8 @@ class Group {
   @JsonKey(name: "join_code_valid_until")
   @TimestampConverter()
   final DateTime? joinCodeValidUntil;
+  @JsonKey(name: "admin_id")
+  final String? adminId;
 
   const Group({
     this.id,
@@ -25,6 +27,7 @@ class Group {
     this.checklistsIds = const [],
     this.joinCode,
     this.joinCodeValidUntil,
+    this.adminId,
   });
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
@@ -38,6 +41,7 @@ class Group {
     List<String>? checklistsIds,
     String? joinCode,
     DateTime? joinCodeValidUntil,
+    String? adminId,
   }) =>
       Group(
         id: id ?? this.id,
@@ -46,5 +50,6 @@ class Group {
         checklistsIds: checklistsIds ?? this.checklistsIds,
         joinCode: joinCode ?? this.joinCode,
         joinCodeValidUntil: joinCodeValidUntil ?? this.joinCodeValidUntil,
+        adminId: adminId ?? this.adminId,
       );
 }

@@ -30,4 +30,9 @@ abstract class GroupsRepository {
     required String groupId,
     required String name,
   });
+
+  Future<bool> isCurrentUserAdmin(
+    String userId,
+    String groupId,
+  );
 }
