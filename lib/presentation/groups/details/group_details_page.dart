@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/details/cubit/group_details_cubit.dart';
+import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
@@ -191,17 +192,30 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
   }
 
   Widget _buildListsTab(GroupDetailsLoaded state) {
-    return ListView.builder(
-      itemCount: state.detailedGroup.checklists.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(Dimens.kMarginLarge),
-          child: ListTile(
-            tileColor: Colors.black,
-            title: Text(state.detailedGroup.checklists[index].name ?? ""),
+    return Stack(
+      children: [
+        ListView.builder(
+          itemCount: state.detailedGroup.checklists.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(Dimens.kMarginLarge),
+              child: ListTile(
+                tileColor: Colors.black,
+                title: Text(state.detailedGroup.checklists[index].name ?? ""),
+              ),
+            );
+          },
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              context.router.push(AddChecklistRoute(groupId: widget.groupId));
+            },
+            label: const Text("Add checklist"),
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 
