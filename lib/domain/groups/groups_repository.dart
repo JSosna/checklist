@@ -16,6 +16,11 @@ abstract class GroupsRepository {
     required String userId,
   });
 
+  Future<void> addChecklistToGroup({
+    required String checklistId,
+    required String groupId,
+  });
+
   Future<void> removeUserFromGroup({
     required String groupId,
     required String userId,

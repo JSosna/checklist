@@ -63,6 +63,21 @@ class FirebaseGroupsRepository implements GroupsRepository {
   }
 
   @override
+  Future<void> addChecklistToGroup({
+    required String checklistId,
+    required String groupId,
+  }) async {
+    final group = await getGroup(groupId: groupId);
+
+    final checklistsIds = group?.checklistsIds ?? [];
+    checklistsIds.add(checklistId);
+
+    await groups
+        .doc(groupId)
+        .set(group?.copyWith(checklistsIds: checklistsIds).toJson());
+  }
+
+  @override
   Future<void> removeUserFromGroup({
     required String groupId,
     required String userId,

@@ -1,3 +1,4 @@
+import 'package:checklist/domain/checklists/use_case/create_checklist_use_case.dart';
 import 'package:checklist/domain/groups/use_case/add_user_to_existing_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/create_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/delete_group_use_case.dart';
@@ -17,4 +18,5 @@ void registerUseCaseModule(GetIt injector) {
   injector.registerFactory(() => LeaveGroupUseCase(injector.get(), injector.get(), injector.get()));
   injector.registerFactory(() => DeleteGroupUseCase(injector.get(), injector.get()));
   injector.registerFactory(() => LoadDetailedGroupUseCase(injector.get(), injector.get(), injector.get()));
+  injector.registerFactory(() => CreateChecklistUseCase(injector.get(), injector.get()));
 }

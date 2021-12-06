@@ -10,9 +10,9 @@ class Checklist {
   final String? name;
 
   Checklist({
-    required this.id,
-    required this.assignedGroupId,
-    required this.name,
+    this.id,
+    this.assignedGroupId,
+    this.name,
   });
 
   factory Checklist.fromJson(Map<String, dynamic> json) =>
