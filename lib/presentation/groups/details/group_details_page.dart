@@ -180,7 +180,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           Expanded(
             child: TabBarView(
               children: [
-                _buildListsTab(),
+                _buildListsTab(state),
                 _buildMembersTab(state),
               ],
             ),
@@ -190,15 +190,15 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     );
   }
 
-  Widget _buildListsTab() {
+  Widget _buildListsTab(GroupDetailsLoaded state) {
     return ListView.builder(
-      itemCount: 4,
+      itemCount: state.detailedGroup.checklists.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(Dimens.kMarginLarge),
           child: ListTile(
             tileColor: Colors.black,
-            title: Text("list $index"),
+            title: Text(state.detailedGroup.members[index].name ?? ""),
           ),
         );
       },

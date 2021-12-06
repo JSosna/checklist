@@ -1,9 +1,11 @@
 import 'package:checklist/data/authentication/firebase_authentication_repository.dart';
+import 'package:checklist/data/checklists/firebase_checklists_repository.dart';
 import 'package:checklist/data/groups/firebase_groups_repository.dart';
 import 'package:checklist/data/settings/hive_settings_storage.dart';
 import 'package:checklist/data/theme/hive_theme_storage.dart';
 import 'package:checklist/data/users/firebase_users_repository.dart';
 import 'package:checklist/domain/authentication/authentication_repository.dart';
+import 'package:checklist/domain/checklists/checklists_repository.dart';
 import 'package:checklist/domain/groups/groups_repository.dart';
 import 'package:checklist/domain/settings/settings_storage.dart';
 import 'package:checklist/domain/theme/theme_storage.dart';
@@ -18,6 +20,7 @@ void registerRepositoryModule(GetIt injector) {
 
   injector.registerFactory<GroupsRepository>(() => FirebaseGroupsRepository());
   injector.registerFactory<UsersRepository>(() => FirebaseUsersRepository());
+  injector.registerFactory<ChecklistsRepository>(() => FirebaseChecklistsRepository());
 
   final LocalAuthentication localAuthentication = LocalAuthentication();
   injector.registerFactory<AuthenticationRepository>(() => FirebaseAuthenticationRepository(localAuthentication));

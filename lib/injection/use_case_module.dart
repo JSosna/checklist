@@ -16,5 +16,5 @@ void registerUseCaseModule(GetIt injector) {
   injector.registerFactory(() => CreateGroupUseCase(injector.get(), injector.get(), injector.get()));
   injector.registerFactory(() => LeaveGroupUseCase(injector.get(), injector.get(), injector.get()));
   injector.registerFactory(() => DeleteGroupUseCase(injector.get(), injector.get()));
-  injector.registerFactory(() => LoadDetailedGroupUseCase(injector.get(), injector.get()));
+  injector.registerFactory(() => LoadDetailedGroupUseCase(injector.get(), injector.get(), injector.get()));
 }
