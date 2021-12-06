@@ -25,7 +25,7 @@ class AddUserToExistingGroupUseCase {
         final userComplete = await _usersRepository.getUser(userId: userId);
 
         if (group != null && userComplete != null) {
-          if (group.membersIds?.contains(userId) == true ||
+          if (group.membersIds.contains(userId) == true ||
               userComplete.groupsIds?.contains(groupId) == true) {
             return false;
           }

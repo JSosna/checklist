@@ -3,7 +3,7 @@ import 'package:checklist/domain/groups/detailed_group.dart';
 import 'package:checklist/domain/groups/groups_repository.dart';
 import 'package:checklist/domain/groups/use_case/delete_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/leave_group_use_case.dart';
-import 'package:checklist/domain/groups/use_case/load_details_use_case.dart';
+import 'package:checklist/domain/groups/use_case/load_detailed_group_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'group_details_state.dart';

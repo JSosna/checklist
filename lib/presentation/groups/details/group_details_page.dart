@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/details/cubit/group_details_cubit.dart';
+import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
@@ -180,7 +181,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           Expanded(
             child: TabBarView(
               children: [
-                _buildListsTab(),
+                _buildListsTab(state),
                 _buildMembersTab(state),
               ],
             ),
@@ -190,18 +191,38 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     );
   }
 
-  Widget _buildListsTab() {
-    return ListView.builder(
-      itemCount: 4,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(Dimens.kMarginLarge),
-          child: ListTile(
-            tileColor: Colors.black,
-            title: Text("list $index"),
+  Widget _buildListsTab(GroupDetailsLoaded state) {
+    return Stack(
+      children: [
+        ListView.builder(
+          itemCount: state.detailedGroup.checklists.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(Dimens.kMarginLarge),
+              child: ListTile(
+                tileColor: Colors.black,
+                title: Text(state.detailedGroup.checklists[index].name ?? ""),
+              ),
+            );
+          },
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: FloatingActionButton.extended(
+            onPressed: () async {
+              final shouldUpdate = await context.router
+                  .push(AddChecklistRoute(groupId: widget.groupId));
+
+              if (shouldUpdate == true) {
+                if (!mounted) return;
+                BlocProvider.of<GroupDetailsCubit>(context)
+                    .loadDetails(widget.groupId);
+              }
+            },
+            label: const Text("Add checklist"),
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 
