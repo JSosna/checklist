@@ -96,7 +96,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             },
             icon: const Icon(Icons.arrow_back),
           ),
-          _buildMoreButton(),
+          _buildMoreButton(state),
         ],
       ),
       Align(
@@ -114,7 +114,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     ];
   }
 
-  Widget _buildMoreButton() {
+  Widget _buildMoreButton(GroupDetailsLoaded state) {
     return PortalEntry(
       visible: _showMoreMenu,
       portal: GestureDetector(
@@ -129,7 +129,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
         visible: _showMoreMenu,
         portalAnchor: Alignment.topRight,
         childAnchor: Alignment.center,
-        portal: _buildMoreMenu(),
+        portal: _buildMoreMenu(state),
         child: IconButton(
           onPressed: () {
             setState(() {
@@ -142,7 +142,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     );
   }
 
-  Widget _buildMoreMenu() {
+  Widget _buildMoreMenu(GroupDetailsLoaded state) {
     return Material(
       elevation: 8,
       child: IntrinsicWidth(
@@ -151,6 +151,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           children: [
             ListTile(
               title: const Text('leave group'),
+              enabled: !state.detailedGroup.isCurrentUserAdmin,
               onTap: () {
                 BlocProvider.of<GroupDetailsCubit>(context)
                     .leaveGroup(widget.groupId);
@@ -158,6 +159,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             ),
             ListTile(
               title: const Text('delete group'),
+              enabled: state.detailedGroup.isCurrentUserAdmin,
               onTap: () {
                 BlocProvider.of<GroupDetailsCubit>(context)
                     .deleteGroup(widget.groupId);

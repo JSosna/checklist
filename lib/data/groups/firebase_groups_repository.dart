@@ -101,4 +101,11 @@ class FirebaseGroupsRepository implements GroupsRepository {
 
     await groups.doc(groupId).set(group?.copyWith(name: name).toJson());
   }
+
+  @override
+  Future<bool> isCurrentUserAdmin(String userId, String groupId) async {
+    final group = await getGroup(groupId: groupId);
+
+    return group?.adminId == userId;
+  }
 }

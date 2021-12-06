@@ -17,24 +17,28 @@ class CreateGroupUseCase {
 
   Future<Group?> createGroup(String name) async {
     try {
-      final group = Group(
-        name: name,
-      );
+      final userId = _authenticationRepository.getCurrentUser()?.uid;
 
-      final groupWithId = await _groupsRepository.createGroup(group: group);
+      if (userId != null) {
+        final group = Group(
+          name: name,
+          adminId: userId,
+        );
 
-      if (groupWithId != null) {
-        final groupId = groupWithId.id;
-        final userId = _authenticationRepository.getCurrentUser()?.uid;
+        final groupWithId = await _groupsRepository.createGroup(group: group);
 
-        if (userId != null && groupId != null) {
-          await _usersRepository.addGroup(userId: userId, groupId: groupId);
-          await _groupsRepository.addUserToGroup(
-            groupId: groupId,
-            userId: userId,
-          );
+        if (groupWithId != null) {
+          final groupId = groupWithId.id;
 
-          return groupWithId;
+          if (groupId != null) {
+            await _usersRepository.addGroup(userId: userId, groupId: groupId);
+            await _groupsRepository.addUserToGroup(
+              groupId: groupId,
+              userId: userId,
+            );
+
+            return groupWithId;
+          }
         }
       }
     } catch (e, stack) {

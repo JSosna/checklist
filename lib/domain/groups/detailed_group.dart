@@ -10,11 +10,13 @@ class DetailedGroup {
   final Group group;
   final List<User> members;
   final List<Checklist> checklists;
+  final bool isCurrentUserAdmin;
 
   const DetailedGroup({
     required this.group,
     required this.members,
     required this.checklists,
+    required this.isCurrentUserAdmin,
   });
 
   factory DetailedGroup.fromJson(Map<String, dynamic> json) =>
@@ -26,10 +28,12 @@ class DetailedGroup {
     Group? group,
     List<User>? members,
     List<Checklist>? checklists,
+    bool? isCurrentUserAdmin,
   }) =>
       DetailedGroup(
         group: group ?? this.group,
         members: members ?? this.members,
         checklists: checklists ?? this.checklists,
+        isCurrentUserAdmin: isCurrentUserAdmin ?? this.isCurrentUserAdmin,
       );
 }
