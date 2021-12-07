@@ -1,20 +1,78 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:checklist/injection/cubit_factory.dart';
+import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
+import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChecklistsPage extends StatelessWidget {
-  const ChecklistsPage({Key? key}) : super(key: key);
+class ChecklistsPage extends StatefulWidget implements AutoRouteWrapper {
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    final CubitFactory cubitFactory = CubitFactory.of(context);
+    return BlocProvider<ChecklistsCubit>(
+      create: (context) => cubitFactory.get<ChecklistsCubit>(),
+      child: this,
+    );
+  }
+
+  @override
+  State<ChecklistsPage> createState() => _ChecklistsPageState();
+}
+
+class _ChecklistsPageState extends State<ChecklistsPage> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<ChecklistsCubit, ChecklistsState>(
+      builder: (context, state) {
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          child: _buildPage(state),
+        );
+      },
+    );
+  }
+
+  Widget _buildLoader() {
+    return const Scaffold(
+      key: ValueKey("loading"),
+      body: Center(child: ChecklistLoadingIndicator()),
+    );
+  }
+
+  Widget _buildContent(ChecklistsLoaded state) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            FirebaseCrashlytics.instance.crash();
-          },
-          child: const Text("Crash"),
-        ),
+      key: const ValueKey("content"),
+      body: ListView.builder(
+        itemCount: state.checklists.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(state.checklists[index].name ?? ""),
+          );
+        },
       ),
     );
+  }
+
+  Widget _buildError() {
+    return const Scaffold(
+      key: ValueKey("error"),
+      body: Center(child: Text("Error loading list, try again later!")),
+    );
+  }
+
+  Widget _buildPage(ChecklistsState state) {
+    if (state is ChecklistsLoading) {
+      return _buildLoader();
+    } else if (state is ChecklistsLoaded) {
+      return _buildContent(state);
+    } else {
+      return _buildError();
+    }
   }
 }
