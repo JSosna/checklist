@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
+import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,6 +45,9 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
           return ListTile(
             tileColor: Colors.grey.withOpacity(0.5),
             title: Text(state.checklists[index].name ?? ""),
+            onTap: () {
+              context.router.push(const ChecklistDetailsRoute());
+            },
           );
         },
       ),

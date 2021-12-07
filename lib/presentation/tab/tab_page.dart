@@ -6,7 +6,6 @@ import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/presentation/tab/cubit/authentication_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
-import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,7 +36,7 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
       child: AutoTabsScaffold(
         lazyLoad: false,
         animationDuration: Duration.zero,
-        routes: const [ChecklistsRoute(), GroupsRouter(), SettingsRoute()],
+        routes: const [ChecklistsRouter(), GroupsRouter(), SettingsRoute()],
         bottomNavigationBuilder: (_, tabsRouter) {
           return BottomNavigationBar(
             selectedItemColor:
