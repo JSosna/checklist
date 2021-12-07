@@ -3,9 +3,10 @@ import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
-import 'package:checklist/presentation/home/cubit/home_cubit.dart';
+import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/presentation/tab/cubit/authentication_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,7 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<AuthenticationCubit>(
           create: (context) => cubitFactory.get(),
         ),
-        BlocProvider<HomeCubit>(create: (context) => cubitFactory.get()),
+        BlocProvider<ChecklistsCubit>(create: (context) => cubitFactory.get()),
       ],
       child: this,
     );
@@ -36,7 +37,7 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
       child: AutoTabsScaffold(
         lazyLoad: false,
         animationDuration: Duration.zero,
-        routes: const [HomeRoute(), GroupsRouter(), SettingsRoute()],
+        routes: const [ChecklistsRoute(), GroupsRouter(), SettingsRoute()],
         bottomNavigationBuilder: (_, tabsRouter) {
           return BottomNavigationBar(
             selectedItemColor:
@@ -45,8 +46,8 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
             onTap: tabsRouter.setActiveIndex,
             items: [
               BottomNavigationBarItem(
-                icon: const Icon(Icons.home),
-                label: translate(LocaleKeys.tab_home),
+                icon: const Icon(Icons.list_rounded),
+                label: translate(LocaleKeys.tab_lists),
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Icons.groups),

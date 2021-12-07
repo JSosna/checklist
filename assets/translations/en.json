@@ -4,8 +4,8 @@
         "submit": "submit"
     },
     "tab": {
-        "home": "home",
-        "groups": "grupy",
+        "lists": "lists",
+        "groups": "groups",
         "settings": "settings"
     },
     "onboarding": {

@@ -45,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _usernameValidator = MultiValidator([
     RequiredValidator(
-      errorText: translate(LocaleKeys.validation_password_is_required),
+      errorText: translate(LocaleKeys.validation_username_is_required),
     ),
     MinLengthValidator(
       4,

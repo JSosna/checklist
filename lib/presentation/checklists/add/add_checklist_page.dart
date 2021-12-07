@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/add/cubit/add_checklist_cubit.dart';
+import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
     return BlocConsumer<AddChecklistCubit, AddChecklistState>(
       listener: (context, state) {
         if (state is CreatedNewChecklist) {
+          BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
           context.router.pop(true);
         } else if (state is ErrorWhileCreatingChecklist) {
           // TODO: show error toast
