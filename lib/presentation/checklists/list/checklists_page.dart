@@ -45,13 +45,18 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
           return ListTile(
             tileColor: Colors.grey.withOpacity(0.5),
             title: Text(state.checklists[index].name ?? ""),
-            onTap: () {
+            onTap: () async {
               final checklistId = state.checklists[index].id;
 
               if (checklistId != null) {
-                context.router.push(
+                final shouldUpdate = await context.router.push(
                   ChecklistDetailsRoute(checklistId: checklistId),
                 );
+
+                if (shouldUpdate == true) {
+                  if (!mounted) return;
+                  BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
+                }
               }
             },
           );
