@@ -147,7 +147,6 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
       child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [],
         ),
       ),
     );

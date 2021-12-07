@@ -42,4 +42,16 @@ class FirebaseChecklistsRepository implements ChecklistsRepository {
         .doc(checklistId)
         .set(checklist?.copyWith(name: newName).toJson());
   }
+
+  @override
+  Future<void> changeName({
+    required String checklistId,
+    required String newName,
+  }) async {
+    final checklist = await getChecklist(checklistId: checklistId);
+
+    await checklists
+        .doc(checklistId)
+        .set(checklist?.copyWith(name: newName).toJson());
+  }
 }

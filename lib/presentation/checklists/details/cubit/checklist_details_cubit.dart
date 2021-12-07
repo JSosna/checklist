@@ -25,6 +25,6 @@ class ChecklistDetailsCubit extends Cubit<ChecklistDetailsState> {
   }
 
   Future<void> changeName(String checklistId, String newName) async {
-
+    await _checklistsRepository.changeName(checklistId: checklistId, newName: newName);
   }
 }
