@@ -46,7 +46,13 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
             tileColor: Colors.grey.withOpacity(0.5),
             title: Text(state.checklists[index].name ?? ""),
             onTap: () {
-              context.router.push(const ChecklistDetailsRoute());
+              final checklistId = state.checklists[index].id;
+
+              if (checklistId != null) {
+                context.router.push(
+                  ChecklistDetailsRoute(checklistId: checklistId),
+                );
+              }
             },
           );
         },

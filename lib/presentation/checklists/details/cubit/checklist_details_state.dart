@@ -7,4 +7,15 @@ abstract class ChecklistDetailsState extends Equatable {
   List<Object> get props => [];
 }
 
-class ChecklistDetailsInitial extends ChecklistDetailsState {}
+class ChecklistDetailsLoading extends ChecklistDetailsState {}
+
+class ChecklistDetailsLoaded extends ChecklistDetailsState {
+  final Checklist checklist;
+
+  const ChecklistDetailsLoaded({required this.checklist});
+
+  @override
+  List<Object> get props => [checklist];
+}
+
+class ChecklistDetailsError extends ChecklistDetailsState {}
