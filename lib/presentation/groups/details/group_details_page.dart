@@ -202,7 +202,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             return Padding(
               padding: const EdgeInsets.all(Dimens.kMarginLarge),
               child: ListTile(
-                tileColor: Colors.black,
+                tileColor: Colors.grey.withOpacity(0.5),
                 title: Text(state.detailedGroup.checklists[index].name ?? ""),
               ),
             );
@@ -235,7 +235,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
         return Padding(
           padding: const EdgeInsets.all(Dimens.kMarginLarge),
           child: ListTile(
-            tileColor: Colors.black,
+            tileColor: Colors.grey.withOpacity(0.5),
             title: Text(state.detailedGroup.members[index].name ?? ""),
           ),
         );

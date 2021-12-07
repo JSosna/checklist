@@ -1,20 +1,9 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChecklistsPage extends StatefulWidget implements AutoRouteWrapper {
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    final CubitFactory cubitFactory = CubitFactory.of(context);
-    return BlocProvider<ChecklistsCubit>(
-      create: (context) => cubitFactory.get<ChecklistsCubit>(),
-      child: this,
-    );
-  }
-
+class ChecklistsPage extends StatefulWidget {
   @override
   State<ChecklistsPage> createState() => _ChecklistsPageState();
 }
@@ -52,6 +41,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
         itemCount: state.checklists.length,
         itemBuilder: (context, index) {
           return ListTile(
+            tileColor: Colors.grey.withOpacity(0.5),
             title: Text(state.checklists[index].name ?? ""),
           );
         },

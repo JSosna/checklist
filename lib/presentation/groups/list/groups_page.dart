@@ -80,7 +80,7 @@ class _GroupsPageState extends State<GroupsPage> {
           itemCount: state.groups.length,
           itemBuilder: (context, index) {
             return ListTile(
-              tileColor: Colors.grey,
+              tileColor: Colors.grey.withOpacity(0.5),
               title: Text(state.groups[index].name ?? ""),
               onTap: () async {
                 final groupId = state.groups[index].id;
