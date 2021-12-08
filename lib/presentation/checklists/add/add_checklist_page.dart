@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddChecklistPage extends StatefulWidget implements AutoRouteWrapper {
-  final Group initialGroup;
+  final Group? initialGroup;
 
   const AddChecklistPage({
-    required this.initialGroup,
+    this.initialGroup,
   });
 
   @override
@@ -34,7 +34,7 @@ class AddChecklistPage extends StatefulWidget implements AutoRouteWrapper {
 
 class _AddChecklistPageState extends State<AddChecklistPage> {
   TextEditingController? _nameController;
-  late Group _group;
+  Group? _group;
 
   @override
   void initState() {
@@ -88,10 +88,10 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         const Text("Group"),
         ChecklistPicker(
-          text: _group.name ?? "",
+          text: _group?.name ?? "",
           onPressed: () async {
             final result = await context.router
-                .push(GroupPickerRoute(initialValue: _group.name ?? ""));
+                .push(GroupPickerRoute(initialValue: _group?.name ?? ""));
 
             if (result is Group) {
               setState(() {
@@ -109,7 +109,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
           onPressed: () {
             // TODO: Use text form validator
             final name = _nameController?.text;
-            final groupId = _group.id;
+            final groupId = _group?.id;
 
             if (name != null && name.length > 4 && groupId != null) {
               BlocProvider.of<AddChecklistCubit>(context)

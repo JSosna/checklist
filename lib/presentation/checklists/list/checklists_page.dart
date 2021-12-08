@@ -21,10 +21,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<ChecklistsCubit, ChecklistsState>(
       builder: (context, state) {
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          child: _buildPage(state),
-        );
+        return _buildPage(state);
       },
     );
   }
@@ -39,6 +36,12 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   Widget _buildContent(ChecklistsLoaded state) {
     return Scaffold(
       key: const ValueKey("content"),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          context.router.push(AddChecklistRoute());
+        },
+      ),
       body: ListView.builder(
         itemCount: state.checklists.length,
         itemBuilder: (context, index) {
