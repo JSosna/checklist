@@ -204,6 +204,14 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
               child: ListTile(
                 tileColor: Colors.grey.withOpacity(0.5),
                 title: Text(state.detailedGroup.checklists[index].name ?? ""),
+                onTap: () async {
+                  final checklistId = state.detailedGroup.checklists[index].id;
+
+                  if (checklistId != null) {
+                    context.router
+                        .push(ChecklistDetailsRoute(checklistId: checklistId));
+                  }
+                },
               ),
             );
           },

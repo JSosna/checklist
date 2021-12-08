@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/checklists/add/add_checklist_page.dart';
+import 'package:checklist/presentation/checklists/details/checklist_details_page.dart';
 import 'package:checklist/presentation/groups/add/add_group_page.dart';
 import 'package:checklist/presentation/groups/details/group_details_page.dart';
 import 'package:checklist/presentation/groups/list/groups_page.dart';
@@ -10,5 +11,6 @@ class GroupsRoutes {
     AutoRoute<dynamic>(page: GroupDetailsPage),
     AutoRoute<dynamic>(page: AddGroupPage),
     AutoRoute<dynamic>(page: AddChecklistPage),
+    AutoRoute<dynamic>(page: ChecklistDetailsPage),
   ];
 }

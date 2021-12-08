@@ -41,7 +41,9 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChecklistDetailsCubit, ChecklistDetailsState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        
+      },
       builder: (context, state) {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),

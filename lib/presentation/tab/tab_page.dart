@@ -42,7 +42,13 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
             selectedItemColor:
                 context.isDarkTheme ? Colors.white : Colors.black,
             currentIndex: tabsRouter.activeIndex,
-            onTap: tabsRouter.setActiveIndex,
+            onTap: (index) {
+              if (index == 0) {
+                BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
+              }
+
+              tabsRouter.setActiveIndex(index);
+            },
             items: [
               BottomNavigationBarItem(
                 icon: const Icon(Icons.list_rounded),
