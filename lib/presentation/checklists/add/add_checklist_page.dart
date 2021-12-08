@@ -1,16 +1,21 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/domain/groups/group.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/add/cubit/add_checklist_cubit.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
+import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_picker.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddChecklistPage extends StatefulWidget implements AutoRouteWrapper {
-  final String groupId;
+  final Group initialGroup;
 
-  const AddChecklistPage({required this.groupId});
+  const AddChecklistPage({
+    required this.initialGroup,
+  });
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -29,11 +34,13 @@ class AddChecklistPage extends StatefulWidget implements AutoRouteWrapper {
 
 class _AddChecklistPageState extends State<AddChecklistPage> {
   TextEditingController? _nameController;
+  late Group _group;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController();
+    _group = widget.initialGroup;
   }
 
   @override
@@ -79,6 +86,21 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
       children: [
         const Text("Create new checklist"),
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+        const Text("Group"),
+        ChecklistPicker(
+          text: _group.name ?? "",
+          onPressed: () async {
+            final result = await context.router
+                .push(GroupPickerRoute(initialValue: _group.name ?? ""));
+
+            if (result is Group) {
+              setState(() {
+                _group = result;
+              });
+            }
+          },
+        ),
+        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         const Text("Name"),
         TextField(controller: _nameController),
         const Spacer(),
@@ -87,10 +109,11 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
           onPressed: () {
             // TODO: Use text form validator
             final name = _nameController?.text;
+            final groupId = _group.id;
 
-            if (name != null && name.length > 4) {
+            if (name != null && name.length > 4 && groupId != null) {
               BlocProvider.of<AddChecklistCubit>(context)
-                  .createNewChecklist(widget.groupId, name);
+                  .createNewChecklist(groupId, name);
             }
           },
         ),

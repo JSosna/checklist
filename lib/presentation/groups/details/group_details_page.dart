@@ -220,8 +220,11 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           alignment: Alignment.bottomCenter,
           child: FloatingActionButton.extended(
             onPressed: () async {
-              final shouldUpdate = await context.router
-                  .push(AddChecklistRoute(groupId: widget.groupId));
+              final shouldUpdate = await context.router.push(
+                AddChecklistRoute(
+                  initialGroup: state.detailedGroup.group,
+                ),
+              );
 
               if (shouldUpdate == true) {
                 if (!mounted) return;

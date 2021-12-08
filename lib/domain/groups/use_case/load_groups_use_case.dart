@@ -15,7 +15,7 @@ class LoadGroupsUseCase {
     this._groupsRepository,
   );
 
-  Future<List<Group>?> loadGroups() async {
+  Future<List<Group>?> loadGroups({String? filter}) async {
     try {
       final userId = _authenticationRepository.getCurrentUser()?.uid;
 
