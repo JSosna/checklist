@@ -5,14 +5,16 @@ part 'checklist.g.dart';
 @JsonSerializable()
 class Checklist {
   final String? id;
+  final String? name;
   @JsonKey(name: "assigned_group_id")
   final String? assignedGroupId;
-  final String? name;
+  final String? founderId;
 
   Checklist({
     this.id,
-    this.assignedGroupId,
     this.name,
+    this.assignedGroupId,
+    this.founderId,
   });
 
   factory Checklist.fromJson(Map<String, dynamic> json) =>
@@ -22,12 +24,14 @@ class Checklist {
 
   Checklist copyWith({
     String? id,
-    String? assignedGroupId,
     String? name,
+    String? assignedGroupId,
+    String? founderId,
   }) =>
       Checklist(
         id: id ?? this.id,
-        assignedGroupId: assignedGroupId ?? this.assignedGroupId,
         name: name ?? this.name,
+        assignedGroupId: assignedGroupId ?? this.assignedGroupId,
+        founderId: founderId ?? this.founderId,
       );
 }

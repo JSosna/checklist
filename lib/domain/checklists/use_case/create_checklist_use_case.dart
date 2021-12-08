@@ -1,3 +1,4 @@
+import 'package:checklist/domain/authentication/authentication_repository.dart';
 import 'package:checklist/domain/checklists/checklist.dart';
 import 'package:checklist/domain/checklists/checklists_repository.dart';
 import 'package:checklist/domain/groups/groups_repository.dart';
@@ -6,32 +7,39 @@ import 'package:fimber/fimber.dart';
 class CreateChecklistUseCase {
   final GroupsRepository _groupsRepository;
   final ChecklistsRepository _checklistsRepository;
+  final AuthenticationRepository _authenticationRepository;
 
   const CreateChecklistUseCase(
     this._groupsRepository,
     this._checklistsRepository,
+    this._authenticationRepository,
   );
 
   Future<Checklist?> createChecklist(String groupId, String name) async {
     try {
-      final checklist = Checklist(
-        name: name,
-        assignedGroupId: groupId,
-      );
+      final userId = _authenticationRepository.getCurrentUser()?.uid;
 
-      final checklistWithId =
-          await _checklistsRepository.createChecklist(checklist: checklist);
+      if (userId != null) {
+        final checklist = Checklist(
+          name: name,
+          assignedGroupId: groupId,
+          founderId: userId,
+        );
 
-      if (checklistWithId != null) {
-        final checklistId = checklistWithId.id;
+        final checklistWithId =
+            await _checklistsRepository.createChecklist(checklist: checklist);
 
-        if (checklistId != null) {
-          await _groupsRepository.addChecklistToGroup(
-            groupId: groupId,
-            checklistId: checklistId,
-          );
+        if (checklistWithId != null) {
+          final checklistId = checklistWithId.id;
 
-          return checklistWithId;
+          if (checklistId != null) {
+            await _groupsRepository.addChecklistToGroup(
+              groupId: groupId,
+              checklistId: checklistId,
+            );
+
+            return checklistWithId;
+          }
         }
       }
     } catch (e, stack) {

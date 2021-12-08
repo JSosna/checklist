@@ -11,8 +11,12 @@ class ChecklistDetailsLoading extends ChecklistDetailsState {}
 
 class ChecklistDetailsLoaded extends ChecklistDetailsState {
   final Checklist checklist;
+  final bool isUserAdmin;
 
-  const ChecklistDetailsLoaded({required this.checklist});
+  const ChecklistDetailsLoaded({
+    required this.checklist,
+    required this.isUserAdmin,
+  });
 
   @override
   List<Object> get props => [checklist];
