@@ -42,13 +42,13 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<ChecklistDetailsCubit, ChecklistDetailsState>(
       listener: (context, state) {
-        
+        if (state is ChecklistDeleted) {
+          context.router.pop(true);
+        }
       },
+      buildWhen: (previous, current) => current is! ChecklistDeleted,
       builder: (context, state) {
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          child: _buildPage(state),
-        );
+        return _buildPage(state);
       },
     );
   }
@@ -149,6 +149,23 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
       child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('delete list'),
+              enabled: state.isUserAdmin,
+              onTap: () {
+                final groupId = state.checklist.assignedGroupId;
+
+                if (groupId != null) {
+                  BlocProvider.of<ChecklistDetailsCubit>(context)
+                      .deleteChecklist(
+                    widget.checklistId,
+                    groupId,
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

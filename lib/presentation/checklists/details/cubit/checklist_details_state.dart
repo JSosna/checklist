@@ -23,3 +23,5 @@ class ChecklistDetailsLoaded extends ChecklistDetailsState {
 }
 
 class ChecklistDetailsError extends ChecklistDetailsState {}
+
+class ChecklistDeleted extends ChecklistDetailsState {}
