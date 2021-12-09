@@ -4,6 +4,7 @@ import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
+import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/tab/cubit/authentication_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
           create: (context) => cubitFactory.get(),
         ),
         BlocProvider<ChecklistsCubit>(create: (context) => cubitFactory.get()),
+        BlocProvider<GroupsCubit>(create: (context) => cubitFactory.get()),
       ],
       child: this,
     );
@@ -45,6 +47,8 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
             onTap: (index) {
               if (index == 0) {
                 BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
+              } else if (index == 1) {
+                BlocProvider.of<GroupsCubit>(context).loadGroups();
               }
 
               tabsRouter.setActiveIndex(index);

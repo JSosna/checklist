@@ -7,10 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nil/nil.dart';
 
 class GroupPickerPage extends StatefulWidget implements AutoRouteWrapper {
-  final String initialValue;
-
-  const GroupPickerPage({required this.initialValue});
-
   @override
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
@@ -32,7 +28,7 @@ class _GroupPickerPageState extends State<GroupPickerPage> {
   @override
   void initState() {
     super.initState();
-    _groupNameController = TextEditingController(text: widget.initialValue);
+    _groupNameController = TextEditingController();
 
     BlocProvider.of<GroupPickerCubit>(context)
         .loadGroups(_groupNameController.text);
