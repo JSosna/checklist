@@ -81,7 +81,15 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ..._buildTopPart(state),
-            Expanded(child: ChecklistElements(elements: state.checklist.elements ?? [])),
+            Expanded(
+              child: ChecklistElements(
+                elements: state.checklist.elements ?? [],
+                onReorder: (reorderedList) {
+                  BlocProvider.of<ChecklistDetailsCubit>(context)
+                      .reorderItems(reorderedList);
+                },
+              ),
+            ),
           ],
         ),
       ),

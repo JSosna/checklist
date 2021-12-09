@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ChecklistListItem extends StatelessWidget {
   final ChecklistElement element;
 
-  const ChecklistListItem({required this.element});
+  const ChecklistListItem({required Key key, required this.element}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

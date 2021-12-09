@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:checklist/domain/checklists/checklist.dart';
+import 'package:checklist/domain/checklists/checklist_element.dart';
 import 'package:checklist/domain/checklists/checklists_repository.dart';
 import 'package:checklist/domain/checklists/use_case/delete_checklist_use_case.dart';
 import 'package:checklist/domain/checklists/use_case/is_user_checklist_admin.dart';
@@ -54,7 +55,8 @@ class ChecklistDetailsCubit extends Cubit<ChecklistDetailsState> {
 
   Future<void> deleteChecklist(String checklistId, String groupId) async {
     emit(ChecklistDetailsLoading());
-    final success = await _deleteChecklistUseCase.deleteChecklist(checklistId, groupId);
+    final success =
+        await _deleteChecklistUseCase.deleteChecklist(checklistId, groupId);
 
     if (success) {
       emit(ChecklistDeleted());
@@ -62,4 +64,6 @@ class ChecklistDetailsCubit extends Cubit<ChecklistDetailsState> {
       emit(ChecklistDetailsError());
     }
   }
+
+  Future<void> reorderItems(List<ChecklistElement> reorderedList) async {}
 }

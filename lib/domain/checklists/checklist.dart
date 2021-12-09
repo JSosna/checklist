@@ -9,8 +9,10 @@ class Checklist {
   final String? name;
   @JsonKey(name: "assigned_group_id")
   final String? assignedGroupId;
+  @JsonKey(name: "founder_id")
   final String? founderId;
   final List<ChecklistElement>? elements;
+  final bool checkable;
 
   Checklist({
     this.id,
@@ -18,6 +20,7 @@ class Checklist {
     this.assignedGroupId,
     this.founderId,
     this.elements,
+    this.checkable = false,
   });
 
   factory Checklist.fromJson(Map<String, dynamic> json) =>
@@ -31,6 +34,7 @@ class Checklist {
     String? assignedGroupId,
     String? founderId,
     List<ChecklistElement>? elements,
+    bool? checkable,
   }) =>
       Checklist(
         id: id ?? this.id,
@@ -38,5 +42,6 @@ class Checklist {
         assignedGroupId: assignedGroupId ?? this.assignedGroupId,
         founderId: founderId ?? this.founderId,
         elements: elements ?? this.elements,
+        checkable: checkable ?? this.checkable,
       );
 }
