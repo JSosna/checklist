@@ -82,4 +82,25 @@ class ChecklistDetailsCubit extends Cubit<ChecklistDetailsState> {
       emit(ChecklistDetailsError());
     }
   }
+
+  Future<void> toggleCheckable(
+    String checklistId, {
+    required bool isUserAdmin,
+  }) async {
+    emit(ChecklistDetailsLoading());
+    final checklist = await _checklistsRepository.toggleCheckable(
+      checklistId: checklistId,
+    );
+
+    if (checklist != null) {
+      emit(
+        ChecklistDetailsLoaded(
+          checklist: checklist,
+          isUserAdmin: isUserAdmin,
+        ),
+      );
+    } else {
+      emit(ChecklistDetailsError());
+    }
+  }
 }

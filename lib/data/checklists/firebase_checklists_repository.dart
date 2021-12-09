@@ -57,6 +57,17 @@ class FirebaseChecklistsRepository implements ChecklistsRepository {
   }
 
   @override
+  Future<Checklist?> toggleCheckable({required String checklistId}) async {
+    final checklist = await getChecklist(checklistId: checklistId);
+
+    await checklists
+        .doc(checklistId)
+        .set(checklist?.copyWith(checkable: !checklist.checkable).toJson());
+
+    return checklist?.copyWith(checkable: !checklist.checkable);
+  }
+
+  @override
   Future<void> updateElements({
     required String checklistId,
     required List<ChecklistElement> updatedElements,

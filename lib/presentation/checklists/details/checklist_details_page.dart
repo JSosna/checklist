@@ -162,6 +162,19 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
+              title: const Text('toggle checkboxes'),
+              onTap: () {
+                BlocProvider.of<ChecklistDetailsCubit>(context).toggleCheckable(
+                  widget.checklistId,
+                  isUserAdmin: state.isUserAdmin,
+                );
+
+                setState(() {
+                  _showMoreMenu = false;
+                });
+              },
+            ),
+            ListTile(
               title: const Text('delete list'),
               enabled: state.isUserAdmin,
               onTap: () {
@@ -174,6 +187,10 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
                     groupId,
                   );
                 }
+                
+                setState(() {
+                  _showMoreMenu = false;
+                });
               },
             ),
           ],
