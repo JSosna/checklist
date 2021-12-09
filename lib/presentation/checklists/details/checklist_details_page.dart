@@ -86,7 +86,7 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
                 elements: state.checklist.elements ?? [],
                 onItemsUpdated: (updatedList) {
                   BlocProvider.of<ChecklistDetailsCubit>(context)
-                      .updateItems(updatedList);
+                      .updateItems(state, updatedList, widget.checklistId);
                 },
               ),
             ),

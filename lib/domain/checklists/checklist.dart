@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'checklist.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Checklist {
   final String? id;
   final String? name;

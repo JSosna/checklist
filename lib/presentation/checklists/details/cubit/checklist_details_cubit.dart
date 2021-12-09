@@ -4,6 +4,7 @@ import 'package:checklist/domain/checklists/checklist_element.dart';
 import 'package:checklist/domain/checklists/checklists_repository.dart';
 import 'package:checklist/domain/checklists/use_case/delete_checklist_use_case.dart';
 import 'package:checklist/domain/checklists/use_case/is_user_checklist_admin.dart';
+import 'package:checklist/domain/checklists/use_case/update_checklist_elements_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'checklist_details_state.dart';
@@ -12,11 +13,13 @@ class ChecklistDetailsCubit extends Cubit<ChecklistDetailsState> {
   final ChecklistsRepository _checklistsRepository;
   final IsUserChecklistAdminUseCase _isUserChecklistAdminUseCase;
   final DeleteChecklistUseCase _deleteChecklistUseCase;
+  final UpdateChecklistElementsUseCase _updateChecklistElementsUseCase;
 
   ChecklistDetailsCubit(
     this._checklistsRepository,
     this._isUserChecklistAdminUseCase,
     this._deleteChecklistUseCase,
+    this._updateChecklistElementsUseCase,
   ) : super(ChecklistDetailsLoading());
 
   Future<void> loadDetails(String checklistId) async {
@@ -65,5 +68,18 @@ class ChecklistDetailsCubit extends Cubit<ChecklistDetailsState> {
     }
   }
 
-  Future<void> updateItems(List<ChecklistElement> reorderedList) async {}
+  Future<void> updateItems(
+    ChecklistDetailsLoaded state,
+    List<ChecklistElement> updatedList,
+    String checklistId,
+  ) async {
+    final success = await _updateChecklistElementsUseCase.updateElements(
+      checklistId,
+      updatedList,
+    );
+
+    if (!success) {
+      emit(ChecklistDetailsError());
+    }
+  }
 }

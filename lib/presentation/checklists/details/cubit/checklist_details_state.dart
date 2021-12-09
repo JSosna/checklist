@@ -19,7 +19,7 @@ class ChecklistDetailsLoaded extends ChecklistDetailsState {
   });
 
   @override
-  List<Object> get props => [checklist];
+  List<Object> get props => [checklist, isUserAdmin];
 }
 
 class ChecklistDetailsError extends ChecklistDetailsState {}

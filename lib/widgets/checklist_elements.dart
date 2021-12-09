@@ -46,7 +46,12 @@ class _ChecklistElementsState extends State<ChecklistElements> {
             itemCount: widget.elements.length,
             onReorder: (oldIndex, newIndex) {
               final element = currentElements.removeAt(oldIndex);
-              currentElements.insert(newIndex, element);
+              if (oldIndex < newIndex) {
+                currentElements.insert(newIndex - 1, element);
+              } else {
+                currentElements.insert(newIndex, element);
+              }
+
               widget.onItemsUpdated(currentElements);
             },
             itemBuilder: (context, index) {
