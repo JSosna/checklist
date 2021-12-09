@@ -45,14 +45,16 @@ class _ChecklistElementsState extends State<ChecklistElements> {
           child: ReorderableListView.builder(
             itemCount: widget.elements.length,
             onReorder: (oldIndex, newIndex) {
-              final element = currentElements.removeAt(oldIndex);
-              if (oldIndex < newIndex) {
-                currentElements.insert(newIndex - 1, element);
-              } else {
-                currentElements.insert(newIndex, element);
-              }
+              setState(() {
+                final element = currentElements.removeAt(oldIndex);
+                if (oldIndex < newIndex) {
+                  currentElements.insert(newIndex - 1, element);
+                } else {
+                  currentElements.insert(newIndex, element);
+                }
 
-              widget.onItemsUpdated(currentElements);
+                widget.onItemsUpdated(currentElements);
+              });
             },
             itemBuilder: (context, index) {
               return ChecklistListItem(
@@ -94,10 +96,12 @@ class _ChecklistElementsState extends State<ChecklistElements> {
                   description: descriptionController.text,
                 );
 
-                currentElements.insert(0, element);
+                setState(() {
+                  currentElements.insert(0, element);
 
-                onItemsUpdated(currentElements);
-                context.router.pop();
+                  onItemsUpdated(currentElements);
+                  context.router.pop();
+                });
               },
             )
           ],
