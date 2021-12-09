@@ -3,6 +3,7 @@ import 'package:checklist/domain/checklists/checklist_element.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class ChecklistElements extends StatefulWidget {
   final List<ChecklistElement> elements;
@@ -19,6 +20,14 @@ class ChecklistElements extends StatefulWidget {
 
 class _ChecklistElementsState extends State<ChecklistElements> {
   late List<ChecklistElement> currentElements;
+  final _formKey = GlobalKey<FormState>();
+
+  final _titleValidator = MultiValidator([
+    MaxLengthValidator(100, errorText: "error"),
+    RequiredValidator(
+      errorText: "error",
+    ),
+  ]);
 
   @override
   void initState() {
@@ -58,7 +67,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
             },
             itemBuilder: (context, index) {
               return ChecklistListItem(
-                key: ValueKey(widget.elements[index].index),
+                key: ValueKey(widget.elements[index].name),
                 element: widget.elements[index],
               );
             },
@@ -79,17 +88,34 @@ class _ChecklistElementsState extends State<ChecklistElements> {
       builder: (context) {
         return AlertDialog(
           title: const Text("Add new item"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ChecklistTextField(controller: titleController),
-              ChecklistTextField(controller: descriptionController),
-            ],
+          content: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ChecklistTextField(
+                  controller: titleController,
+                  validator: _titleValidator,
+                ),
+                ChecklistTextField(controller: descriptionController),
+              ],
+            ),
           ),
           actions: [
             TextButton(
               child: const Text("Submit"),
               onPressed: () {
+                if (_formKey.currentState?.validate() == false) {
+                  return;
+                }
+
+                final title = titleController.text;
+
+                if (widget.elements.any((element) => element.name == title)) {
+                  // TODO: Show toast - "Item with this name already exists"
+                  return;
+                }
+
                 final element = ChecklistElement(
                   index: 0,
                   name: titleController.text,
