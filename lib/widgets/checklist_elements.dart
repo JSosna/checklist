@@ -52,7 +52,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
         ),
         Expanded(
           child: ReorderableListView.builder(
-            itemCount: widget.elements.length,
+            itemCount: currentElements.length,
             onReorder: (oldIndex, newIndex) {
               setState(() {
                 final element = currentElements.removeAt(oldIndex);
@@ -67,10 +67,16 @@ class _ChecklistElementsState extends State<ChecklistElements> {
             },
             itemBuilder: (context, index) {
               return ChecklistListItem(
-                key: ValueKey(widget.elements[index].name),
-                element: widget.elements[index],
+                key: ValueKey(currentElements[index].name),
+                element: currentElements[index],
                 onPressed: () {
-                  _showNewElementModal(index, widget.elements[index]);
+                  _showNewElementModal(index, currentElements[index]);
+                },
+                onDismissed: () {
+                  setState(() {
+                    currentElements.removeAt(index);
+                    widget.onItemsUpdated(currentElements);
+                  });
                 },
               );
             },
@@ -115,7 +121,8 @@ class _ChecklistElementsState extends State<ChecklistElements> {
 
                 final title = titleController.text;
 
-                if (index == null && widget.elements.any((element) => element.name == title)) {
+                if (index == null &&
+                    widget.elements.any((element) => element.name == title)) {
                   // TODO: Show toast - "Item with this name already exists"
                   return;
                 }
