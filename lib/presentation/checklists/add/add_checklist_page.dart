@@ -90,7 +90,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
         ChecklistPicker(
           text: _group?.name ?? "",
           onPressed: () async {
-            final result = await context.router.push(GroupPickerRoute());
+            final result = await context.router.push(const GroupPickerRoute());
 
             if (result is Group) {
               setState(() {

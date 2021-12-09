@@ -1,3 +1,4 @@
+import 'package:checklist/domain/checklists/checklist_element.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'checklist.g.dart';
@@ -9,12 +10,14 @@ class Checklist {
   @JsonKey(name: "assigned_group_id")
   final String? assignedGroupId;
   final String? founderId;
+  final List<ChecklistElement>? elements;
 
   Checklist({
     this.id,
     this.name,
     this.assignedGroupId,
     this.founderId,
+    this.elements,
   });
 
   factory Checklist.fromJson(Map<String, dynamic> json) =>
@@ -27,11 +30,13 @@ class Checklist {
     String? name,
     String? assignedGroupId,
     String? founderId,
+    List<ChecklistElement>? elements,
   }) =>
       Checklist(
         id: id ?? this.id,
         name: name ?? this.name,
         assignedGroupId: assignedGroupId ?? this.assignedGroupId,
         founderId: founderId ?? this.founderId,
+        elements: elements ?? this.elements,
       );
 }
