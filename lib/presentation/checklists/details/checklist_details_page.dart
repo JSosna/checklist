@@ -84,9 +84,9 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
             Expanded(
               child: ChecklistElements(
                 elements: state.checklist.elements ?? [],
-                onReorder: (reorderedList) {
+                onItemsUpdated: (updatedList) {
                   BlocProvider.of<ChecklistDetailsCubit>(context)
-                      .reorderItems(reorderedList);
+                      .updateItems(updatedList);
                 },
               ),
             ),

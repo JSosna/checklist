@@ -65,5 +65,5 @@ class ChecklistDetailsCubit extends Cubit<ChecklistDetailsState> {
     }
   }
 
-  Future<void> reorderItems(List<ChecklistElement> reorderedList) async {}
+  Future<void> updateItems(List<ChecklistElement> reorderedList) async {}
 }

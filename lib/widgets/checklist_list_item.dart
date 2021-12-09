@@ -10,7 +10,7 @@ class ChecklistListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Dimens.kMarginMedium),
+      padding: const EdgeInsets.all(Dimens.kMarginMedium).copyWith(top: 0.0),
       child: Container(
         padding: const EdgeInsets.all(Dimens.kMarginMedium),
         color: Colors.grey.withOpacity(0.5),
