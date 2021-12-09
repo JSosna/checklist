@@ -15,7 +15,11 @@ class CreateChecklistUseCase {
     this._authenticationRepository,
   );
 
-  Future<Checklist?> createChecklist(String groupId, String name) async {
+  Future<Checklist?> createChecklist(
+    String groupId,
+    String name, {
+    bool checkable = false,
+  }) async {
     try {
       final userId = _authenticationRepository.getCurrentUser()?.uid;
 
@@ -24,6 +28,7 @@ class CreateChecklistUseCase {
           name: name,
           assignedGroupId: groupId,
           founderId: userId,
+          checkable: checkable,
         );
 
         final checklistWithId =

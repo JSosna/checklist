@@ -35,6 +35,7 @@ class AddChecklistPage extends StatefulWidget implements AutoRouteWrapper {
 class _AddChecklistPageState extends State<AddChecklistPage> {
   TextEditingController? _nameController;
   Group? _group;
+  bool checkable = false;
 
   @override
   void initState() {
@@ -102,6 +103,14 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
         const SizedBox(height: Dimens.kMarginExtraLargeDouble),
         const Text("Name"),
         TextField(controller: _nameController),
+        Checkbox(
+          value: checkable,
+          onChanged: (checked) {
+            setState(() {
+              checkable = checked ?? false;
+            });
+          },
+        ),
         const Spacer(),
         ChecklistRoundedButton(
           text: "Create",
@@ -112,7 +121,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
 
             if (name != null && name.length > 4 && groupId != null) {
               BlocProvider.of<AddChecklistCubit>(context)
-                  .createNewChecklist(groupId, name);
+                  .createNewChecklist(groupId, name, checkable: checkable);
             }
           },
         ),

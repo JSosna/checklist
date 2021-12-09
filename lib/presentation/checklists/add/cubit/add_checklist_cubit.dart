@@ -10,8 +10,13 @@ class AddChecklistCubit extends Cubit<AddChecklistState> {
   AddChecklistCubit(this._createChecklistUseCase)
       : super(AddChecklistInitial());
 
-  Future<void> createNewChecklist(String groupId, String name) async {
-    final checklist = await _createChecklistUseCase.createChecklist(groupId, name);
+  Future<void> createNewChecklist(
+    String groupId,
+    String name, {
+    bool checkable = false,
+  }) async {
+    final checklist = await _createChecklistUseCase
+        .createChecklist(groupId, name, checkable: checkable);
 
     if (checklist != null) {
       emit(CreatedNewChecklist());

@@ -8,10 +8,12 @@ import 'package:form_field_validator/form_field_validator.dart';
 class ChecklistElements extends StatefulWidget {
   final List<ChecklistElement> elements;
   final void Function(List<ChecklistElement>) onItemsUpdated;
+  final bool checkable;
 
   const ChecklistElements({
     required this.elements,
     required this.onItemsUpdated,
+    this.checkable = false,
   });
 
   @override
@@ -75,6 +77,15 @@ class _ChecklistElementsState extends State<ChecklistElements> {
                 onDismissed: () {
                   setState(() {
                     currentElements.removeAt(index);
+                    widget.onItemsUpdated(currentElements);
+                  });
+                },
+                checkable: widget.checkable,
+                checked: currentElements[index].checked,
+                onCheckedChanged: (checked) {
+                  setState(() {
+                    currentElements[index] =
+                        currentElements[index].copyWith(checked: checked);
                     widget.onItemsUpdated(currentElements);
                   });
                 },
