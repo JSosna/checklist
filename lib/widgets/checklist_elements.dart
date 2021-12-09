@@ -43,7 +43,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
           alignment: Alignment.centerRight,
           child: IconButton(
             onPressed: () {
-              _showNewElementModal(widget.onItemsUpdated);
+              _showNewElementModal();
             },
             icon: const Icon(Icons.add),
             padding: EdgeInsets.zero,
@@ -69,6 +69,9 @@ class _ChecklistElementsState extends State<ChecklistElements> {
               return ChecklistListItem(
                 key: ValueKey(widget.elements[index].name),
                 element: widget.elements[index],
+                onPressed: () {
+                  _showNewElementModal(index, widget.elements[index]);
+                },
               );
             },
           ),
@@ -77,17 +80,18 @@ class _ChecklistElementsState extends State<ChecklistElements> {
     );
   }
 
-  void _showNewElementModal(
-    void Function(List<ChecklistElement>) onItemsUpdated,
-  ) {
-    final titleController = TextEditingController();
-    final descriptionController = TextEditingController();
+  void _showNewElementModal([int? index, ChecklistElement? existingElement]) {
+    final titleController = TextEditingController(text: existingElement?.name);
+    final descriptionController =
+        TextEditingController(text: existingElement?.description);
 
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Add new item"),
+          title: index != null
+              ? const Text("Edit item")
+              : const Text("Add new item"),
           content: Form(
             key: _formKey,
             child: Column(
@@ -111,23 +115,32 @@ class _ChecklistElementsState extends State<ChecklistElements> {
 
                 final title = titleController.text;
 
-                if (widget.elements.any((element) => element.name == title)) {
+                if (index == null && widget.elements.any((element) => element.name == title)) {
                   // TODO: Show toast - "Item with this name already exists"
                   return;
                 }
 
-                final element = ChecklistElement(
-                  index: 0,
-                  name: titleController.text,
-                  description: descriptionController.text,
-                );
+                if (index != null && existingElement != null) {
+                  final element = existingElement.copyWith(
+                    name: titleController.text,
+                    description: descriptionController.text,
+                  );
+
+                  currentElements[index] = element;
+                } else {
+                  final element = ChecklistElement(
+                    index: 0,
+                    name: titleController.text,
+                    description: descriptionController.text,
+                  );
+
+                  currentElements.insert(0, element);
+                }
 
                 setState(() {
-                  currentElements.insert(0, element);
-
-                  onItemsUpdated(currentElements);
-                  context.router.pop();
+                  widget.onItemsUpdated(currentElements);
                 });
+                context.router.pop();
               },
             )
           ],
