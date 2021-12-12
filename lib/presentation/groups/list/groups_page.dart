@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
+import 'package:checklist/widgets/checklist_group_icon.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,9 @@ class _GroupsPageState extends State<GroupsPage> {
           itemCount: state.groups.length,
           itemBuilder: (context, index) {
             return ListTile(
+              leading: ChecklistGroupIcon(
+                group: state.groups[index],
+              ),
               tileColor: Colors.grey.withOpacity(0.5),
               title: Text(state.groups[index].name ?? ""),
               onTap: () async {
