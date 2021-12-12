@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/groups/group.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/add/cubit/add_checklist_cubit.dart';
-import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
+import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_picker.dart';
@@ -49,7 +49,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
     return BlocConsumer<AddChecklistCubit, AddChecklistState>(
       listener: (context, state) {
         if (state is CreatedNewChecklist) {
-          BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
+          BlocProvider.of<ChecklistsLoaderCubit>(context).reloadChecklists();
           context.router.pop(true);
         } else if (state is ErrorWhileCreatingChecklist) {
           // TODO: show error toast

@@ -3,6 +3,7 @@ import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
+import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
@@ -15,6 +16,7 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
+    final ChecklistsLoaderCubit checklistsLoaderCubit = cubitFactory.get();
     final GroupsLoaderCubit groupsLoaderCubit = cubitFactory.get();
 
     return MultiBlocProvider(
@@ -22,7 +24,13 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<AuthenticationCubit>(
           create: (context) => cubitFactory.get(),
         ),
-        BlocProvider<ChecklistsCubit>(create: (context) => cubitFactory.get()),
+        BlocProvider<ChecklistsLoaderCubit>(
+          create: (context) => checklistsLoaderCubit,
+        ),
+        BlocProvider<ChecklistsCubit>(
+          create: (context) =>
+              cubitFactory.getChecklistsCubit(checklistsLoaderCubit),
+        ),
         BlocProvider<GroupsLoaderCubit>(create: (context) => groupsLoaderCubit),
         BlocProvider<GroupsCubit>(
           create: (context) => cubitFactory.getGroupsCubit(groupsLoaderCubit),
@@ -51,7 +59,8 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
             currentIndex: tabsRouter.activeIndex,
             onTap: (index) {
               if (index == 0) {
-                BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
+                BlocProvider.of<ChecklistsLoaderCubit>(context)
+                    .reloadChecklists();
               } else if (index == 1) {
                 BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
               }

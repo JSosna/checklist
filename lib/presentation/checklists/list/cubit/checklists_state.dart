@@ -13,6 +13,9 @@ class ChecklistsLoaded extends ChecklistsState {
   final List<GroupWithChecklists> groupsWithChecklists;
 
   const ChecklistsLoaded(this.groupsWithChecklists);
+
+  @override
+  List<Object> get props => [groupsWithChecklists];
 }
 
 class ChecklistLoadingError extends ChecklistsState {}
