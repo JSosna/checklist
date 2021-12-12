@@ -5,6 +5,7 @@ import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
+import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/presentation/tab/cubit/authentication_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
+    final GroupsLoaderCubit groupsLoaderCubit = cubitFactory.get();
 
     return MultiBlocProvider(
       providers: [
@@ -21,7 +23,10 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
           create: (context) => cubitFactory.get(),
         ),
         BlocProvider<ChecklistsCubit>(create: (context) => cubitFactory.get()),
-        BlocProvider<GroupsCubit>(create: (context) => cubitFactory.get()),
+        BlocProvider<GroupsLoaderCubit>(create: (context) => groupsLoaderCubit),
+        BlocProvider<GroupsCubit>(
+          create: (context) => cubitFactory.getGroupsCubit(groupsLoaderCubit),
+        ),
       ],
       child: this,
     );
@@ -48,7 +53,7 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
               if (index == 0) {
                 BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
               } else if (index == 1) {
-                BlocProvider.of<GroupsCubit>(context).loadGroups();
+                BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
               }
 
               tabsRouter.setActiveIndex(index);

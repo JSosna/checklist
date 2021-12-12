@@ -7,6 +7,7 @@ import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.da
 import 'package:checklist/presentation/groups/add/cubit/add_group_cubit.dart';
 import 'package:checklist/presentation/groups/details/cubit/group_details_cubit.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
+import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/presentation/groups/picker/cubit/group_picker_cubit.dart';
 import 'package:checklist/presentation/groups/picker/group_picker_loader_cubit/group_picker_loader_cubit.dart';
 import 'package:checklist/presentation/groups/share/cubit/share_group_cubit.dart';
@@ -28,7 +29,8 @@ Future<void> registerBlocModule(GetIt injector) async {
   injector.registerFactory(() => OnboardingCubit());
   injector.registerFactory(() => ChecklistsCubit(injector.get()));
   injector.registerFactory(() => ChecklistDetailsCubit(injector.get(), injector.get(), injector.get(), injector.get()));
-  injector.registerFactory(() => GroupsCubit(injector.get()));
+  injector.registerFactory(() => GroupsLoaderCubit(injector.get()));
+  injector.registerFactoryParam<GroupsCubit, GroupsLoaderCubit, dynamic>((p1, p2) => GroupsCubit(p1, injector.get()));
   injector.registerFactory(() => GroupDetailsCubit(injector.get(), injector.get(), injector.get(), injector.get(), injector.get(), injector.get(), injector.get()));
   injector.registerFactory(() => GroupPickerLoaderCubit(injector.get()));
   injector.registerFactoryParam<GroupPickerCubit, GroupPickerLoaderCubit, dynamic>((p1, p2) => GroupPickerCubit(p1, injector.get()));

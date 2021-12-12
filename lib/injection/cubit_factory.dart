@@ -1,3 +1,5 @@
+import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
+import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/presentation/groups/picker/cubit/group_picker_cubit.dart';
 import 'package:checklist/presentation/groups/picker/group_picker_loader_cubit/group_picker_loader_cubit.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,6 @@ class CubitFactory {
   static CubitFactory of(BuildContext context, {bool listen = true}) =>
       Provider.of<CubitFactory>(context, listen: listen);
 
-
+  GroupsCubit getGroupsCubit(GroupsLoaderCubit groupsLoaderCubit) => injector.get(param1: groupsLoaderCubit);
   GroupPickerCubit getGroupPickerCubit(GroupPickerLoaderCubit groupPickerLoaderCubit) => injector.get(param1: groupPickerLoaderCubit);
 }
