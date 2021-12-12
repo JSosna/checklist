@@ -41,6 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
     EmailValidator(
       errorText: translate(LocaleKeys.validation_email_is_invalid),
     ),
+    MaxLengthValidator(30, errorText: "Too long"),
   ]);
 
   final _usernameValidator = MultiValidator([
@@ -51,6 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
       4,
       errorText: translate(LocaleKeys.validation_username_too_short),
     ),
+    MaxLengthValidator(20, errorText: "Too long"),
   ]);
 
   final _passwordValidator = MultiValidator([
@@ -61,6 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
       4,
       errorText: translate(LocaleKeys.validation_password_too_short),
     ),
+    MaxLengthValidator(20, errorText: "Too long"),
     PatternValidator(
       r'(?=.*?[#?!@$%^&*-])',
       errorText: translate(LocaleKeys.validation_password_special),
