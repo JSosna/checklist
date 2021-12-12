@@ -147,4 +147,16 @@ class FirebaseGroupsRepository implements GroupsRepository {
     final query = await groups.where("share_code", isEqualTo: shareCode).get();
     return query.docs.isNotEmpty;
   }
+
+  @override
+  Future<void> changeAdmin({
+    required String groupId,
+    required String memberId,
+  }) async {
+    final group = await getGroup(groupId: groupId);
+
+    await groups.doc(groupId).set(
+          group?.copyWith(adminId: memberId).toJson(),
+        );
+  }
 }

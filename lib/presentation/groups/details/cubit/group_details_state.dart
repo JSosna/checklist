@@ -13,11 +13,15 @@ class GroupDetailsLoading extends GroupDetailsState {}
 
 class GroupDetailsLoaded extends GroupDetailsState {
   final DetailedGroup detailedGroup;
+  final String currentUserId;
 
-  const GroupDetailsLoaded({required this.detailedGroup});
+  const GroupDetailsLoaded({
+    required this.detailedGroup,
+    required this.currentUserId,
+  });
 
   @override
-  List<Object> get props => [detailedGroup];
+  List<Object> get props => [detailedGroup, currentUserId];
 }
 
 class LeftGroup extends GroupDetailsState {}

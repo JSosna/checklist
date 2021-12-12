@@ -28,9 +28,9 @@ Future<void> registerBlocModule(GetIt injector) async {
   injector.registerFactory(() => ChecklistsCubit(injector.get()));
   injector.registerFactory(() => ChecklistDetailsCubit(injector.get(), injector.get(), injector.get(), injector.get()));
   injector.registerFactory(() => GroupsCubit(injector.get()));
-  injector.registerFactory(() => GroupDetailsCubit(injector.get(), injector.get(), injector.get(), injector.get()));
+  injector.registerFactory(() => GroupDetailsCubit(injector.get(), injector.get(), injector.get(), injector.get(), injector.get(), injector.get(), injector.get()));
   injector.registerFactory(() => GroupPickerCubit(injector.get()));
-  injector.registerFactory(() => ShareGroupCubit(injector.get()));
+  injector.registerFactory(() => ShareGroupCubit(injector.get(), injector.get()));
   injector.registerFactory(() => AddGroupCubit(injector.get(), injector.get()));
   injector.registerFactory(() => AddChecklistCubit(injector.get()));
   injector.registerFactory(() => SettingsCubit(injector.get(), injector.get(), injector.get()));

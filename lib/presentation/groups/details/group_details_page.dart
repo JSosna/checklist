@@ -2,10 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/details/cubit/group_details_cubit.dart';
+import 'package:checklist/presentation/groups/details/widgets/group_member_list_item.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -234,8 +236,13 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
 
               if (shouldUpdate == true) {
                 if (!mounted) return;
-                BlocProvider.of<GroupDetailsCubit>(context)
-                    .loadDetails(widget.groupId);
+
+                try {
+                  BlocProvider.of<GroupDetailsCubit>(context)
+                      .loadDetails(widget.groupId);
+                } catch (e) {
+                  Fimber.d("BlocProvider error");
+                }
               }
             },
             label: const Text("Add checklist"),
@@ -249,12 +256,27 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     return ListView.builder(
       itemCount: state.detailedGroup.members.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(Dimens.kMarginLarge),
-          child: ListTile(
-            tileColor: Colors.grey.withOpacity(0.5),
-            title: Text(state.detailedGroup.members[index].name ?? ""),
-          ),
+        return GroupMemberListItem(
+          name: state.detailedGroup.members[index].name ?? "",
+          isCurrentUser:
+              state.currentUserId == state.detailedGroup.members[index].uid,
+          onDelete: () {
+            final memberId = state.detailedGroup.members[index].uid;
+
+            if (memberId != null) {
+              BlocProvider.of<GroupDetailsCubit>(context)
+                  .removeMember(widget.groupId, memberId);
+            }
+          },
+          onHandOverAdmin: () {
+            final memberId = state.detailedGroup.members[index].uid;
+
+            if (memberId != null) {
+              BlocProvider.of<GroupDetailsCubit>(context)
+                  .handOverAdmin(widget.groupId, memberId);
+            }
+          },
+          isCurrentUserAdmin: state.detailedGroup.isCurrentUserAdmin,
         );
       },
     );

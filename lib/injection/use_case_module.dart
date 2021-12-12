@@ -6,10 +6,14 @@ import 'package:checklist/domain/checklists/use_case/update_checklist_elements_u
 import 'package:checklist/domain/groups/use_case/add_user_to_existing_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/create_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/delete_group_use_case.dart';
+import 'package:checklist/domain/groups/use_case/generate_share_code_use_case.dart';
 import 'package:checklist/domain/groups/use_case/get_share_code_use_case.dart';
+import 'package:checklist/domain/groups/use_case/hand_over_admin_use_case.dart';
 import 'package:checklist/domain/groups/use_case/leave_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/load_detailed_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/load_groups_use_case.dart';
+import 'package:checklist/domain/groups/use_case/refresh_share_code_use_case.dart';
+import 'package:checklist/domain/groups/use_case/remove_group_member_use_case.dart';
 import 'package:checklist/domain/users/use_case/change_username_use_case.dart';
 import 'package:checklist/domain/users/use_case/register_user_use_case.dart';
 import 'package:get_it/get_it.dart';
@@ -28,5 +32,9 @@ void registerUseCaseModule(GetIt injector) {
   injector.registerFactory(() => IsUserChecklistAdminUseCase(injector.get(), injector.get()));
   injector.registerFactory(() => DeleteChecklistUseCase(injector.get(), injector.get()));
   injector.registerFactory(() => UpdateChecklistElementsUseCase(injector.get()));
-  injector.registerFactory(() => GetShareCodeUseCase(injector.get()));
+  injector.registerFactory(() => GenerateShareCodeUseCase(injector.get()));
+  injector.registerFactory(() => RefreshShareCodeUseCase(injector.get(), injector.get()));
+  injector.registerFactory(() => GetShareCodeUseCase(injector.get(), injector.get()));
+  injector.registerFactory(() => RemoveGroupMemberUseCase(injector.get(), injector.get()));
+  injector.registerFactory(() => HandOverAdminUseCase(injector.get()));
 }
