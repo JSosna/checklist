@@ -119,7 +119,7 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
           ),
           onChanged: (newText) {
             BlocProvider.of<ChecklistDetailsCubit>(context)
-                .changeName(widget.checklistId, newText);
+                .changeName(widget.checklistId, newText.trim());
           },
         ),
       ),

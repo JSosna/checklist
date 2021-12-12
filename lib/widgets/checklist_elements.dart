@@ -130,7 +130,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
                   return;
                 }
 
-                final title = titleController.text;
+                final title = titleController.text.trim();
 
                 if (index == null &&
                     widget.elements.any((element) => element.name == title)) {
@@ -140,16 +140,16 @@ class _ChecklistElementsState extends State<ChecklistElements> {
 
                 if (index != null && existingElement != null) {
                   final element = existingElement.copyWith(
-                    name: titleController.text,
-                    description: descriptionController.text,
+                    name: titleController.text.trim(),
+                    description: descriptionController.text.trim(),
                   );
 
                   currentElements[index] = element;
                 } else {
                   final element = ChecklistElement(
                     index: 0,
-                    name: titleController.text,
-                    description: descriptionController.text,
+                    name: titleController.text.trim(),
+                    description: descriptionController.text.trim(),
                   );
 
                   currentElements.insert(0, element);

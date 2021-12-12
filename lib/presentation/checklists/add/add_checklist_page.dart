@@ -116,7 +116,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
           text: "Create",
           onPressed: () {
             // TODO: Use text form validator
-            final name = _nameController?.text;
+            final name = _nameController?.text.trim();
             final groupId = _group?.id;
 
             if (name != null && name.length > 4 && groupId != null) {

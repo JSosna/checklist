@@ -92,7 +92,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
             Expanded(child: TextField(controller: joinGroupController)),
             IconButton(
               onPressed: () {
-                final shareCode = joinGroupController?.text;
+                final shareCode = joinGroupController?.text.trim();
 
                 // TODO: Use text form validator
                 if (shareCode != null && shareCode.length == 6) {
@@ -121,7 +121,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
           text: "Create",
           onPressed: () {
             // TODO: Use text form validator
-            final name = newGroupNameController?.text;
+            final name = newGroupNameController?.text.trim();
 
             if (name != null && name.length > 4) {
               BlocProvider.of<AddGroupCubit>(context).createNewGroup(name);
