@@ -6,12 +6,14 @@ class GroupMemberListItem extends StatefulWidget {
   final VoidCallback onDelete;
   final VoidCallback onHandOverAdmin;
   final bool isCurrentUser;
+  final bool isCurrentUserAdmin;
 
   const GroupMemberListItem({
     required this.name,
     required this.onDelete,
     required this.onHandOverAdmin,
     this.isCurrentUser = false,
+    this.isCurrentUserAdmin = false,
   });
 
   @override
@@ -26,7 +28,19 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
       child: ListTile(
         tileColor: Colors.grey.withOpacity(0.5),
         title: Text(widget.name),
+        trailing: _buildMenu(),
       ),
     );
+  }
+
+  Widget _buildMenu() {
+    if (widget.isCurrentUserAdmin && !widget.isCurrentUser) {
+      return IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.more_vert),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

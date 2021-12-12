@@ -7,6 +7,7 @@ import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -235,8 +236,13 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
 
               if (shouldUpdate == true) {
                 if (!mounted) return;
-                BlocProvider.of<GroupDetailsCubit>(context)
-                    .loadDetails(widget.groupId);
+
+                try {
+                  BlocProvider.of<GroupDetailsCubit>(context)
+                      .loadDetails(widget.groupId);
+                } catch (e) {
+                  Fimber.d("BlocProvider error");
+                }
               }
             },
             label: const Text("Add checklist"),
@@ -256,6 +262,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
               state.currentUserId == state.detailedGroup.members[index].uid,
           onDelete: () {},
           onHandOverAdmin: () {},
+          isCurrentUserAdmin: state.detailedGroup.isCurrentUserAdmin,
         );
       },
     );

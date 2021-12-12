@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,7 +60,12 @@ class _GroupsPageState extends State<GroupsPage> {
 
           if (shouldUpdate == true) {
             if (!mounted) return;
-            BlocProvider.of<GroupsCubit>(context).loadGroups();
+
+            try {
+              BlocProvider.of<GroupsCubit>(context).loadGroups();
+            } catch (e) {
+              Fimber.d("BlocProvider error");
+            }
           }
         },
       ),
@@ -79,7 +85,12 @@ class _GroupsPageState extends State<GroupsPage> {
 
                   if (shouldUpdate == true) {
                     if (!mounted) return;
-                    BlocProvider.of<GroupsCubit>(context).loadGroups();
+
+                    try {
+                      BlocProvider.of<GroupsCubit>(context).loadGroups();
+                    } catch (e) {
+                      Fimber.d("BlocProvider error");
+                    }
                   }
                 }
               },
