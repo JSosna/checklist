@@ -6,6 +6,7 @@ import 'package:checklist/checklist_app.dart';
 import 'package:checklist/injection/bloc_factory.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/injection/modules.dart';
+import 'package:checklist/utlis/color_generator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,9 @@ Future<void> main() async {
           ),
           Provider<CubitFactory>(
             create: (context) => CubitFactory(injector: injector),
+          ),
+          Provider<ColorGenerator>(
+            create: (context) => ColorGenerator(),
           ),
         ],
         child: EasyLocalization(

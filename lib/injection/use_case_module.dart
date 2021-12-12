@@ -11,7 +11,9 @@ import 'package:checklist/domain/groups/use_case/get_share_code_use_case.dart';
 import 'package:checklist/domain/groups/use_case/hand_over_admin_use_case.dart';
 import 'package:checklist/domain/groups/use_case/leave_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/load_detailed_group_use_case.dart';
+import 'package:checklist/domain/groups/use_case/load_group_with_checklist_use_case.dart';
 import 'package:checklist/domain/groups/use_case/load_groups_use_case.dart';
+import 'package:checklist/domain/groups/use_case/load_groups_with_checklists_use_case.dart';
 import 'package:checklist/domain/groups/use_case/refresh_share_code_use_case.dart';
 import 'package:checklist/domain/groups/use_case/remove_group_member_use_case.dart';
 import 'package:checklist/domain/users/use_case/change_username_use_case.dart';
@@ -37,4 +39,6 @@ void registerUseCaseModule(GetIt injector) {
   injector.registerFactory(() => GetShareCodeUseCase(injector.get(), injector.get()));
   injector.registerFactory(() => RemoveGroupMemberUseCase(injector.get(), injector.get()));
   injector.registerFactory(() => HandOverAdminUseCase(injector.get()));
+  injector.registerFactory(() => LoadGroupWithChecklistsUseCase(injector.get(), injector.get(), injector.get()));
+  injector.registerFactory(() => LoadGroupsWithChecklistsUseCase(injector.get(), injector.get(), injector.get()));
 }

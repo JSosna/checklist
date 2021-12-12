@@ -10,9 +10,9 @@ abstract class ChecklistsState extends Equatable {
 class ChecklistsLoading extends ChecklistsState {}
 
 class ChecklistsLoaded extends ChecklistsState {
-  final List<Checklist> checklists;
+  final List<GroupWithChecklists> groupsWithChecklists;
 
-  const ChecklistsLoaded(this.checklists);
+  const ChecklistsLoaded(this.groupsWithChecklists);
 }
 
 class ChecklistLoadingError extends ChecklistsState {}

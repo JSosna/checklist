@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
+import 'package:checklist/presentation/checklists/list/widgets/checklist_list_item.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:fimber/fimber.dart';
@@ -27,59 +28,6 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
     );
   }
 
-  Widget _buildLoader() {
-    return const Scaffold(
-      key: ValueKey("loading"),
-      body: Center(child: ChecklistLoadingIndicator()),
-    );
-  }
-
-  Widget _buildContent(ChecklistsLoaded state) {
-    return Scaffold(
-      key: const ValueKey("content"),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          context.router.push(AddChecklistRoute());
-        },
-      ),
-      body: ListView.builder(
-        itemCount: state.checklists.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            tileColor: Colors.grey.withOpacity(0.5),
-            title: Text(state.checklists[index].name ?? ""),
-            onTap: () async {
-              final checklistId = state.checklists[index].id;
-
-              if (checklistId != null) {
-                final shouldUpdate = await context.router.push(
-                  ChecklistDetailsRoute(checklistId: checklistId),
-                );
-
-                if (shouldUpdate == true) {
-                  if (!mounted) return;
-                  try {
-                    BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
-                  } catch (e) {
-                    Fimber.d("BlocProvider error");
-                  }
-                }
-              }
-            },
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildError() {
-    return const Scaffold(
-      key: ValueKey("error"),
-      body: Center(child: Text("Error loading list, try again later!")),
-    );
-  }
-
   Widget _buildPage(ChecklistsState state) {
     if (state is ChecklistsLoading) {
       return _buildLoader();
@@ -88,5 +36,71 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
     } else {
       return _buildError();
     }
+  }
+
+  Widget _buildLoader() {
+    return const Scaffold(
+      body: Center(child: ChecklistLoadingIndicator()),
+    );
+  }
+
+  Widget _buildContent(ChecklistsLoaded state) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          context.router.push(AddChecklistRoute());
+        },
+      ),
+      body: _buildList(state),
+    );
+  }
+
+  Widget _buildList(ChecklistsLoaded state) {
+    return ListView.builder(
+      itemCount: state.groupsWithChecklists.length,
+      itemBuilder: (context, index) {
+        if (state.groupsWithChecklists[index].checklists.isNotEmpty) {
+          return ExpansionTile(
+            initiallyExpanded: true,
+            title: Text(state.groupsWithChecklists[index].group.name ?? ""),
+            children: state.groupsWithChecklists[index].checklists
+                .map(
+                  (e) => ChecklistListItem(
+                    checklist: e,
+                    onPressed: () async {
+                      final checklistId = e.id;
+
+                      if (checklistId != null) {
+                        final shouldUpdate = await context.router.push(
+                          ChecklistDetailsRoute(checklistId: checklistId),
+                        );
+
+                        if (shouldUpdate == true) {
+                          if (!mounted) return;
+                          try {
+                            BlocProvider.of<ChecklistsCubit>(context)
+                                .loadChecklists();
+                          } catch (e) {
+                            Fimber.d("BlocProvider error");
+                          }
+                        }
+                      }
+                    },
+                  ),
+                )
+                .toList(),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  Widget _buildError() {
+    return const Scaffold(
+      body: Center(child: Text("Error loading list, try again later!")),
+    );
   }
 }
