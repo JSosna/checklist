@@ -10,12 +10,12 @@ abstract class ShareGroupState extends Equatable {
 class ShareGroupLoading extends ShareGroupState {}
 
 class ShareGroupLoaded extends ShareGroupState {
-  final String joinCode;
+  final String shareCode;
 
-  const ShareGroupLoaded(this.joinCode);
+  const ShareGroupLoaded(this.shareCode);
 
   @override
-  List<Object> get props => [joinCode];
+  List<Object> get props => [shareCode];
 }
 
 class ShareGroupError extends ShareGroupState {}

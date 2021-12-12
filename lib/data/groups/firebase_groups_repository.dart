@@ -19,8 +19,8 @@ class FirebaseGroupsRepository implements GroupsRepository {
   }
 
   @override
-  Future<Group?> getGroupWithJoinCode({required String joinCode}) async {
-    final query = await groups.where("join_code", isEqualTo: joinCode).get();
+  Future<Group?> getGroupWithShareCode({required String shareCode}) async {
+    final query = await groups.where("share_code", isEqualTo: shareCode).get();
 
     if (query.docs.isNotEmpty) {
       final data = query.docs.first.data();

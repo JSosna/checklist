@@ -1,15 +1,15 @@
 import 'package:checklist/domain/groups/groups_repository.dart';
 
-class GetJoinCodeUseCase {
+class GetShareCodeUseCase {
   final GroupsRepository _groupsRepository;
 
-  const GetJoinCodeUseCase(
+  const GetShareCodeUseCase(
     this._groupsRepository,
   );
 
-  Future<String?> getJoinCode({required String groupId}) async {
+  Future<String?> getShareCode({required String groupId}) async {
     final group = await _groupsRepository.getGroup(groupId: groupId);
 
-    return group?.joinCode;
+    return group?.shareCode;
   }
 }

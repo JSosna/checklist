@@ -66,7 +66,7 @@ class _ShareGroupPageState extends State<ShareGroupPage> {
               },
               icon: const Icon(Icons.arrow_back),
             ),
-            Center(child: Text(state.joinCode)),
+            Center(child: Text(state.shareCode)),
           ],
         ),
       ),

@@ -6,7 +6,7 @@ import 'package:checklist/domain/checklists/use_case/update_checklist_elements_u
 import 'package:checklist/domain/groups/use_case/add_user_to_existing_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/create_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/delete_group_use_case.dart';
-import 'package:checklist/domain/groups/use_case/get_join_code_use_case.dart';
+import 'package:checklist/domain/groups/use_case/get_share_code_use_case.dart';
 import 'package:checklist/domain/groups/use_case/leave_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/load_detailed_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/load_groups_use_case.dart';
@@ -28,5 +28,5 @@ void registerUseCaseModule(GetIt injector) {
   injector.registerFactory(() => IsUserChecklistAdminUseCase(injector.get(), injector.get()));
   injector.registerFactory(() => DeleteChecklistUseCase(injector.get(), injector.get()));
   injector.registerFactory(() => UpdateChecklistElementsUseCase(injector.get()));
-  injector.registerFactory(() => GetJoinCodeUseCase(injector.get()));
+  injector.registerFactory(() => GetShareCodeUseCase(injector.get()));
 }
