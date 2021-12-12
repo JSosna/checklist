@@ -15,7 +15,7 @@ class LoadGroupsUseCase {
     this._groupsRepository,
   );
 
-  Future<List<Group>?> loadGroups() async {
+  Future<List<Group>?> loadGroups({String? filter}) async {
     try {
       final userId = _authenticationRepository.getCurrentUser()?.uid;
 
@@ -30,7 +30,13 @@ class LoadGroupsUseCase {
             final group = await _groupsRepository.getGroup(groupId: groupId);
 
             if (group != null) {
-              groups.add(group);
+              if (filter == null) {
+                groups.add(group);
+              } else {
+                if (_containsString(group.name, filter)) {
+                  groups.add(group);
+                }
+              }
             }
           }
 
@@ -41,5 +47,15 @@ class LoadGroupsUseCase {
       Fimber.e("Loading groups error", ex: e, stacktrace: stack);
     }
     return null;
+  }
+
+  bool _containsString(String? name, String filter) {
+    if (name != null) {
+      if (name.toUpperCase().contains(filter.toUpperCase())) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

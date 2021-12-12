@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
+import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,10 +21,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<ChecklistsCubit, ChecklistsState>(
       builder: (context, state) {
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          child: _buildPage(state),
-        );
+        return _buildPage(state);
       },
     );
   }
@@ -37,12 +36,32 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   Widget _buildContent(ChecklistsLoaded state) {
     return Scaffold(
       key: const ValueKey("content"),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          context.router.push(AddChecklistRoute());
+        },
+      ),
       body: ListView.builder(
         itemCount: state.checklists.length,
         itemBuilder: (context, index) {
           return ListTile(
             tileColor: Colors.grey.withOpacity(0.5),
             title: Text(state.checklists[index].name ?? ""),
+            onTap: () async {
+              final checklistId = state.checklists[index].id;
+
+              if (checklistId != null) {
+                final shouldUpdate = await context.router.push(
+                  ChecklistDetailsRoute(checklistId: checklistId),
+                );
+
+                if (shouldUpdate == true) {
+                  if (!mounted) return;
+                  BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
+                }
+              }
+            },
           );
         },
       ),

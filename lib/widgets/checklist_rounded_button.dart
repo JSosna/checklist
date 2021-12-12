@@ -1,6 +1,5 @@
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/style/dimens.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistRoundedButton extends StatelessWidget {
