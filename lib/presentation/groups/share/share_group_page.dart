@@ -60,16 +60,32 @@ class _ShareGroupPageState extends State<ShareGroupPage> {
       body: SafeArea(
         child: Column(
           children: [
-            IconButton(
-              onPressed: () {
-                context.router.pop();
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
+            _buildTopPart(),
             Center(child: Text(state.shareCode)),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTopPart() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+          onPressed: () {
+            context.router.pop(true);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        const Spacer(),
+        IconButton(
+          onPressed: () {
+            BlocProvider.of<ShareGroupCubit>(context).refreshShareCode(widget.groupId);
+          },
+          icon: const Icon(Icons.refresh),
+        )
+      ],
     );
   }
 

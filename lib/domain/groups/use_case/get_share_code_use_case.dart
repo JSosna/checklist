@@ -1,12 +1,13 @@
-import 'dart:math';
-
 import 'package:checklist/domain/groups/groups_repository.dart';
+import 'package:checklist/domain/groups/use_case/refresh_share_code_use_case.dart';
 
 class GetShareCodeUseCase {
   final GroupsRepository _groupsRepository;
+  final RefreshShareCodeUseCase _refreshShareCodeUseCase;
 
   const GetShareCodeUseCase(
     this._groupsRepository,
+    this._refreshShareCodeUseCase,
   );
 
   Future<String?> getShareCode({required String groupId}) async {
@@ -19,36 +20,10 @@ class GetShareCodeUseCase {
           group.shareCode != null) {
         return group.shareCode;
       } else {
-        String code = generateCode();
-
-        while (await _groupsRepository.anyGroupContainsShareCode(
-          shareCode: code,
-        )) {
-          code = generateCode();
-        }
-
-        await _groupsRepository.updateShareCode(
-          groupId: groupId,
-          shareCode: code,
-          shareCodeValidUntil: now.add(const Duration(days: 7)),
-        );
-
-        return code;
+        return _refreshShareCodeUseCase.refreshCode(groupId: groupId);
       }
     }
 
     return null;
-  }
-
-  String generateCode() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    final random = Random.secure();
-
-    return String.fromCharCodes(
-      Iterable.generate(
-        6,
-        (_) => characters.codeUnitAt(random.nextInt(characters.length)),
-      ),
-    );
   }
 }
