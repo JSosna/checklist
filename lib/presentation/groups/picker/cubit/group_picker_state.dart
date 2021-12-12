@@ -13,6 +13,9 @@ class GroupPickerLoaded extends GroupPickerState {
   final List<Group> groups;
 
   const GroupPickerLoaded({required this.groups});
+
+  @override
+  List<Object> get props => [groups];
 }
 
 class GroupPickerError extends GroupPickerState {}
