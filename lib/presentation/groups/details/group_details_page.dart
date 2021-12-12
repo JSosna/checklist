@@ -150,6 +150,12 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
+              title: const Text('share'),
+              onTap: () {
+                context.router.push(ShareGroupRoute(groupId: widget.groupId));
+              },
+            ),
+            ListTile(
               title: const Text('leave group'),
               enabled: !state.detailedGroup.isCurrentUserAdmin,
               onTap: () {
@@ -258,7 +264,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     return const Scaffold(
       body: Center(
         child: Text(
-          "Error while loading the list, check your internet connection or try later",
+          "Error while loading the details, check your internet connection or try later",
         ),
       ),
     );
