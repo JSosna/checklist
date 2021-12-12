@@ -86,6 +86,13 @@ class _SettingsPageState extends State<SettingsPage> {
           onPressed: () {
             BlocProvider.of<SettingsCubit>(context).logout();
           },
+        ),
+        ChecklistRoundedButton(
+          text: "delete account",
+          color: Colors.red,
+          onPressed: () {
+            BlocProvider.of<SettingsCubit>(context).deleteAccount();
+          },
         )
       ],
     );

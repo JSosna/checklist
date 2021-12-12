@@ -146,4 +146,13 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         return AuthenticationErrorType.unknownError;
     }
   }
+
+  @override
+  Future<void> deleteUser() async {
+    try {
+      await firebase.FirebaseAuth.instance.currentUser?.delete();
+    } catch (e, stack) {
+      Fimber.e("Delete account error", ex: e, stacktrace: stack);
+    }
+  }
 }

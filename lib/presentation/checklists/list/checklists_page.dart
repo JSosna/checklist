@@ -47,6 +47,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   Widget _buildContent(ChecklistsLoaded state) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        heroTag: "add checklist",
         child: const Icon(Icons.add),
         onPressed: () {
           context.router.push(AddChecklistRoute());

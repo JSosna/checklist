@@ -227,6 +227,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
         Align(
           alignment: Alignment.bottomCenter,
           child: FloatingActionButton.extended(
+            heroTag: "group details add checklist",
             onPressed: () async {
               final shouldUpdate = await context.router.push(
                 AddChecklistRoute(

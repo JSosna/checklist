@@ -55,6 +55,7 @@ class _GroupsPageState extends State<GroupsPage> {
   Widget _buildContent(GroupsLoaded state) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        heroTag: "add group",
         child: const Icon(Icons.add),
         onPressed: () async {
           final shouldUpdate = await context.router.push(const AddGroupRoute());

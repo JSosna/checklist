@@ -24,4 +24,6 @@ abstract class AuthenticationRepository {
   Future<bool> authenticateUsingBiometrics(String reason);
 
   Future<void> changeUsername(String newValue);
+
+  Future<void> deleteUser();
 }
