@@ -5,6 +5,7 @@ import 'package:checklist/presentation/groups/add/add_group_page.dart';
 import 'package:checklist/presentation/groups/details/group_details_page.dart';
 import 'package:checklist/presentation/groups/list/groups_page.dart';
 import 'package:checklist/presentation/groups/picker/group_picker_page.dart';
+import 'package:checklist/presentation/groups/share/share_group_page.dart';
 
 class GroupsRoutes {
   static const List<AutoRoute> items = [
@@ -14,5 +15,6 @@ class GroupsRoutes {
     AutoRoute<dynamic>(page: AddChecklistPage),
     AutoRoute<dynamic>(page: ChecklistDetailsPage),
     AutoRoute<dynamic>(page: GroupPickerPage),
+    AutoRoute<dynamic>(page: ShareGroupPage),
   ];
 }

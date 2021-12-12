@@ -14,11 +14,11 @@ class AddUserToExistingGroupUseCase {
     this._groupsRepository,
   );
 
-  // TODO: Handle join code valid until
-  Future<bool> addUserToExistingGroup(String joinCode) async {
+  // TODO: Handle share code valid until
+  Future<bool> addUserToExistingGroup(String shareCode) async {
     try {
       final group =
-          await _groupsRepository.getGroupWithJoinCode(joinCode: joinCode);
+          await _groupsRepository.getGroupWithShareCode(shareCode: shareCode);
       final groupId = group?.id;
       final userId = _authenticationRepository.getCurrentUser()?.uid;
       if (userId != null && groupId != null) {

@@ -92,12 +92,12 @@ class _AddGroupPageState extends State<AddGroupPage> {
             Expanded(child: TextField(controller: joinGroupController)),
             IconButton(
               onPressed: () {
-                final joinCode = joinGroupController?.text;
+                final shareCode = joinGroupController?.text;
 
                 // TODO: Use text form validator
-                if (joinCode != null && joinCode.length == 6) {
+                if (shareCode != null && shareCode.length == 6) {
                   BlocProvider.of<AddGroupCubit>(context)
-                      .joinToExistingGroup(joinCode);
+                      .joinToExistingGroup(shareCode);
                 }
               },
               icon: const Icon(Icons.arrow_forward),

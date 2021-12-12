@@ -8,6 +8,7 @@ import 'package:checklist/presentation/groups/add/cubit/add_group_cubit.dart';
 import 'package:checklist/presentation/groups/details/cubit/group_details_cubit.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/groups/picker/cubit/group_picker_cubit.dart';
+import 'package:checklist/presentation/groups/share/cubit/share_group_cubit.dart';
 import 'package:checklist/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:checklist/presentation/settings/cubit/settings_cubit.dart';
 import 'package:checklist/presentation/splash/bloc/splash_bloc.dart';
@@ -29,6 +30,7 @@ Future<void> registerBlocModule(GetIt injector) async {
   injector.registerFactory(() => GroupsCubit(injector.get()));
   injector.registerFactory(() => GroupDetailsCubit(injector.get(), injector.get(), injector.get(), injector.get()));
   injector.registerFactory(() => GroupPickerCubit(injector.get()));
+  injector.registerFactory(() => ShareGroupCubit(injector.get()));
   injector.registerFactory(() => AddGroupCubit(injector.get(), injector.get()));
   injector.registerFactory(() => AddChecklistCubit(injector.get()));
   injector.registerFactory(() => SettingsCubit(injector.get(), injector.get(), injector.get()));

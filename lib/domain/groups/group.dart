@@ -12,11 +12,11 @@ class Group {
   final List<String> membersIds;
   @JsonKey(name: "checklists_ids")
   final List<String> checklistsIds;
-  @JsonKey(name: "join_code")
-  final String? joinCode;
-  @JsonKey(name: "join_code_valid_until")
+  @JsonKey(name: "share_code")
+  final String? shareCode;
+  @JsonKey(name: "share_code_valid_until")
   @TimestampConverter()
-  final DateTime? joinCodeValidUntil;
+  final DateTime? shareCodeValidUntil;
   @JsonKey(name: "admin_id")
   final String? adminId;
 
@@ -25,8 +25,8 @@ class Group {
     this.name,
     this.membersIds = const [],
     this.checklistsIds = const [],
-    this.joinCode,
-    this.joinCodeValidUntil,
+    this.shareCode,
+    this.shareCodeValidUntil,
     this.adminId,
   });
 
@@ -39,8 +39,8 @@ class Group {
     String? name,
     List<String>? membersIds,
     List<String>? checklistsIds,
-    String? joinCode,
-    DateTime? joinCodeValidUntil,
+    String? shareCode,
+    DateTime? shareCodeValidUntil,
     String? adminId,
   }) =>
       Group(
@@ -48,8 +48,8 @@ class Group {
         name: name ?? this.name,
         membersIds: membersIds ?? this.membersIds,
         checklistsIds: checklistsIds ?? this.checklistsIds,
-        joinCode: joinCode ?? this.joinCode,
-        joinCodeValidUntil: joinCodeValidUntil ?? this.joinCodeValidUntil,
+        shareCode: shareCode ?? this.shareCode,
+        shareCodeValidUntil: shareCodeValidUntil ?? this.shareCodeValidUntil,
         adminId: adminId ?? this.adminId,
       );
 }

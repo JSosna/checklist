@@ -3,7 +3,7 @@ import 'package:checklist/domain/groups/group.dart';
 abstract class GroupsRepository {
   Future<Group?> getGroup({required String groupId});
 
-  Future<Group?> getGroupWithJoinCode({required String joinCode});
+  Future<Group?> getGroupWithShareCode({required String shareCode});
 
   Future<void> deleteGroup({required String groupId});
 
@@ -40,4 +40,14 @@ abstract class GroupsRepository {
     String userId,
     String groupId,
   );
+
+  Future<void> updateShareCode({
+    required String groupId,
+    required String shareCode,
+    required DateTime shareCodeValidUntil,
+  });
+
+  Future<bool> anyGroupContainsShareCode({
+    required String shareCode,
+  });
 }

@@ -19,8 +19,8 @@ class FirebaseGroupsRepository implements GroupsRepository {
   }
 
   @override
-  Future<Group?> getGroupWithJoinCode({required String joinCode}) async {
-    final query = await groups.where("join_code", isEqualTo: joinCode).get();
+  Future<Group?> getGroupWithShareCode({required String shareCode}) async {
+    final query = await groups.where("share_code", isEqualTo: shareCode).get();
 
     if (query.docs.isNotEmpty) {
       final data = query.docs.first.data();
@@ -122,5 +122,29 @@ class FirebaseGroupsRepository implements GroupsRepository {
     final group = await getGroup(groupId: groupId);
 
     return group?.adminId == userId;
+  }
+
+  @override
+  Future<void> updateShareCode({
+    required String groupId,
+    required String shareCode,
+    required DateTime shareCodeValidUntil,
+  }) async {
+    final group = await getGroup(groupId: groupId);
+
+    await groups.doc(groupId).set(
+          group
+              ?.copyWith(
+                shareCode: shareCode,
+                shareCodeValidUntil: shareCodeValidUntil,
+              )
+              .toJson(),
+        );
+  }
+
+  @override
+  Future<bool> anyGroupContainsShareCode({required String shareCode}) async {
+    final query = await groups.where("share_code", isEqualTo: shareCode).get();
+    return query.docs.isNotEmpty;
   }
 }
