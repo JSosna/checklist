@@ -123,4 +123,28 @@ class FirebaseGroupsRepository implements GroupsRepository {
 
     return group?.adminId == userId;
   }
+
+  @override
+  Future<void> updateShareCode({
+    required String groupId,
+    required String shareCode,
+    required DateTime shareCodeValidUntil,
+  }) async {
+    final group = await getGroup(groupId: groupId);
+
+    await groups.doc(groupId).set(
+          group
+              ?.copyWith(
+                shareCode: shareCode,
+                shareCodeValidUntil: shareCodeValidUntil,
+              )
+              .toJson(),
+        );
+  }
+
+  @override
+  Future<bool> anyGroupContainsShareCode({required String shareCode}) async {
+    final query = await groups.where("share_code", isEqualTo: shareCode).get();
+    return query.docs.isNotEmpty;
+  }
 }

@@ -40,4 +40,14 @@ abstract class GroupsRepository {
     String userId,
     String groupId,
   );
+
+  Future<void> updateShareCode({
+    required String groupId,
+    required String shareCode,
+    required DateTime shareCodeValidUntil,
+  });
+
+  Future<bool> anyGroupContainsShareCode({
+    required String shareCode,
+  });
 }
