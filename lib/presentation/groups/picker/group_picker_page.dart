@@ -4,7 +4,6 @@ import 'package:checklist/presentation/groups/picker/cubit/group_picker_cubit.da
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nil/nil.dart';
 
 class GroupPickerPage extends StatefulWidget implements AutoRouteWrapper {
   @override
@@ -92,7 +91,7 @@ class _GroupPickerPageState extends State<GroupPickerPage> {
             },
           );
         } else {
-          return nil;
+          return const SizedBox.shrink();
         }
       },
     );
