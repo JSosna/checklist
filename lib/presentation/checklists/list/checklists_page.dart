@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/presentation/checklists/list/widgets/checklist_list_item.dart';
 import 'package:checklist/routing/router.gr.dart';
@@ -53,7 +54,22 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
           context.router.push(AddChecklistRoute());
         },
       ),
-      body: _buildList(state),
+      body: Stack(
+        children: [
+          _buildList(state),
+          BlocBuilder<ChecklistsLoaderCubit, ChecklistsLoaderState>(
+            builder: (context, state) {
+              if (state is ChecklistsLoaderLoading) {
+                return const Center(
+                  child: ChecklistLoadingIndicator(),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          )
+        ],
+      ),
     );
   }
 
@@ -80,8 +96,8 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
                         if (shouldUpdate == true) {
                           if (!mounted) return;
                           try {
-                            BlocProvider.of<ChecklistsCubit>(context)
-                                .loadChecklists();
+                            BlocProvider.of<ChecklistsLoaderCubit>(context)
+                                .reloadChecklists();
                           } catch (e) {
                             Fimber.d("BlocProvider error");
                           }

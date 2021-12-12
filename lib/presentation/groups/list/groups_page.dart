@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
+import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_group_icon.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
@@ -64,7 +65,7 @@ class _GroupsPageState extends State<GroupsPage> {
             if (!mounted) return;
 
             try {
-              BlocProvider.of<GroupsCubit>(context).loadGroups();
+              BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
             } catch (e) {
               Fimber.d("BlocProvider error");
             }
@@ -72,37 +73,54 @@ class _GroupsPageState extends State<GroupsPage> {
         },
       ),
       body: Center(
-        child: ListView.builder(
-          itemCount: state.groups.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: ChecklistGroupIcon(
-                group: state.groups[index],
-              ),
-              tileColor: Colors.grey.withOpacity(0.5),
-              title: Text(state.groups[index].name ?? ""),
-              onTap: () async {
-                final groupId = state.groups[index].id;
-
-                if (groupId != null) {
-                  final shouldUpdate = await context.router
-                      .push(GroupDetailsRoute(groupId: groupId));
-
-                  if (shouldUpdate == true) {
-                    if (!mounted) return;
-
-                    try {
-                      BlocProvider.of<GroupsCubit>(context).loadGroups();
-                    } catch (e) {
-                      Fimber.d("BlocProvider error");
-                    }
-                  }
+        child: Stack(
+          children: [
+            _buildList(state),
+            BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
+              builder: (context, state) {
+                if (state is GroupsLoaderLoading) {
+                  return const Center(child: ChecklistLoadingIndicator());
+                } else {
+                  return const SizedBox.shrink();
                 }
               },
-            );
-          },
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildList(GroupsLoaded state) {
+    return ListView.builder(
+      itemCount: state.groups.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: ChecklistGroupIcon(
+            group: state.groups[index],
+          ),
+          tileColor: Colors.grey.withOpacity(0.5),
+          title: Text(state.groups[index].name ?? ""),
+          onTap: () async {
+            final groupId = state.groups[index].id;
+
+            if (groupId != null) {
+              final shouldUpdate = await context.router
+                  .push(GroupDetailsRoute(groupId: groupId));
+
+              if (shouldUpdate == true) {
+                if (!mounted) return;
+
+                try {
+                  BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
+                } catch (e) {
+                  Fimber.d("BlocProvider error");
+                }
+              }
+            }
+          },
+        );
+      },
     );
   }
 }
