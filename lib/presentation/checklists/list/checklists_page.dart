@@ -60,36 +60,40 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
     return ListView.builder(
       itemCount: state.groupsWithChecklists.length,
       itemBuilder: (context, index) {
-        return ExpansionTile(
-          initiallyExpanded: true,
-          title: Text(state.groupsWithChecklists[index].group.name ?? ""),
-          children: state.groupsWithChecklists[index].checklists
-              .map(
-                (e) => ChecklistListItem(
-                  checklist: e,
-                  onPressed: () async {
-                    final checklistId = e.id;
+        if (state.groupsWithChecklists[index].checklists.isNotEmpty) {
+          return ExpansionTile(
+            initiallyExpanded: true,
+            title: Text(state.groupsWithChecklists[index].group.name ?? ""),
+            children: state.groupsWithChecklists[index].checklists
+                .map(
+                  (e) => ChecklistListItem(
+                    checklist: e,
+                    onPressed: () async {
+                      final checklistId = e.id;
 
-                    if (checklistId != null) {
-                      final shouldUpdate = await context.router.push(
-                        ChecklistDetailsRoute(checklistId: checklistId),
-                      );
+                      if (checklistId != null) {
+                        final shouldUpdate = await context.router.push(
+                          ChecklistDetailsRoute(checklistId: checklistId),
+                        );
 
-                      if (shouldUpdate == true) {
-                        if (!mounted) return;
-                        try {
-                          BlocProvider.of<ChecklistsCubit>(context)
-                              .loadChecklists();
-                        } catch (e) {
-                          Fimber.d("BlocProvider error");
+                        if (shouldUpdate == true) {
+                          if (!mounted) return;
+                          try {
+                            BlocProvider.of<ChecklistsCubit>(context)
+                                .loadChecklists();
+                          } catch (e) {
+                            Fimber.d("BlocProvider error");
+                          }
                         }
                       }
-                    }
-                  },
-                ),
-              )
-              .toList(),
-        );
+                    },
+                  ),
+                )
+                .toList(),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
     );
   }
