@@ -50,4 +50,6 @@ abstract class GroupsRepository {
   Future<bool> anyGroupContainsShareCode({
     required String shareCode,
   });
+
+  Future<void> changeAdmin({required String groupId, required String memberId});
 }

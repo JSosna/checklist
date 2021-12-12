@@ -3,8 +3,10 @@ import 'package:checklist/domain/authentication/authentication_repository.dart';
 import 'package:checklist/domain/groups/detailed_group.dart';
 import 'package:checklist/domain/groups/groups_repository.dart';
 import 'package:checklist/domain/groups/use_case/delete_group_use_case.dart';
+import 'package:checklist/domain/groups/use_case/hand_over_admin_use_case.dart';
 import 'package:checklist/domain/groups/use_case/leave_group_use_case.dart';
 import 'package:checklist/domain/groups/use_case/load_detailed_group_use_case.dart';
+import 'package:checklist/domain/groups/use_case/remove_group_member_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'group_details_state.dart';
@@ -15,6 +17,8 @@ class GroupDetailsCubit extends Cubit<GroupDetailsState> {
   final LoadDetailedGroupUseCase _loadDetailsUseCase;
   final LeaveGroupUseCase _leaveGroupUseCase;
   final DeleteGroupUseCase _deleteGroupUseCase;
+  final RemoveGroupMemberUseCase _removeGroupMemberUseCase;
+  final HandOverAdminUseCase _handOverAdminUseCase;
 
   GroupDetailsCubit(
     this._groupsRepository,
@@ -22,6 +26,8 @@ class GroupDetailsCubit extends Cubit<GroupDetailsState> {
     this._loadDetailsUseCase,
     this._leaveGroupUseCase,
     this._deleteGroupUseCase,
+    this._removeGroupMemberUseCase,
+    this._handOverAdminUseCase,
   ) : super(GroupDetailsLoading());
 
   Future<void> loadDetails(String groupId) async {
@@ -69,11 +75,19 @@ class GroupDetailsCubit extends Cubit<GroupDetailsState> {
     }
   }
 
-  Future<void> removeMember(String groupId, String uid) async {
+  Future<void> removeMember(String groupId, String memberId) async {
+    await _removeGroupMemberUseCase.removeMember(
+      groupId: groupId,
+      memberId: memberId,
+    );
     await loadDetails(groupId);
   }
 
   Future<void> handOverAdmin(String groupId, String memberId) async {
+    await _handOverAdminUseCase.handOverAdmin(
+      groupId: groupId,
+      memberId: memberId,
+    );
     await loadDetails(groupId);
   }
 }
