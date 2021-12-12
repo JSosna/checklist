@@ -260,8 +260,22 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           name: state.detailedGroup.members[index].name ?? "",
           isCurrentUser:
               state.currentUserId == state.detailedGroup.members[index].uid,
-          onDelete: () {},
-          onHandOverAdmin: () {},
+          onDelete: () {
+            final memberId = state.detailedGroup.members[index].uid;
+
+            if (memberId != null) {
+              BlocProvider.of<GroupDetailsCubit>(context)
+                  .removeMember(widget.groupId, memberId);
+            }
+          },
+          onHandOverAdmin: () {
+            final memberId = state.detailedGroup.members[index].uid;
+
+            if (memberId != null) {
+              BlocProvider.of<GroupDetailsCubit>(context)
+                  .handOverAdmin(widget.groupId, memberId);
+            }
+          },
           isCurrentUserAdmin: state.detailedGroup.isCurrentUserAdmin,
         );
       },

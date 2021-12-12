@@ -68,4 +68,12 @@ class GroupDetailsCubit extends Cubit<GroupDetailsState> {
       emit(GroupDetailsError());
     }
   }
+
+  Future<void> removeMember(String groupId, String uid) async {
+    await loadDetails(groupId);
+  }
+
+  Future<void> handOverAdmin(String groupId, String memberId) async {
+    await loadDetails(groupId);
+  }
 }

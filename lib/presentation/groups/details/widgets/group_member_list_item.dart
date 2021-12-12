@@ -1,5 +1,6 @@
 import 'package:checklist/style/dimens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 
 class GroupMemberListItem extends StatefulWidget {
   final String name;
@@ -21,6 +22,8 @@ class GroupMemberListItem extends StatefulWidget {
 }
 
 class _GroupMemberListItemState extends State<GroupMemberListItem> {
+  bool _showMoreMenu = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,19 +31,77 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
       child: ListTile(
         tileColor: Colors.grey.withOpacity(0.5),
         title: Text(widget.name),
-        trailing: _buildMenu(),
+        trailing: _buildTrailing(),
       ),
     );
   }
 
-  Widget _buildMenu() {
+  Widget _buildTrailing() {
     if (widget.isCurrentUserAdmin && !widget.isCurrentUser) {
-      return IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.more_vert),
-      );
+      return _buildMenu();
     } else {
       return const SizedBox.shrink();
     }
+  }
+
+  Widget _buildMenu() {
+    return PortalEntry(
+      visible: _showMoreMenu,
+      portal: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          setState(() {
+            _showMoreMenu = false;
+          });
+        },
+      ),
+      child: PortalEntry(
+        visible: _showMoreMenu,
+        portalAnchor: Alignment.topRight,
+        childAnchor: Alignment.center,
+        portal: _buildMoreMenu(),
+        child: IconButton(
+          onPressed: () {
+            setState(() {
+              _showMoreMenu = !_showMoreMenu;
+            });
+          },
+          icon: const Icon(Icons.more_vert),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMoreMenu() {
+    return Material(
+      elevation: 8,
+      child: IntrinsicWidth(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('hand over admin'),
+              onTap: () {
+                setState(() {
+                  _showMoreMenu = false;
+                });
+
+                widget.onHandOverAdmin();
+              },
+            ),
+            ListTile(
+              title: const Text('remove member'),
+              onTap: () {
+                setState(() {
+                  _showMoreMenu = false;
+                });
+
+                widget.onDelete();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
