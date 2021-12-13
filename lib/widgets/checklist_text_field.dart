@@ -42,7 +42,9 @@ class _ChecklistTextFormFieldState extends State<ChecklistTextFormField> {
             padding: const EdgeInsets.only(left: Dimens.marginMedium),
             child: Text(
               widget.label ?? "",
-              style: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black),
+              style: context.typo.mediumBold(
+                color: context.isDarkTheme ? Colors.white : Colors.black,
+              ),
             ),
           ),
           const SizedBox(height: Dimens.marginSmall),
@@ -56,7 +58,8 @@ class _ChecklistTextFormFieldState extends State<ChecklistTextFormField> {
     return TextFormField(
       controller: widget.controller,
       validator: widget.validator,
-      style: context.typo.medium(color: Colors.white),
+      style: context.typo
+          .medium(color: context.isDarkTheme ? Colors.white : Colors.black),
       textInputAction: widget.textInputAction,
       keyboardType: widget.textInputType,
       obscureText: isObscured ?? false,

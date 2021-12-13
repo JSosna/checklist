@@ -113,6 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         },
                       ),
+                      const SizedBox(height: Dimens.marginMedium),
                       ChecklistRoundedButton(
                         text: translate(LocaleKeys.authentication_register),
                         onPressed: () async {

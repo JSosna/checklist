@@ -65,36 +65,40 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildContent(BuildContext context, SettingsLoaded state) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(height: Dimens.marginLarge),
-        ChecklistSettingsTextInput(
-          title: translate(LocaleKeys.settings_username),
-          value: state.user?.name ?? "",
-          onChanged: (newValue) {
-            BlocProvider.of<SettingsCubit>(context).changeUsername(newValue);
-          },
-        ),
-        const SizedBox(height: Dimens.marginMedium),
-        _buildDarkModeSwitch(),
-        const SizedBox(height: Dimens.marginMedium),
-        _buildBiometricAuthenticationSwitch(state),
-        const Spacer(),
-        ChecklistRoundedButton(
-          text: translate(LocaleKeys.settings_logout),
-          onPressed: () {
-            BlocProvider.of<SettingsCubit>(context).logout();
-          },
-        ),
-        ChecklistRoundedButton(
-          text: "delete account",
-          color: Colors.red,
-          onPressed: () {
-            BlocProvider.of<SettingsCubit>(context).deleteAccount();
-          },
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.marginLargeDouble),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: Dimens.marginLarge),
+          ChecklistSettingsTextInput(
+            title: translate(LocaleKeys.settings_username),
+            value: state.user?.name ?? "",
+            onChanged: (newValue) {
+              BlocProvider.of<SettingsCubit>(context).changeUsername(newValue);
+            },
+          ),
+          const SizedBox(height: Dimens.marginMedium),
+          _buildDarkModeSwitch(),
+          const SizedBox(height: Dimens.marginMedium),
+          _buildBiometricAuthenticationSwitch(state),
+          const Spacer(),
+          ChecklistRoundedButton(
+            text: translate(LocaleKeys.settings_logout),
+            onPressed: () {
+              BlocProvider.of<SettingsCubit>(context).logout();
+            },
+          ),
+          const SizedBox(height: Dimens.marginMedium),
+          ChecklistRoundedButton.negative(
+            text: "delete account",
+            onPressed: () {
+              BlocProvider.of<SettingsCubit>(context).deleteAccount();
+            },
+          ),
+          const SizedBox(height: Dimens.marginMedium),
+        ],
+      ),
     );
   }
 
