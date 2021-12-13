@@ -68,7 +68,9 @@ class _ChecklistTextFormFieldState extends State<ChecklistTextFormField> {
         suffixIcon:
             isObscured != null ? _buildSuffixIcon() : const SizedBox.shrink(),
         filled: true,
-        fillColor: Colors.grey.withOpacity(0.5),
+        fillColor: context.isDarkTheme
+            ? Colors.grey[850]?.withOpacity(0.5)
+            : Colors.blueGrey[200]?.withOpacity(0.5),
         border: const OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.all(Radius.circular(15.0)),
