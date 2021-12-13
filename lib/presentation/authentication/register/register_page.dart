@@ -6,7 +6,11 @@ import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/authentication/register/cubit/register_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_large_text_button.dart';
+import 'package:checklist/widgets/checklist_page_title.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
+import 'package:checklist/widgets/checklist_scrollable_wrapper.dart';
+import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -88,80 +92,26 @@ class _RegisterPageState extends State<RegisterPage> {
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(Dimens.marginExtraLargeDouble),
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.marginExtraLargeDouble,
+                ),
+                child: ChecklistScrollableWrapper(
                   child: Column(
                     children: [
-                      Text(translate(LocaleKeys.authentication_register)),
-                      const SizedBox(height: Dimens.marginExtraLarge),
-                      TextFormField(
-                        controller: _usernameController,
-                        validator: _usernameValidator,
-                        decoration: InputDecoration(
-                          labelText:
-                              translate(LocaleKeys.authentication_username),
-                          border: const OutlineInputBorder(),
-                        ),
+                      const SizedBox(height: Dimens.marginLarge),
+                      ChecklistPageTitle(
+                        translate(LocaleKeys.authentication_register),
                       ),
-                      const SizedBox(height: Dimens.marginExtraLarge),
-                      TextFormField(
-                        controller: _emailController,
-                        validator: _emailValidator,
-                        decoration: InputDecoration(
-                          labelText: translate(LocaleKeys.authentication_email),
-                          border: const OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: Dimens.marginExtraLarge),
-                      TextFormField(
-                        controller: _passwordController,
-                        validator: _passwordValidator,
-                        decoration: InputDecoration(
-                          labelText:
-                              translate(LocaleKeys.authentication_password),
-                          border: const OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: Dimens.marginExtraLarge),
-                      TextFormField(
-                        controller: _confirmPasswordController,
-                        validator: (val) => MatchValidator(
-                          errorText: translate(
-                            LocaleKeys.validation_passwords_do_not_match,
-                          ),
-                        ).validateMatch(val ?? "", _passwordController.text),
-                        decoration: InputDecoration(
-                          labelText: translate(
-                            LocaleKeys.authentication_confirm_password,
-                          ),
-                          border: const OutlineInputBorder(),
-                        ),
-                      ),
-                      ChecklistRoundedButton(
-                        text: translate(LocaleKeys.authentication_register),
-                        onPressed: () async {
-                          final username = _usernameController.text;
-                          final email = _emailController.text;
-                          final password = _passwordController.text;
-
-                          if (_formKey.currentState?.validate() == true) {
-                            BlocProvider.of<RegisterCubit>(context).register(
-                              username: username,
-                              email: email,
-                              password: password,
-                            );
-                          }
-                        },
-                      ),
-                      ChecklistRoundedButton(
-                        text: translate(LocaleKeys.authentication_login),
-                        onPressed: () async {
-                          context.router.pop();
-                        },
-                      ),
+                      const SizedBox(height: Dimens.marginLargeDouble),
+                      ..._buildForm(),
+                      const Spacer(),
+                      _buildRegisterButton(),
+                      const SizedBox(height: Dimens.marginMedium),
+                      _buildLoginButton(),
+                      const SizedBox(height: Dimens.marginMedium),
                     ],
                   ),
                 ),
@@ -170,6 +120,74 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         );
       },
+    );
+  }
+
+  List<Widget> _buildForm() {
+    return [
+      ChecklistTextFormField(
+        controller: _usernameController,
+        validator: _usernameValidator,
+        label: translate(LocaleKeys.authentication_username),
+      ),
+      const SizedBox(height: Dimens.marginMedium),
+      ChecklistTextFormField(
+        controller: _emailController,
+        validator: _emailValidator,
+        label: translate(LocaleKeys.authentication_email),
+        textInputType: TextInputType.emailAddress,
+      ),
+      const SizedBox(height: Dimens.marginMedium),
+      ChecklistTextFormField(
+        controller: _passwordController,
+        validator: _passwordValidator,
+        label: translate(LocaleKeys.authentication_password),
+        isObscured: true,
+      ),
+      const SizedBox(height: Dimens.marginMedium),
+      ChecklistTextFormField(
+        controller: _confirmPasswordController,
+        validator: (val) => MatchValidator(
+          errorText: translate(
+            LocaleKeys.validation_passwords_do_not_match,
+          ),
+        ).validateMatch(val ?? "", _passwordController.text),
+        label: translate(LocaleKeys.authentication_confirm_password),
+        isObscured: true,
+        textInputAction: TextInputAction.done,
+      ),
+    ];
+  }
+
+  Widget _buildRegisterButton() {
+    return ChecklistRoundedButton(
+      text: translate(LocaleKeys.authentication_register),
+      onPressed: () async {
+        final username = _usernameController.text;
+        final email = _emailController.text;
+        final password = _passwordController.text;
+
+        if (_formKey.currentState?.validate() == true) {
+          BlocProvider.of<RegisterCubit>(context).register(
+            username: username,
+            email: email,
+            password: password,
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: ChecklistLargeTextButton(
+        text: translate(LocaleKeys.authentication_login),
+        forward: false,
+        onPressed: () async {
+          context.router.pop();
+        },
+      ),
     );
   }
 

@@ -6,6 +6,7 @@ import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/authentication/login/cubit/login_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_large_text_button.dart';
 import 'package:checklist/widgets/checklist_page_title.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_scrollable_wrapper.dart';
@@ -86,40 +87,12 @@ class _LoginPageState extends State<LoginPage> {
                         translate(LocaleKeys.authentication_login),
                       ),
                       const SizedBox(height: Dimens.marginLargeDouble),
-                      ChecklistTextFormField(
-                        controller: _emailController,
-                        validator: _emailValidator,
-                        label: translate(LocaleKeys.authentication_email),
-                        textInputType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(height: Dimens.marginMedium),
-                      ChecklistTextFormField(
-                        controller: _passwordController,
-                        validator: _passwordValidator,
-                        label: translate(LocaleKeys.authentication_password),
-                        isObscured: true,
-                        textInputAction: TextInputAction.done,
-                      ),
+                      ..._buildForms(),
                       const Spacer(),
-                      ChecklistRoundedButton(
-                        text: translate(LocaleKeys.authentication_login),
-                        onPressed: () async {
-                          final email = _emailController.text;
-                          final password = _passwordController.text;
-                
-                          if (_formKey.currentState?.validate() == true) {
-                            BlocProvider.of<LoginCubit>(context)
-                                .login(email: email, password: password);
-                          }
-                        },
-                      ),
+                      _buildLoginButton(),
                       const SizedBox(height: Dimens.marginMedium),
-                      ChecklistRoundedButton(
-                        text: translate(LocaleKeys.authentication_register),
-                        onPressed: () async {
-                          context.router.push(const RegisterRoute());
-                        },
-                      ),
+                      _buildRegisterButton(),
+                      const SizedBox(height: Dimens.marginMedium),
                     ],
                   ),
                 ),
@@ -128,6 +101,53 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       },
+    );
+  }
+
+  List<Widget> _buildForms() {
+    return [
+      ChecklistTextFormField(
+        controller: _emailController,
+        validator: _emailValidator,
+        label: translate(LocaleKeys.authentication_email),
+        textInputType: TextInputType.emailAddress,
+      ),
+      const SizedBox(height: Dimens.marginMedium),
+      ChecklistTextFormField(
+        controller: _passwordController,
+        validator: _passwordValidator,
+        label: translate(LocaleKeys.authentication_password),
+        isObscured: true,
+        textInputAction: TextInputAction.done,
+      ),
+    ];
+  }
+
+  Widget _buildLoginButton() {
+    return ChecklistRoundedButton(
+      text: translate(LocaleKeys.authentication_login),
+      onPressed: () async {
+        final email = _emailController.text;
+        final password = _passwordController.text;
+
+        if (_formKey.currentState?.validate() == true) {
+          BlocProvider.of<LoginCubit>(context)
+              .login(email: email, password: password);
+        }
+      },
+    );
+  }
+
+  Widget _buildRegisterButton() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: ChecklistLargeTextButton(
+        text: translate(LocaleKeys.authentication_register),
+        forward: true,
+        onPressed: () async {
+          context.router.push(const RegisterRoute());
+        },
+      ),
     );
   }
 
