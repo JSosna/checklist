@@ -68,7 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(height: Dimens.kMarginLarge),
+        const SizedBox(height: Dimens.marginLarge),
         ChecklistSettingsTextInput(
           title: translate(LocaleKeys.settings_username),
           value: state.user?.name ?? "",
@@ -76,9 +76,9 @@ class _SettingsPageState extends State<SettingsPage> {
             BlocProvider.of<SettingsCubit>(context).changeUsername(newValue);
           },
         ),
-        const SizedBox(height: Dimens.kMarginMedium),
+        const SizedBox(height: Dimens.marginMedium),
         _buildDarkModeSwitch(),
-        const SizedBox(height: Dimens.kMarginMedium),
+        const SizedBox(height: Dimens.marginMedium),
         _buildBiometricAuthenticationSwitch(state),
         const Spacer(),
         ChecklistRoundedButton(

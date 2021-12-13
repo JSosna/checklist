@@ -14,7 +14,7 @@ class ChecklistPicker extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.all(Dimens.kMarginLarge),
+          padding: const EdgeInsets.all(Dimens.marginLarge),
           child: Row(
             children: [Expanded(child: Text(text)), const Icon(Icons.search)],
           ),

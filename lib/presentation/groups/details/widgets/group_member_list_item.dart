@@ -27,7 +27,7 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Dimens.kMarginLarge),
+      padding: const EdgeInsets.all(Dimens.marginLarge),
       child: ListTile(
         tileColor: Colors.grey.withOpacity(0.5),
         title: Text(widget.name),

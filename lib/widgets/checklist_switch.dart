@@ -20,7 +20,7 @@ class ChecklistSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.symmetric(horizontal: Dimens.kMarginLargeDouble),
+          const EdgeInsets.symmetric(horizontal: Dimens.marginLargeDouble),
       child: Row(
         children: [
           Expanded(

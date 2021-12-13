@@ -42,7 +42,7 @@ class _ChecklistSettingsTextInputState
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.symmetric(horizontal: Dimens.kMarginLargeDouble),
+          const EdgeInsets.symmetric(horizontal: Dimens.marginLargeDouble),
       child: GestureDetector(
         onTap: _openInputDialog,
         child: SizedBox(

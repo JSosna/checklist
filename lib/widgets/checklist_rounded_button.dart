@@ -18,8 +18,8 @@ class ChecklistRoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: Dimens.kMarginLargeDouble,
-        vertical: Dimens.kMarginLarge,
+        horizontal: Dimens.marginLargeDouble,
+        vertical: Dimens.marginLarge,
       ),
       child: TextButton(
         onPressed: onPressed,

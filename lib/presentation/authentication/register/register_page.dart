@@ -92,11 +92,11 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Form(
                 key: _formKey,
                 child: Padding(
-                  padding: const EdgeInsets.all(Dimens.kMarginExtraLargeDouble),
+                  padding: const EdgeInsets.all(Dimens.marginExtraLargeDouble),
                   child: Column(
                     children: [
                       Text(translate(LocaleKeys.authentication_register)),
-                      const SizedBox(height: Dimens.kMarginExtraLarge),
+                      const SizedBox(height: Dimens.marginExtraLarge),
                       TextFormField(
                         controller: _usernameController,
                         validator: _usernameValidator,
@@ -106,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           border: const OutlineInputBorder(),
                         ),
                       ),
-                      const SizedBox(height: Dimens.kMarginExtraLarge),
+                      const SizedBox(height: Dimens.marginExtraLarge),
                       TextFormField(
                         controller: _emailController,
                         validator: _emailValidator,
@@ -115,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           border: const OutlineInputBorder(),
                         ),
                       ),
-                      const SizedBox(height: Dimens.kMarginExtraLarge),
+                      const SizedBox(height: Dimens.marginExtraLarge),
                       TextFormField(
                         controller: _passwordController,
                         validator: _passwordValidator,
@@ -125,7 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           border: const OutlineInputBorder(),
                         ),
                       ),
-                      const SizedBox(height: Dimens.kMarginExtraLarge),
+                      const SizedBox(height: Dimens.marginExtraLarge),
                       TextFormField(
                         controller: _confirmPasswordController,
                         validator: (val) => MatchValidator(

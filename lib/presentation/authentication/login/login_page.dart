@@ -7,6 +7,7 @@ import 'package:checklist/presentation/authentication/login/cubit/login_cubit.da
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
+import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -73,28 +74,22 @@ class _LoginPageState extends State<LoginPage> {
               child: Form(
                 key: _formKey,
                 child: Padding(
-                  padding: const EdgeInsets.all(Dimens.kMarginExtraLargeDouble),
+                  padding: const EdgeInsets.all(Dimens.marginExtraLargeDouble),
                   child: Column(
                     children: [
                       Text(translate(LocaleKeys.authentication_login)),
-                      const SizedBox(height: Dimens.kMarginExtraLarge),
-                      TextFormField(
+                      const SizedBox(height: Dimens.marginExtraLarge),
+                      ChecklistTextFormField(
                         controller: _emailController,
                         validator: _emailValidator,
-                        decoration: InputDecoration(
-                          labelText: translate(LocaleKeys.authentication_email),
-                          border: const OutlineInputBorder(),
-                        ),
+                        label: translate(LocaleKeys.authentication_email),
                       ),
-                      const SizedBox(height: Dimens.kMarginExtraLarge),
-                      TextFormField(
+                      const SizedBox(height: Dimens.marginSmall),
+                      ChecklistTextFormField(
                         controller: _passwordController,
                         validator: _passwordValidator,
-                        decoration: InputDecoration(
-                          labelText:
-                              translate(LocaleKeys.authentication_password),
-                          border: const OutlineInputBorder(),
-                        ),
+                        label: translate(LocaleKeys.authentication_password),
+                        isObscured: true,
                       ),
                       ChecklistRoundedButton(
                         text: translate(LocaleKeys.authentication_login),

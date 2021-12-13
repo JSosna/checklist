@@ -99,18 +99,18 @@ class _OnboardingPageState extends State<OnboardingPage>
               color: context.isDarkTheme ? Colors.white : Colors.black,
             ),
           ),
-          const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+          const SizedBox(height: Dimens.marginExtraLargeDouble),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(width: Dimens.kMarginMedium),
+              const SizedBox(width: Dimens.marginMedium),
               Text(
                 translate(LocaleKeys.onboarding_create),
                 style: context.typo.medium(
                   color: context.isDarkTheme ? Colors.white : Colors.black,
                 ),
               ),
-              const SizedBox(width: Dimens.kMarginMedium),
+              const SizedBox(width: Dimens.marginMedium),
               SizedBox(
                 width: 130,
                 height: 40,
@@ -171,7 +171,7 @@ class _OnboardingPageState extends State<OnboardingPage>
               color: context.isDarkTheme ? Colors.white : Colors.black,
             ),
           ),
-          const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+          const SizedBox(height: Dimens.marginExtraLargeDouble),
           Text(
             translate(LocaleKeys.onboarding_create_lists_together),
             style: context.typo.medium(
@@ -194,7 +194,7 @@ class _OnboardingPageState extends State<OnboardingPage>
               color: context.isDarkTheme ? Colors.white : Colors.black,
             ),
           ),
-          const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+          const SizedBox(height: Dimens.marginExtraLargeDouble),
           SizedBox(
             width: 240,
             child: ChecklistSwitch(
