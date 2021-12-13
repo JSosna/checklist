@@ -23,6 +23,7 @@ class ChecklistLargeTextButton extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(4),
         onTap: onPressed,

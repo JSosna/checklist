@@ -6,6 +6,7 @@ import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/authentication/login/cubit/login_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_large_text_button.dart';
 import 'package:checklist/widgets/checklist_page_title.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
@@ -71,29 +72,32 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          body: SafeArea(
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.marginExtraLargeDouble,
-                ),
-                child: ChecklistScrollableWrapper(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: Dimens.marginLarge),
-                      ChecklistPageTitle(
-                        translate(LocaleKeys.authentication_login),
-                      ),
-                      const SizedBox(height: Dimens.marginLargeDouble),
-                      ..._buildForms(),
-                      const Spacer(),
-                      _buildLoginButton(),
-                      const SizedBox(height: Dimens.marginMedium),
-                      _buildRegisterButton(),
-                      const SizedBox(height: Dimens.marginMedium),
-                    ],
+        return ChecklistBlurredBackgroundWrapper(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SafeArea(
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Dimens.marginExtraLargeDouble,
+                  ),
+                  child: ChecklistScrollableWrapper(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: Dimens.marginLarge),
+                        ChecklistPageTitle(
+                          translate(LocaleKeys.authentication_login),
+                        ),
+                        const SizedBox(height: Dimens.marginLargeDouble),
+                        ..._buildForms(),
+                        const Spacer(),
+                        _buildLoginButton(),
+                        const SizedBox(height: Dimens.marginMedium),
+                        _buildRegisterButton(),
+                        const SizedBox(height: Dimens.marginMedium),
+                      ],
+                    ),
                   ),
                 ),
               ),
