@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/authentication/authentication_error_type.dart';
-import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
@@ -9,6 +8,7 @@ import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_page_title.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
+import 'package:checklist/widgets/checklist_scrollable_wrapper.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,33 +72,41 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(Dimens.marginExtraLargeDouble).copyWith(top: Dimens.marginLarge),
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.marginExtraLargeDouble,
+                ),
+                child: ChecklistScrollableWrapper(
                   child: Column(
                     children: [
-                      ChecklistPageTitle(translate(LocaleKeys.authentication_login)),
+                      const SizedBox(height: Dimens.marginLarge),
+                      ChecklistPageTitle(
+                        translate(LocaleKeys.authentication_login),
+                      ),
                       const SizedBox(height: Dimens.marginLargeDouble),
                       ChecklistTextFormField(
                         controller: _emailController,
                         validator: _emailValidator,
                         label: translate(LocaleKeys.authentication_email),
+                        textInputType: TextInputType.emailAddress,
                       ),
-                      const SizedBox(height: Dimens.marginSmall),
+                      const SizedBox(height: Dimens.marginMedium),
                       ChecklistTextFormField(
                         controller: _passwordController,
                         validator: _passwordValidator,
                         label: translate(LocaleKeys.authentication_password),
                         isObscured: true,
+                        textInputAction: TextInputAction.done,
                       ),
+                      const Spacer(),
                       ChecklistRoundedButton(
                         text: translate(LocaleKeys.authentication_login),
                         onPressed: () async {
                           final email = _emailController.text;
                           final password = _passwordController.text;
-
+                
                           if (_formKey.currentState?.validate() == true) {
                             BlocProvider.of<LoginCubit>(context)
                                 .login(email: email, password: password);
