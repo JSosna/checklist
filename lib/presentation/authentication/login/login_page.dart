@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/authentication/authentication_error_type.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/authentication/login/cubit/login_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_page_title.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
@@ -74,11 +76,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Form(
                 key: _formKey,
                 child: Padding(
-                  padding: const EdgeInsets.all(Dimens.marginExtraLargeDouble),
+                  padding: const EdgeInsets.all(Dimens.marginExtraLargeDouble).copyWith(top: Dimens.marginLarge),
                   child: Column(
                     children: [
-                      Text(translate(LocaleKeys.authentication_login)),
-                      const SizedBox(height: Dimens.marginExtraLarge),
+                      ChecklistPageTitle(translate(LocaleKeys.authentication_login)),
+                      const SizedBox(height: Dimens.marginLargeDouble),
                       ChecklistTextFormField(
                         controller: _emailController,
                         validator: _emailValidator,
