@@ -1,6 +1,7 @@
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/style/colors.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistRoundedButton extends StatelessWidget {
@@ -8,12 +9,14 @@ class ChecklistRoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? color;
   final Color? splashColor;
+  final bool isLoading;
 
   const ChecklistRoundedButton({
     required this.text,
     required this.onPressed,
     this.color,
     this.splashColor,
+    this.isLoading = false,
   });
 
   const ChecklistRoundedButton.negative({
@@ -21,6 +24,7 @@ class ChecklistRoundedButton extends StatelessWidget {
     required this.onPressed,
     this.color = AppColors.red,
     this.splashColor,
+    this.isLoading = false,
   });
 
   @override
@@ -48,17 +52,26 @@ class ChecklistRoundedButton extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              text,
-              style: context.typo.mediumBold(
-                color: context.isDarkTheme ? Colors.black : Colors.white,
-              ),
-            ),
-          ),
+          child: isLoading
+              ? ChecklistLoadingIndicator(
+                  size: 30.0,
+                  isDark: context.isDarkTheme,
+                )
+              : _buildText(context),
         ),
       ],
+    );
+  }
+
+  Widget _buildText(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        text,
+        style: context.typo.mediumBold(
+          color: context.isDarkTheme ? Colors.black : Colors.white,
+        ),
+      ),
     );
   }
 }

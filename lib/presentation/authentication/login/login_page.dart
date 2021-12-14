@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
             msg: message,
             gravity: ToastGravity.TOP,
             backgroundColor: Colors.red,
+            toastLength: Toast.LENGTH_LONG,
           );
         }
       },
@@ -92,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(height: Dimens.marginLargeDouble),
                         ..._buildForms(),
                         const Spacer(),
-                        _buildLoginButton(),
+                        _buildLoginButton(state),
                         const SizedBox(height: Dimens.marginMedium),
                         _buildRegisterButton(),
                         const SizedBox(height: Dimens.marginMedium),
@@ -127,9 +128,10 @@ class _LoginPageState extends State<LoginPage> {
     ];
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildLoginButton(LoginState state) {
     return ChecklistRoundedButton(
       text: translate(LocaleKeys.authentication_login),
+      isLoading: state is LoginLoading,
       onPressed: () async {
         final email = _emailController.text;
         final password = _passwordController.text;

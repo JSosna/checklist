@@ -111,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(height: Dimens.marginLargeDouble),
                         ..._buildForm(),
                         const Spacer(),
-                        _buildRegisterButton(),
+                        _buildRegisterButton(state),
                         const SizedBox(height: Dimens.marginMedium),
                         _buildLoginButton(),
                         const SizedBox(height: Dimens.marginMedium),
@@ -163,9 +163,10 @@ class _RegisterPageState extends State<RegisterPage> {
     ];
   }
 
-  Widget _buildRegisterButton() {
+  Widget _buildRegisterButton(RegisterState state) {
     return ChecklistRoundedButton(
       text: translate(LocaleKeys.authentication_register),
+      isLoading: state is RegisterLoading,
       onPressed: () async {
         final username = _usernameController.text;
         final email = _emailController.text;
@@ -200,9 +201,9 @@ class _RegisterPageState extends State<RegisterPage> {
       case AuthenticationErrorType.invalidEmail:
         return translate(LocaleKeys.authentication_errors_invalid_email);
       case AuthenticationErrorType.emailAlreadyInUse:
-        return translate(LocaleKeys.authentication_errors_invalid_password);
+        return translate(LocaleKeys.authentication_errors_email_already_in_use);
       case AuthenticationErrorType.weakPassword:
-        return translate(LocaleKeys.authentication_errors_user_not_found);
+        return translate(LocaleKeys.authentication_errors_weak_password);
       default:
         return translate(LocaleKeys.authentication_errors_unknown_error);
     }

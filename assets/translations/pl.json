@@ -21,7 +21,7 @@
         "dark_mode": "ciemny tryb",
         "biometrics": "biometryka",
         "skip": "pomiń",
-        "start": "zacznij",
+        "start": "start",
         "next": "dalej"
     },
     "authentication": {
@@ -38,7 +38,9 @@
         "invalid_password": "nieprawidłowe hasło",
         "user_not_found": "nie znaleziono użytkownika",
         "user_disabled": "użytkownik zablokowany",
-        "unknown_error": "wystąpił błąd, spróbuj ponownie później"
+        "unknown_error": "wystąpił błąd, spróbuj ponownie później",
+        "weak_password": "hasło jest zbyt słabe",
+        "email_already_in_use": "email jest już używany"
     },
     "validation": {
         "username_is_required": "nazwa uytkownika jest wymagana",

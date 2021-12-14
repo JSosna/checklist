@@ -4,8 +4,9 @@ import 'package:rive/rive.dart';
 
 class ChecklistLoadingIndicator extends StatefulWidget {
   final double size;
+  final bool? isDark;
 
-  const ChecklistLoadingIndicator({Key? key, this.size = 100})
+  const ChecklistLoadingIndicator({Key? key, this.size = 100, this.isDark})
       : super(key: key);
 
   @override
@@ -32,12 +33,16 @@ class _ChecklistLoadingIndicatorState extends State<ChecklistLoadingIndicator> {
 
   @override
   Widget build(BuildContext context) {
+    String animation = context.isDarkTheme ? lightAnimation : darkAnimation;
+
+    if (widget.isDark != null) {
+      animation = widget.isDark == true ? darkAnimation : lightAnimation;
+    }
+
     return SizedBox(
       height: widget.size,
       width: widget.size,
-      child: RiveAnimation.asset(
-        context.isDarkTheme ? lightAnimation : darkAnimation,
-      ),
+      child: RiveAnimation.asset(animation),
     );
   }
 }

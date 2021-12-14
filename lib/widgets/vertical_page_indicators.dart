@@ -1,3 +1,4 @@
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class VerticalPageIndicators extends StatefulWidget {
@@ -48,9 +49,12 @@ class _VerticalPageIndicatorsState extends State<VerticalPageIndicators> {
           width: 11.0,
           height: isActive ? 42.0 : 11.0,
           decoration: BoxDecoration(
-            color: isActive ? Colors.blue.shade400 : Colors.blue[50],
+            color: context.isDarkTheme ? Colors.white : Colors.black,
             borderRadius: BorderRadius.circular(6),
-            border: Border.all(color: Colors.blue.shade400, width: 2),
+            border: Border.all(
+              color: context.isDarkTheme ? Colors.white : Colors.black,
+              width: 2,
+            ),
           ),
         ),
       ),
