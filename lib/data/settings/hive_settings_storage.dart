@@ -46,6 +46,17 @@ class HiveSettingsStorage implements SettingsStorage {
     return getAppSettings();
   }
 
+    @override
+  Future<ChecklistSettings> setBiometricsOption({required bool active}) async {
+    final settings = getAppSettings();
+
+    await saveAppSettings(
+      settings.copyWith(isBiometricsActive: active),
+    );
+
+    return getAppSettings();
+  }
+
   @override
   bool isBiometricsActive() {
     return getAppSettings().isBiometricsActive;

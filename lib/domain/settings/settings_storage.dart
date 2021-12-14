@@ -7,5 +7,8 @@ abstract class SettingsStorage {
 
   Future<ChecklistSettings> toggleBiometricsOption();
 
+  Future<ChecklistSettings> setBiometricsOption({required bool active});
+
   bool isBiometricsActive();
+
 }

@@ -27,7 +27,7 @@ Future<void> registerBlocModule(GetIt injector) async {
   injector.registerFactory(() => SplashBloc(injector.get(), injector.get()));
   injector.registerFactory(() => LoginCubit(injector.get(), injector.get()));
   injector.registerFactory(() => RegisterCubit(injector.get()));
-  injector.registerFactory(() => OnboardingCubit());
+  injector.registerFactory(() => OnboardingCubit(injector.get()));
   injector.registerFactory(() => ChecklistsLoaderCubit(injector.get()));
   injector.registerFactoryParam<ChecklistsCubit, ChecklistsLoaderCubit, dynamic>((p1, p2) => ChecklistsCubit(p1, injector.get()));
   injector.registerFactory(() => ChecklistDetailsCubit(injector.get(), injector.get(), injector.get(), injector.get()));
