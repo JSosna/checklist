@@ -114,11 +114,11 @@ class _ChecklistElementsState extends State<ChecklistElements> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ChecklistTextField(
+                ChecklistTextFormField(
                   controller: titleController,
                   validator: _titleValidator,
                 ),
-                ChecklistTextField(controller: descriptionController),
+                ChecklistTextFormField(controller: descriptionController),
               ],
             ),
           ),

@@ -38,7 +38,9 @@
         "invalid_password": "invalid password",
         "user_not_found": "user not found",
         "user_disabled": "user disabled",
-        "unknown_error": "error, please try again later"
+        "unknown_error": "error, please try again later",
+        "weak_password": "password is too weak",
+        "email_already_in_use": "email already in use"
     },
     "validation": {
         "username_is_required": "username is required",

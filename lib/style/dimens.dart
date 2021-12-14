@@ -1,8 +1,8 @@
 class Dimens {
-  static const double kMarginSmall = 4.0;
-  static const double kMarginMedium = 8.0;
-  static const double kMarginLarge = 12.0;
-  static const double kMarginExtraLarge = 16.0;
-  static const double kMarginLargeDouble = 24.0;
-  static const double kMarginExtraLargeDouble = 32.0;
+  static const double marginSmall = 4.0;
+  static const double marginMedium = 8.0;
+  static const double marginLarge = 12.0;
+  static const double marginExtraLarge = 16.0;
+  static const double marginLargeDouble = 24.0;
+  static const double marginExtraLargeDouble = 32.0;
 }

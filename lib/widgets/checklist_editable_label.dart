@@ -42,7 +42,7 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
         borderRadius: BorderRadius.circular(8.0),
         onTap: _openInputDialog,
         child: Container(
-          padding: const EdgeInsets.all(Dimens.kMarginSmall),
+          padding: const EdgeInsets.all(Dimens.marginSmall),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -51,7 +51,7 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
                 currentValue ?? "",
                 style: widget.style,
               ),
-              const SizedBox(width: Dimens.kMarginSmall),
+              const SizedBox(width: Dimens.marginSmall),
               const Icon(
                 Icons.edit,
                 color: Colors.grey,

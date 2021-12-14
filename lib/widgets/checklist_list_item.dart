@@ -36,7 +36,7 @@ class _ChecklistListItemState extends State<ChecklistListItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Dimens.kMarginMedium).copyWith(top: 0.0),
+      padding: const EdgeInsets.all(Dimens.marginMedium).copyWith(top: 0.0),
       child: Dismissible(
         key: widget.key ?? ValueKey(widget.element.name),
         direction: DismissDirection.endToStart,
@@ -56,7 +56,7 @@ class _ChecklistListItemState extends State<ChecklistListItem> {
           child: InkWell(
             onTap: widget.onPressed,
             child: Padding(
-              padding: const EdgeInsets.all(Dimens.kMarginMedium),
+              padding: const EdgeInsets.all(Dimens.marginMedium),
               child: Row(
                 children: [
                   if (widget.checkable)

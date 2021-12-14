@@ -52,7 +52,7 @@ class _SplashPageState extends State<SplashPage> {
                   color: context.isDarkTheme ? Colors.white : Colors.black,
                 ),
               ),
-              const SizedBox(height: Dimens.kMarginLarge),
+              const SizedBox(height: Dimens.marginLarge),
               const ChecklistLoadingIndicator(),
             ],
           ),

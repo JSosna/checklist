@@ -7,4 +7,13 @@ abstract class OnboardingState extends Equatable {
   List<Object> get props => [];
 }
 
-class OnboardingInitial extends OnboardingState {}
+class OnboardingLoading extends OnboardingState {}
+
+class OnboardingLoaded extends OnboardingState {
+  final ChecklistSettings settings;
+
+  const OnboardingLoaded({required this.settings});
+
+  @override
+  List<Object> get props => [settings];
+}

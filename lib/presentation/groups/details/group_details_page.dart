@@ -78,7 +78,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ..._buildTopPart(state),
-            const SizedBox(height: Dimens.kMarginLarge),
+            const SizedBox(height: Dimens.marginLarge),
             const Divider(height: 0),
             Expanded(child: _buildTabs(state)),
           ],
@@ -208,7 +208,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           itemCount: state.detailedGroup.checklists.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.all(Dimens.kMarginLarge),
+              padding: const EdgeInsets.all(Dimens.marginLarge),
               child: ListTile(
                 tileColor: Colors.grey.withOpacity(0.5),
                 title: Text(state.detailedGroup.checklists[index].name ?? ""),

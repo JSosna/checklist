@@ -1,7 +1,6 @@
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
-import 'package:checklist/style/dimens.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistSettingsTextInput extends StatefulWidget {
@@ -40,37 +39,33 @@ class _ChecklistSettingsTextInputState
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          const EdgeInsets.symmetric(horizontal: Dimens.kMarginLargeDouble),
-      child: GestureDetector(
-        onTap: _openInputDialog,
-        child: SizedBox(
-          height: 40.0,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Text(
-                  widget.title,
-                  style: context.typo.medium(
-                    color: context.isDarkTheme ? Colors.white : Colors.black,
-                  ),
+    return GestureDetector(
+      onTap: _openInputDialog,
+      child: SizedBox(
+        height: 40.0,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                widget.title,
+                style: context.typo.medium(
+                  color: context.isDarkTheme ? Colors.white : Colors.black,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  value ?? "",
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.end,
-                  style: context.typo.medium(
-                    color: Colors.grey,
-                  ),
+            ),
+            Expanded(
+              child: Text(
+                value ?? "",
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.end,
+                style: context.typo.medium(
+                  color: Colors.grey,
                 ),
               ),
-              const Icon(Icons.chevron_right),
-            ],
-          ),
+            ),
+            const Icon(Icons.chevron_right),
+          ],
         ),
       ),
     );

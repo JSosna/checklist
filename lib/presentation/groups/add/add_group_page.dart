@@ -63,7 +63,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
               children: [
                 _buildBackButton(),
                 _buildJoinGroupPart(),
-                const Divider(height: Dimens.kMarginExtraLargeDouble),
+                const Divider(height: Dimens.marginExtraLargeDouble),
                 Expanded(child: _buildCreateGroupPart()),
               ],
             ),
@@ -113,7 +113,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Text("Create new group"),
-        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+        const SizedBox(height: Dimens.marginExtraLargeDouble),
         const Text("Name"),
         TextField(controller: newGroupNameController),
         const Spacer(),

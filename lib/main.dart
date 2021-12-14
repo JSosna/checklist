@@ -7,6 +7,7 @@ import 'package:checklist/injection/bloc_factory.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/injection/modules.dart';
 import 'package:checklist/utlis/color_generator.dart';
+import 'package:checklist/widgets/blurred_background_state_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,9 @@ Future<void> main() async {
           ),
           Provider<ColorGenerator>(
             create: (context) => ColorGenerator(),
+          ),
+          Provider<BlurredBackgroundStateProvider>(
+            create: (context) => BlurredBackgroundStateProvider(),
           ),
         ],
         child: EasyLocalization(

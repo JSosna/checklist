@@ -86,7 +86,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Text("Create new checklist"),
-        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+        const SizedBox(height: Dimens.marginExtraLargeDouble),
         const Text("Group"),
         ChecklistPicker(
           text: _group?.name ?? "",
@@ -100,10 +100,10 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
             }
           },
         ),
-        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+        const SizedBox(height: Dimens.marginExtraLargeDouble),
         const Text("Name"),
         TextField(controller: _nameController),
-        const SizedBox(height: Dimens.kMarginExtraLargeDouble),
+        const SizedBox(height: Dimens.marginExtraLargeDouble),
         const Text("Checkable"),
         Checkbox(
           value: checkable,

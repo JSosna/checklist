@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:checklist/extension/context_extensions.dart';
-import 'package:checklist/style/dimens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,22 +17,18 @@ class ChecklistSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          const EdgeInsets.symmetric(horizontal: Dimens.kMarginLargeDouble),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: context.typo.medium(
-                color: context.isDarkTheme ? Colors.white : Colors.black,
-              ),
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: context.typo.medium(
+              color: context.isDarkTheme ? Colors.white : Colors.black,
             ),
           ),
-          SizedBox(height: 40.0, child: _buildSwitch()),
-        ],
-      ),
+        ),
+        SizedBox(height: 40.0, child: _buildSwitch()),
+      ],
     );
   }
 
