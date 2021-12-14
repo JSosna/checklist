@@ -7,6 +7,7 @@ import 'package:checklist/localization/utils.dart';
 import 'package:checklist/presentation/settings/cubit/settings_cubit.dart';
 import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_settings_text_input.dart';
@@ -40,20 +41,23 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: BlocBuilder<SettingsCubit, SettingsState>(
-            buildWhen: (previous, current) {
-              return current is! SettingsUpdating;
-            },
-            builder: (context, state) {
-              if (state is SettingsLoaded) {
-                return _buildContent(context, state);
-              } else {
-                return _buildLoader();
-              }
-            },
+    return ChecklistBlurredBackgroundWrapper(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Center(
+            child: BlocBuilder<SettingsCubit, SettingsState>(
+              buildWhen: (previous, current) {
+                return current is! SettingsUpdating;
+              },
+              builder: (context, state) {
+                if (state is SettingsLoaded) {
+                  return _buildContent(context, state);
+                } else {
+                  return _buildLoader();
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -121,7 +125,8 @@ class _SettingsPageState extends State<SettingsPage> {
       label: LocaleKeys.settings_biometric_authentication.tr(),
       value: state.settings.isBiometricsActive,
       onChanged: (value) async {
-        await BlocProvider.of<SettingsCubit>(context).toggleBiometricsOption(state.user);
+        await BlocProvider.of<SettingsCubit>(context)
+            .toggleBiometricsOption(state.user);
       },
     );
   }

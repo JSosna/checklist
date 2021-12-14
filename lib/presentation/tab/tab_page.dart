@@ -54,8 +54,11 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
         routes: const [ChecklistsRouter(), GroupsRouter(), SettingsRoute()],
         bottomNavigationBuilder: (_, tabsRouter) {
           return BottomNavigationBar(
+            backgroundColor: context.isDarkTheme ? Colors.black : Colors.white,
             selectedItemColor:
                 context.isDarkTheme ? Colors.white : Colors.black,
+            unselectedItemColor:
+                context.isDarkTheme ? Colors.white54 : Colors.black54,
             currentIndex: tabsRouter.activeIndex,
             onTap: (index) {
               if (index == 0) {
