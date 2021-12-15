@@ -9,6 +9,8 @@ class ChecklistTextFormField extends StatefulWidget {
   final TextInputType? textInputType;
   final bool? isObscured;
   final String? label;
+  final bool autofocus;
+  final void Function(String)? onChanged;
 
   const ChecklistTextFormField({
     required this.controller,
@@ -17,6 +19,8 @@ class ChecklistTextFormField extends StatefulWidget {
     this.textInputType,
     this.isObscured,
     this.label,
+    this.autofocus = false,
+    this.onChanged,
   });
 
   @override
@@ -57,12 +61,14 @@ class _ChecklistTextFormFieldState extends State<ChecklistTextFormField> {
   Widget _buildTextFormField() {
     return TextFormField(
       controller: widget.controller,
+      autofocus: widget.autofocus,
       validator: widget.validator,
       style: context.typo
           .medium(color: context.isDarkTheme ? Colors.white : Colors.black),
       textInputAction: widget.textInputAction,
       keyboardType: widget.textInputType,
       obscureText: isObscured ?? false,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         helperText: "",
         suffixIcon:

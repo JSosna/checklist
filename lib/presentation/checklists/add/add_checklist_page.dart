@@ -8,6 +8,7 @@ import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_picker.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
+import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +35,7 @@ class AddChecklistPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _AddChecklistPageState extends State<AddChecklistPage> {
-  TextEditingController? _nameController;
+  late final TextEditingController _nameController;
   Group? _group;
   bool checkable = false;
 
@@ -86,52 +87,56 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
   }
 
   Widget _buildContent() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text("Create new checklist"),
-        const SizedBox(height: Dimens.marginExtraLargeDouble),
-        const Text("Group"),
-        ChecklistPicker(
-          text: _group?.name ?? "",
-          onPressed: () async {
-            final result = await context.router.push(const GroupPickerRoute());
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.marginExtraLarge),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text("Create new checklist"),
+          const SizedBox(height: Dimens.marginExtraLargeDouble),
+          const Text("Group"),
+          ChecklistPicker(
+            text: _group?.name ?? "",
+            onPressed: () async {
+              final result = await context.router.push(const GroupPickerRoute());
 
-            if (result is Group) {
+              if (result is Group) {
+                setState(() {
+                  _group = result;
+                });
+              }
+            },
+          ),
+          const SizedBox(height: Dimens.marginExtraLargeDouble),
+          const Text("Name"),
+          ChecklistTextFormField(controller: _nameController),
+          const SizedBox(height: Dimens.marginExtraLargeDouble),
+          const Text("Checkable"),
+          Checkbox(
+            value: checkable,
+            onChanged: (checked) {
               setState(() {
-                _group = result;
+                checkable = checked ?? false;
               });
-            }
-          },
-        ),
-        const SizedBox(height: Dimens.marginExtraLargeDouble),
-        const Text("Name"),
-        TextField(controller: _nameController),
-        const SizedBox(height: Dimens.marginExtraLargeDouble),
-        const Text("Checkable"),
-        Checkbox(
-          value: checkable,
-          onChanged: (checked) {
-            setState(() {
-              checkable = checked ?? false;
-            });
-          },
-        ),
-        const Spacer(),
-        ChecklistRoundedButton(
-          text: "Create",
-          onPressed: () {
-            // TODO: Use text form validator
-            final name = _nameController?.text.trim();
-            final groupId = _group?.id;
+            },
+          ),
+          const Spacer(),
+          ChecklistRoundedButton(
+            text: "Create",
+            onPressed: () {
+              // TODO: Use text form validator
+              final name = _nameController.text.trim();
+              final groupId = _group?.id;
 
-            if (name != null && name.length > 4 && groupId != null) {
-              BlocProvider.of<AddChecklistCubit>(context)
-                  .createNewChecklist(groupId, name, checkable: checkable);
-            }
-          },
-        ),
-      ],
+              if (name.length > 4 && groupId != null) {
+                BlocProvider.of<AddChecklistCubit>(context)
+                    .createNewChecklist(groupId, name, checkable: checkable);
+              }
+            },
+          ),
+          const SizedBox(height: Dimens.marginLarge),
+        ],
+      ),
     );
   }
 }

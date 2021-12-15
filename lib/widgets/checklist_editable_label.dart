@@ -1,6 +1,7 @@
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistEditableLabel extends StatefulWidget {
@@ -20,7 +21,7 @@ class ChecklistEditableLabel extends StatefulWidget {
 
 class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
   String? currentValue;
-  TextEditingController? controller;
+  late final TextEditingController controller;
 
   @override
   void initState() {
@@ -31,7 +32,7 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -70,7 +71,7 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Edit text"),
-        content: TextField(
+        content: ChecklistTextFormField(
           autofocus: true,
           controller: controller,
         ),
@@ -79,9 +80,9 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
             onPressed: () {
               Navigator.of(context).pop();
 
-              final newValue = controller?.text;
+              final newValue = controller.text;
 
-              if (newValue != null && currentValue != newValue) {
+              if (currentValue != newValue) {
                 widget.onChanged(newValue);
                 setState(() {
                   currentValue = newValue;

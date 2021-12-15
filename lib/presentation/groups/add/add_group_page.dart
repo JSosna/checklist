@@ -61,15 +61,21 @@ class _AddGroupPageState extends State<AddGroupPage> {
           child: Scaffold(
             backgroundColor: Colors.transparent,
             body: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildBackButton(),
-                  _buildJoinGroupPart(),
-                  const Divider(height: Dimens.marginExtraLargeDouble),
-                  Expanded(child: _buildCreateGroupPart()),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.marginLargeDouble,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildBackButton(),
+                    _buildJoinGroupPart(),
+                    const Divider(height: Dimens.marginExtraLargeDouble),
+                    Expanded(child: _buildCreateGroupPart()),
+                    const SizedBox(height: Dimens.marginLarge),
+                  ],
+                ),
               ),
             ),
           ),

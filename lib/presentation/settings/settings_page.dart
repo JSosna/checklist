@@ -100,7 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
               BlocProvider.of<SettingsCubit>(context).deleteAccount();
             },
           ),
-          const SizedBox(height: Dimens.marginMedium),
+          const SizedBox(height: Dimens.marginLarge),
         ],
       ),
     );

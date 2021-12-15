@@ -1,6 +1,7 @@
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/localization/utils.dart';
+import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistSettingsTextInput extends StatefulWidget {
@@ -21,7 +22,7 @@ class ChecklistSettingsTextInput extends StatefulWidget {
 
 class _ChecklistSettingsTextInputState
     extends State<ChecklistSettingsTextInput> {
-  TextEditingController? controller;
+  late final TextEditingController controller;
   String? value;
 
   @override
@@ -33,7 +34,7 @@ class _ChecklistSettingsTextInputState
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -76,7 +77,7 @@ class _ChecklistSettingsTextInputState
       context: context,
       builder: (context) => AlertDialog(
         title: Text(widget.title),
-        content: TextField(
+        content: ChecklistTextFormField(
           autofocus: true,
           controller: controller,
         ),
@@ -85,9 +86,9 @@ class _ChecklistSettingsTextInputState
             onPressed: () {
               Navigator.of(context).pop();
 
-              final newValue = controller?.text;
+              final newValue = controller.text;
 
-              if (newValue != null && value != newValue) {
+              if (value != newValue) {
                 widget.onChanged(newValue);
                 setState(() {
                   value = newValue;
