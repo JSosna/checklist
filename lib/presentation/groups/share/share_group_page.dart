@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/share/cubit/share_group_cubit.dart';
-import 'package:checklist/widgets/checklist_loading_indicator.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
+import 'package:checklist/widgets/checklist_error_view.dart';
+import 'package:checklist/widgets/checklist_loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,32 +40,36 @@ class _ShareGroupPageState extends State<ShareGroupPage> {
     return BlocBuilder<ShareGroupCubit, ShareGroupState>(
       builder: (context, state) {
         if (state is ShareGroupLoading) {
-          return _buildLoading();
+          return const ChecklistLoadingView();
         } else if (state is ShareGroupLoaded) {
           return _buildContent(state);
         } else {
-          return _buildError();
+          return const ChecklistErrorView(
+            message: "Error, check your internet connection or try later",
+          );
         }
       },
     );
   }
 
-  Widget _buildLoading() {
-    return const Scaffold(
-      body: Center(
-        child: ChecklistLoadingIndicator(),
-      ),
-    );
-  }
-
   Widget _buildContent(ShareGroupLoaded state) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildTopPart(),
-            Center(child: Text(state.shareCode)),
-          ],
+    return ChecklistBlurredBackgroundWrapper(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            children: [
+              _buildTopPart(),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    state.shareCode,
+                    style: context.typo.extraLargeBold(),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -81,21 +88,12 @@ class _ShareGroupPageState extends State<ShareGroupPage> {
         const Spacer(),
         IconButton(
           onPressed: () {
-            BlocProvider.of<ShareGroupCubit>(context).refreshShareCode(widget.groupId);
+            BlocProvider.of<ShareGroupCubit>(context)
+                .refreshShareCode(widget.groupId);
           },
           icon: const Icon(Icons.refresh),
         )
       ],
-    );
-  }
-
-  Widget _buildError() {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Error, check your internet connection or try later",
-        ),
-      ),
     );
   }
 }

@@ -38,6 +38,7 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
         onTap: _openInputDialog,

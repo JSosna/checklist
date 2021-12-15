@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/picker/cubit/group_picker_cubit.dart';
 import 'package:checklist/presentation/groups/picker/group_picker_loader_cubit/group_picker_loader_cubit.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,25 +45,28 @@ class _GroupPickerPageState extends State<GroupPickerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: BlocConsumer<GroupPickerCubit, GroupPickerState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            return Column(
-              children: [
-                _buildBackButton(),
-                TextField(
-                  controller: _groupNameController,
-                  onChanged: (text) {
-                    BlocProvider.of<GroupPickerLoaderCubit>(context)
-                        .reloadGroups(text);
-                  },
-                ),
-                Expanded(child: _buildContent(state)),
-              ],
-            );
-          },
+    return ChecklistBlurredBackgroundWrapper(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: BlocConsumer<GroupPickerCubit, GroupPickerState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return Column(
+                children: [
+                  _buildBackButton(),
+                  TextField(
+                    controller: _groupNameController,
+                    onChanged: (text) {
+                      BlocProvider.of<GroupPickerLoaderCubit>(context)
+                          .reloadGroups(text);
+                    },
+                  ),
+                  Expanded(child: _buildContent(state)),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

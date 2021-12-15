@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/add/cubit/add_group_cubit.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
+import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,8 +25,8 @@ class AddGroupPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _AddGroupPageState extends State<AddGroupPage> {
-  TextEditingController? joinGroupController;
-  TextEditingController? newGroupNameController;
+  late final TextEditingController joinGroupController;
+  late final TextEditingController newGroupNameController;
 
   @override
   void initState() {
@@ -35,8 +37,8 @@ class _AddGroupPageState extends State<AddGroupPage> {
 
   @override
   void dispose() {
-    joinGroupController?.dispose();
-    newGroupNameController?.dispose();
+    joinGroupController.dispose();
+    newGroupNameController.dispose();
     super.dispose();
   }
 
@@ -55,17 +57,20 @@ class _AddGroupPageState extends State<AddGroupPage> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          body: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildBackButton(),
-                _buildJoinGroupPart(),
-                const Divider(height: Dimens.marginExtraLargeDouble),
-                Expanded(child: _buildCreateGroupPart()),
-              ],
+        return ChecklistBlurredBackgroundWrapper(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildBackButton(),
+                  _buildJoinGroupPart(),
+                  const Divider(height: Dimens.marginExtraLargeDouble),
+                  Expanded(child: _buildCreateGroupPart()),
+                ],
+              ),
             ),
           ),
         );
@@ -89,13 +94,15 @@ class _AddGroupPageState extends State<AddGroupPage> {
         const Text("Join existing group"),
         Row(
           children: [
-            Expanded(child: TextField(controller: joinGroupController)),
+            Expanded(
+              child: ChecklistTextFormField(controller: joinGroupController),
+            ),
             IconButton(
               onPressed: () {
-                final shareCode = joinGroupController?.text.trim();
+                final shareCode = joinGroupController.text.trim();
 
                 // TODO: Use text form validator
-                if (shareCode != null && shareCode.length == 6) {
+                if (shareCode.length == 6) {
                   BlocProvider.of<AddGroupCubit>(context)
                       .joinToExistingGroup(shareCode);
                 }
@@ -115,15 +122,15 @@ class _AddGroupPageState extends State<AddGroupPage> {
         const Text("Create new group"),
         const SizedBox(height: Dimens.marginExtraLargeDouble),
         const Text("Name"),
-        TextField(controller: newGroupNameController),
+        ChecklistTextFormField(controller: newGroupNameController),
         const Spacer(),
         ChecklistRoundedButton(
           text: "Create",
           onPressed: () {
             // TODO: Use text form validator
-            final name = newGroupNameController?.text.trim();
+            final name = newGroupNameController.text.trim();
 
-            if (name != null && name.length > 4) {
+            if (name.length > 4) {
               BlocProvider.of<AddGroupCubit>(context).createNewGroup(name);
             }
           },

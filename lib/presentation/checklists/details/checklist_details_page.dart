@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/details/cubit/checklist_details_cubit.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_elements.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
-import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,30 +63,33 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
       return _buildDetails(state);
     } else {
       return const ChecklistErrorView(
-          message:
-              "Error while loading the list, check your internet connection or try later");
+        message:
+            "Error while loading the list, check your internet connection or try later",
+      );
     }
   }
 
   Widget _buildDetails(ChecklistDetailsLoaded state) {
-    return Scaffold(
-      key: const ValueKey("details"),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ..._buildTopPart(state),
-            Expanded(
-              child: ChecklistElements(
-                elements: state.checklist.elements ?? [],
-                checkable: state.checklist.checkable,
-                onItemsUpdated: (updatedList) {
-                  BlocProvider.of<ChecklistDetailsCubit>(context)
-                      .updateItems(state, updatedList, widget.checklistId);
-                },
+    return ChecklistBlurredBackgroundWrapper(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ..._buildTopPart(state),
+              Expanded(
+                child: ChecklistElements(
+                  elements: state.checklist.elements ?? [],
+                  checkable: state.checklist.checkable,
+                  onItemsUpdated: (updatedList) {
+                    BlocProvider.of<ChecklistDetailsCubit>(context)
+                        .updateItems(state, updatedList, widget.checklistId);
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

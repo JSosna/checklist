@@ -5,8 +5,10 @@ import 'package:checklist/presentation/groups/details/cubit/group_details_cubit.
 import 'package:checklist/presentation/groups/details/widgets/group_member_list_item.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
-import 'package:checklist/widgets/checklist_loading_indicator.dart';
+import 'package:checklist/widgets/checklist_error_view.dart';
+import 'package:checklist/widgets/checklist_loading_view.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,35 +55,33 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
       buildWhen: (previous, current) => current is! LeftGroup,
       builder: (context, state) {
         if (state is GroupDetailsLoading) {
-          return _buildLoading();
+          return const ChecklistLoadingView();
         } else if (state is GroupDetailsLoaded) {
           return _buildDetails(state);
         } else {
-          return _buildError();
+          return const ChecklistErrorView(
+            message:
+                "Error while loading the details, check your internet connection or try later",
+          );
         }
       },
     );
   }
 
-  Widget _buildLoading() {
-    return const Scaffold(
-      body: Center(
-        child: ChecklistLoadingIndicator(),
-      ),
-    );
-  }
-
   Widget _buildDetails(GroupDetailsLoaded state) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ..._buildTopPart(state),
-            const SizedBox(height: Dimens.marginLarge),
-            const Divider(height: 0),
-            Expanded(child: _buildTabs(state)),
-          ],
+    return ChecklistBlurredBackgroundWrapper(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ..._buildTopPart(state),
+              const SizedBox(height: Dimens.marginLarge),
+              const Divider(height: 0),
+              Expanded(child: _buildTabs(state)),
+            ],
+          ),
         ),
       ),
     );
@@ -280,16 +280,6 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           isCurrentUserAdmin: state.detailedGroup.isCurrentUserAdmin,
         );
       },
-    );
-  }
-
-  Widget _buildError() {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Error while loading the details, check your internet connection or try later",
-        ),
-      ),
     );
   }
 }
