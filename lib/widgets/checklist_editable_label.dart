@@ -1,8 +1,8 @@
-import 'package:checklist/localization/keys.g.dart';
-import 'package:checklist/localization/utils.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_dialog.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class ChecklistEditableLabel extends StatefulWidget {
   final String text;
@@ -20,19 +20,27 @@ class ChecklistEditableLabel extends StatefulWidget {
 }
 
 class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
-  String? currentValue;
-  late final TextEditingController controller;
+  final _formKey = GlobalKey<FormState>();
+  String? _currentValue;
+  late final TextEditingController _controller;
+
+  final nameValidator = MultiValidator([
+    RequiredValidator(
+      errorText: "This field is required",
+    ),
+    MaxLengthValidator(30, errorText: "Too long!")
+  ]);
 
   @override
   void initState() {
     super.initState();
-    currentValue = widget.text;
-    controller = TextEditingController(text: widget.text);
+    _currentValue = widget.text;
+    _controller = TextEditingController(text: widget.text);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -50,7 +58,7 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                currentValue ?? "",
+                _currentValue ?? "",
                 style: widget.style,
               ),
               const SizedBox(width: Dimens.marginSmall),
@@ -69,29 +77,31 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
   void _openInputDialog() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Edit text"),
-        content: ChecklistTextField(
-          autofocus: true,
-          controller: controller,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-
-              final newValue = controller.text;
-
-              if (currentValue != newValue) {
-                widget.onChanged(newValue);
-                setState(() {
-                  currentValue = newValue;
-                });
-              }
-            },
-            child: Text(translate(LocaleKeys.general_submit)),
-          )
+      builder: (context) => ChecklistDialog(
+        title: "Edit text",
+        children: [
+          Form(
+            key: _formKey,
+            child: ChecklistTextField(
+              autofocus: true,
+              controller: _controller,
+              validator: nameValidator,
+            ),
+          ),
         ],
+        onSubmit: () {
+          final newValue = _controller.text;
+
+          if (_formKey.currentState?.validate() == true &&
+              _currentValue != newValue) {
+            Navigator.of(context).pop();
+
+            widget.onChanged(newValue);
+            setState(() {
+              _currentValue = newValue;
+            });
+          }
+        },
       ),
     );
   }
