@@ -4,7 +4,9 @@ import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/details/cubit/checklist_details_cubit.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_elements.dart';
+import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
+import 'package:checklist/widgets/checklist_loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -56,21 +58,14 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
 
   Widget _buildPage(ChecklistDetailsState state) {
     if (state is ChecklistDetailsLoading) {
-      return _buildLoading();
+      return const ChecklistLoadingView();
     } else if (state is ChecklistDetailsLoaded) {
       return _buildDetails(state);
     } else {
-      return _buildError();
+      return const ChecklistErrorView(
+          message:
+              "Error while loading the list, check your internet connection or try later");
     }
-  }
-
-  Widget _buildLoading() {
-    return const Scaffold(
-      key: ValueKey("loading"),
-      body: Center(
-        child: ChecklistLoadingIndicator(),
-      ),
-    );
   }
 
   Widget _buildDetails(ChecklistDetailsLoaded state) {
@@ -187,24 +182,13 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
                     groupId,
                   );
                 }
-                
+
                 setState(() {
                   _showMoreMenu = false;
                 });
               },
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildError() {
-    return const Scaffold(
-      key: ValueKey("error"),
-      body: Center(
-        child: Text(
-          "Error while loading the list, check your internet connection or try later",
         ),
       ),
     );

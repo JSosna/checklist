@@ -5,6 +5,7 @@ import 'package:checklist/presentation/checklists/add/cubit/add_checklist_cubit.
 import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_picker.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:flutter/material.dart';
@@ -56,15 +57,18 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          body: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildBackButton(),
-                Expanded(child: _buildContent()),
-              ],
+        return ChecklistBlurredBackgroundWrapper(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildBackButton(),
+                  Expanded(child: _buildContent()),
+                ],
+              ),
             ),
           ),
         );
