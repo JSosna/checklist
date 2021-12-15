@@ -1,6 +1,5 @@
 import 'package:checklist/extension/context_extensions.dart';
-import 'package:checklist/localization/keys.g.dart';
-import 'package:checklist/localization/utils.dart';
+import 'package:checklist/widgets/checklist_dialog.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -8,11 +7,13 @@ class ChecklistSettingsTextInput extends StatefulWidget {
   final String title;
   final String value;
   final void Function(String) onChanged;
+  final String? Function(String?)? validator;
 
   const ChecklistSettingsTextInput({
     required this.title,
     required this.value,
     required this.onChanged,
+    this.validator,
   });
 
   @override
@@ -22,6 +23,7 @@ class ChecklistSettingsTextInput extends StatefulWidget {
 
 class _ChecklistSettingsTextInputState
     extends State<ChecklistSettingsTextInput> {
+  final _formKey = GlobalKey<FormState>();
   late final TextEditingController controller;
   String? value;
 
@@ -75,29 +77,32 @@ class _ChecklistSettingsTextInputState
   void _openInputDialog() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(widget.title),
-        content: ChecklistTextField(
-          autofocus: true,
-          controller: controller,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-
-              final newValue = controller.text;
-
-              if (value != newValue) {
-                widget.onChanged(newValue);
-                setState(() {
-                  value = newValue;
-                });
-              }
-            },
-            child: Text(translate(LocaleKeys.general_submit)),
-          )
+      builder: (context) => ChecklistDialog(
+        title: widget.title,
+        children: [
+          Form(
+            key: _formKey,
+            child: ChecklistTextField(
+              autofocus: true,
+              controller: controller,
+              validator: widget.validator,
+            ),
+          ),
         ],
+        onSubmit: () {
+          if (_formKey.currentState?.validate() == true) {
+            Navigator.of(context).pop();
+
+            final newValue = controller.text;
+
+            if (value != newValue) {
+              widget.onChanged(newValue);
+              setState(() {
+                value = newValue;
+              });
+            }
+          }
+        },
       ),
     );
   }

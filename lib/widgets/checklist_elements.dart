@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/checklists/checklist_element.dart';
+import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_dialog.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class ChecklistElements extends StatefulWidget {
@@ -25,10 +28,10 @@ class _ChecklistElementsState extends State<ChecklistElements> {
   final _formKey = GlobalKey<FormState>();
 
   final _titleValidator = MultiValidator([
-    MaxLengthValidator(100, errorText: "error"),
     RequiredValidator(
-      errorText: "error",
+      errorText: "This field is required",
     ),
+    MaxLengthValidator(100, errorText: "Too long!"),
   ]);
 
   @override
@@ -104,66 +107,60 @@ class _ChecklistElementsState extends State<ChecklistElements> {
 
     showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: index != null
-              ? const Text("Edit item")
-              : const Text("Add new item"),
-          content: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ChecklistTextField(
-                  controller: titleController,
-                  validator: _titleValidator,
-                ),
-                ChecklistTextField(controller: descriptionController),
-              ],
+      builder: (context) => Form(
+        key: _formKey,
+        child: ChecklistDialog(
+          title: index != null ? "Edit item" : "Add new item",
+          children: [
+            ChecklistTextField(
+              controller: titleController,
+              validator: _titleValidator,
             ),
-          ),
-          actions: [
-            TextButton(
-              child: const Text("Submit"),
-              onPressed: () {
-                if (_formKey.currentState?.validate() == false) {
-                  return;
-                }
-
-                final title = titleController.text.trim();
-
-                if (index == null &&
-                    widget.elements.any((element) => element.name == title)) {
-                  // TODO: Show toast - "Item with this name already exists"
-                  return;
-                }
-
-                if (index != null && existingElement != null) {
-                  final element = existingElement.copyWith(
-                    name: titleController.text.trim(),
-                    description: descriptionController.text.trim(),
-                  );
-
-                  currentElements[index] = element;
-                } else {
-                  final element = ChecklistElement(
-                    index: 0,
-                    name: titleController.text.trim(),
-                    description: descriptionController.text.trim(),
-                  );
-
-                  currentElements.insert(0, element);
-                }
-
-                setState(() {
-                  widget.onItemsUpdated(currentElements);
-                });
-                context.router.pop();
-              },
-            )
+            const SizedBox(height: Dimens.marginMedium),
+            ChecklistTextField(controller: descriptionController),
           ],
-        );
-      },
+          onSubmit: () {
+            if (_formKey.currentState?.validate() == false) {
+              return;
+            }
+
+            final title = titleController.text.trim();
+
+            if (index != null &&
+                widget.elements.any((element) => element.name == title)) {
+              Fluttertoast.showToast(
+                msg: "Element with this name already exists",
+                gravity: ToastGravity.TOP,
+                backgroundColor: Colors.red,
+                toastLength: Toast.LENGTH_LONG,
+              );
+              return;
+            }
+
+            if (index != null && existingElement != null) {
+              final element = existingElement.copyWith(
+                name: titleController.text.trim(),
+                description: descriptionController.text.trim(),
+              );
+
+              currentElements[index] = element;
+            } else {
+              final element = ChecklistElement(
+                index: 0,
+                name: titleController.text.trim(),
+                description: descriptionController.text.trim(),
+              );
+
+              currentElements.insert(0, element);
+            }
+
+            setState(() {
+              widget.onItemsUpdated(currentElements);
+            });
+            context.router.pop();
+          },
+        ),
+      ),
     );
   }
 }
