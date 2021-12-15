@@ -3,6 +3,7 @@ import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/c
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/presentation/checklists/list/widgets/checklist_list_item.dart';
 import 'package:checklist/routing/router.gr.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
@@ -40,35 +41,41 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   }
 
   Widget _buildLoader() {
-    return const Scaffold(
-      body: Center(child: ChecklistLoadingIndicator()),
+    return const ChecklistBlurredBackgroundWrapper(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(child: ChecklistLoadingIndicator()),
+      ),
     );
   }
 
   Widget _buildContent(ChecklistsLoaded state) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        heroTag: "add checklist",
-        child: const Icon(Icons.add),
-        onPressed: () {
-          context.router.push(AddChecklistRoute());
-        },
-      ),
-      body: Stack(
-        children: [
-          _buildList(state),
-          BlocBuilder<ChecklistsLoaderCubit, ChecklistsLoaderState>(
-            builder: (context, state) {
-              if (state is ChecklistsLoaderLoading) {
-                return const Center(
-                  child: ChecklistLoadingIndicator(),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          )
-        ],
+    return ChecklistBlurredBackgroundWrapper(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        floatingActionButton: FloatingActionButton(
+          heroTag: "add checklist",
+          child: const Icon(Icons.add),
+          onPressed: () {
+            context.router.push(AddChecklistRoute());
+          },
+        ),
+        body: Stack(
+          children: [
+            _buildList(state),
+            BlocBuilder<ChecklistsLoaderCubit, ChecklistsLoaderState>(
+              builder: (context, state) {
+                if (state is ChecklistsLoaderLoading) {
+                  return const Center(
+                    child: ChecklistLoadingIndicator(),
+                  );
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }

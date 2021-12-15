@@ -6,7 +6,7 @@ class ChecklistTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final TextInputAction textInputAction;
-  final TextInputType textInputType;
+  final TextInputType? textInputType;
   final bool? isObscured;
   final String? label;
 
@@ -14,7 +14,7 @@ class ChecklistTextFormField extends StatefulWidget {
     required this.controller,
     this.validator,
     this.textInputAction = TextInputAction.next,
-    this.textInputType = TextInputType.none,
+    this.textInputType,
     this.isObscured,
     this.label,
   });

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
+import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_group_icon.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:fimber/fimber.dart';
@@ -54,38 +55,41 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 
   Widget _buildContent(GroupsLoaded state) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        heroTag: "add group",
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          final shouldUpdate = await context.router.push(const AddGroupRoute());
-
-          if (shouldUpdate == true) {
-            if (!mounted) return;
-
-            try {
-              BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
-            } catch (e) {
-              Fimber.d("BlocProvider error");
+    return ChecklistBlurredBackgroundWrapper(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        floatingActionButton: FloatingActionButton(
+          heroTag: "add group",
+          child: const Icon(Icons.add),
+          onPressed: () async {
+            final shouldUpdate = await context.router.push(const AddGroupRoute());
+    
+            if (shouldUpdate == true) {
+              if (!mounted) return;
+    
+              try {
+                BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
+              } catch (e) {
+                Fimber.d("BlocProvider error");
+              }
             }
-          }
-        },
-      ),
-      body: Center(
-        child: Stack(
-          children: [
-            _buildList(state),
-            BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
-              builder: (context, state) {
-                if (state is GroupsLoaderLoading) {
-                  return const Center(child: ChecklistLoadingIndicator());
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
-          ],
+          },
+        ),
+        body: Center(
+          child: Stack(
+            children: [
+              _buildList(state),
+              BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
+                builder: (context, state) {
+                  if (state is GroupsLoaderLoading) {
+                    return const Center(child: ChecklistLoadingIndicator());
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
