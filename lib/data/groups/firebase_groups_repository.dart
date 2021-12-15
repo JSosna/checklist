@@ -112,9 +112,9 @@ class FirebaseGroupsRepository implements GroupsRepository {
     required String groupId,
     required String name,
   }) async {
-    final group = await getGroup(groupId: groupId);
-
-    await groups.doc(groupId).set(group?.copyWith(name: name).toJson());
+    await groups.doc(groupId).update({
+      "name": name,
+    });
   }
 
   @override
@@ -130,16 +130,10 @@ class FirebaseGroupsRepository implements GroupsRepository {
     required String shareCode,
     required DateTime shareCodeValidUntil,
   }) async {
-    final group = await getGroup(groupId: groupId);
-
-    await groups.doc(groupId).set(
-          group
-              ?.copyWith(
-                shareCode: shareCode,
-                shareCodeValidUntil: shareCodeValidUntil,
-              )
-              .toJson(),
-        );
+    await groups.doc(groupId).update({
+      "share_code": shareCode,
+      "share_code_valid_until": shareCodeValidUntil,
+    });
   }
 
   @override
@@ -153,10 +147,8 @@ class FirebaseGroupsRepository implements GroupsRepository {
     required String groupId,
     required String memberId,
   }) async {
-    final group = await getGroup(groupId: groupId);
-
-    await groups.doc(groupId).set(
-          group?.copyWith(adminId: memberId).toJson(),
-        );
+    await groups.doc(groupId).update({
+      "admin_id": memberId,
+    });
   }
 }

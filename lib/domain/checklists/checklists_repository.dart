@@ -14,11 +14,6 @@ abstract class ChecklistsRepository {
     required String checklistId,
     required String newName,
   });
-
-  Future<void> changeName({
-    required String checklistId,
-    required String newName,
-  });
   
   Future<Checklist?> toggleCheckable({required String checklistId});
 

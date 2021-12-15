@@ -33,7 +33,7 @@ class FirebaseUsersRepository implements UsersRepository {
     required User user,
     required String username,
   }) async {
-    await users.doc(user.uid).set(user.copyWith(name: username).toJson());
+    await users.doc(user.uid).update({"name": username});
   }
 
   @override
