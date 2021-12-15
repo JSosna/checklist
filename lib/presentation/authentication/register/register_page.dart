@@ -129,27 +129,27 @@ class _RegisterPageState extends State<RegisterPage> {
 
   List<Widget> _buildForm() {
     return [
-      ChecklistTextFormField(
+      ChecklistTextField(
         controller: _usernameController,
         validator: _usernameValidator,
         label: translate(LocaleKeys.authentication_username),
       ),
       const SizedBox(height: Dimens.marginMedium),
-      ChecklistTextFormField(
+      ChecklistTextField(
         controller: _emailController,
         validator: _emailValidator,
         label: translate(LocaleKeys.authentication_email),
         textInputType: TextInputType.emailAddress,
       ),
       const SizedBox(height: Dimens.marginMedium),
-      ChecklistTextFormField(
+      ChecklistTextField(
         controller: _passwordController,
         validator: _passwordValidator,
         label: translate(LocaleKeys.authentication_password),
         isObscured: true,
       ),
       const SizedBox(height: Dimens.marginMedium),
-      ChecklistTextFormField(
+      ChecklistTextField(
         controller: _confirmPasswordController,
         validator: (val) => MatchValidator(
           errorText: translate(

@@ -101,7 +101,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
         Row(
           children: [
             Expanded(
-              child: ChecklistTextFormField(controller: joinGroupController),
+              child: ChecklistTextField(controller: joinGroupController),
             ),
             IconButton(
               onPressed: () {
@@ -128,7 +128,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
         const Text("Create new group"),
         const SizedBox(height: Dimens.marginExtraLargeDouble),
         const Text("Name"),
-        ChecklistTextFormField(controller: newGroupNameController),
+        ChecklistTextField(controller: newGroupNameController),
         const Spacer(),
         ChecklistRoundedButton(
           text: "Create",

@@ -60,7 +60,7 @@ class _GroupPickerPageState extends State<GroupPickerPage> {
                   _buildBackButton(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: Dimens.marginExtraLarge),
-                    child: ChecklistTextFormField(
+                    child: ChecklistTextField(
                       controller: _groupNameController,
                       onChanged: (text) {
                         BlocProvider.of<GroupPickerLoaderCubit>(context)

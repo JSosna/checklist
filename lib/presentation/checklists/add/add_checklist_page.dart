@@ -109,7 +109,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
           ),
           const SizedBox(height: Dimens.marginExtraLargeDouble),
           const Text("Name"),
-          ChecklistTextFormField(controller: _nameController),
+          ChecklistTextField(controller: _nameController),
           const SizedBox(height: Dimens.marginExtraLargeDouble),
           const Text("Checkable"),
           Checkbox(

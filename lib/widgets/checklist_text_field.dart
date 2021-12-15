@@ -2,7 +2,7 @@ import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:flutter/material.dart';
 
-class ChecklistTextFormField extends StatefulWidget {
+class ChecklistTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final TextInputAction textInputAction;
@@ -12,7 +12,7 @@ class ChecklistTextFormField extends StatefulWidget {
   final bool autofocus;
   final void Function(String)? onChanged;
 
-  const ChecklistTextFormField({
+  const ChecklistTextField({
     required this.controller,
     this.validator,
     this.textInputAction = TextInputAction.next,
@@ -24,10 +24,10 @@ class ChecklistTextFormField extends StatefulWidget {
   });
 
   @override
-  State<ChecklistTextFormField> createState() => _ChecklistTextFormFieldState();
+  State<ChecklistTextField> createState() => _ChecklistTextFieldState();
 }
 
-class _ChecklistTextFormFieldState extends State<ChecklistTextFormField> {
+class _ChecklistTextFieldState extends State<ChecklistTextField> {
   bool? isObscured;
 
   @override

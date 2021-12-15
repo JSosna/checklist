@@ -3,8 +3,10 @@ import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
+import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_group_icon.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
+import 'package:checklist/widgets/checklist_loading_view.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,31 +28,16 @@ class _GroupsPageState extends State<GroupsPage> {
     return BlocBuilder<GroupsCubit, GroupsState>(
       builder: (context, state) {
         if (state is GroupsLoading) {
-          return _buildLoading();
+          return const ChecklistLoadingView();
         } else if (state is GroupsLoaded) {
           return _buildContent(state);
         } else {
-          return _buildError();
+          return const ChecklistErrorView(
+            message:
+                "Error while loading the list, check your internet connection or try later",
+          );
         }
       },
-    );
-  }
-
-  Widget _buildLoading() {
-    return const Scaffold(
-      body: Center(
-        child: ChecklistLoadingIndicator(),
-      ),
-    );
-  }
-
-  Widget _buildError() {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Error while loading the list, check your internet connection or try later",
-        ),
-      ),
     );
   }
 
@@ -62,11 +49,12 @@ class _GroupsPageState extends State<GroupsPage> {
           heroTag: "add group",
           child: const Icon(Icons.add),
           onPressed: () async {
-            final shouldUpdate = await context.router.push(const AddGroupRoute());
-    
+            final shouldUpdate =
+                await context.router.push(const AddGroupRoute());
+
             if (shouldUpdate == true) {
               if (!mounted) return;
-    
+
               try {
                 BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
               } catch (e) {

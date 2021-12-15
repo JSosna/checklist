@@ -77,7 +77,7 @@ class _ChecklistSettingsTextInputState
       context: context,
       builder: (context) => AlertDialog(
         title: Text(widget.title),
-        content: ChecklistTextFormField(
+        content: ChecklistTextField(
           autofocus: true,
           controller: controller,
         ),

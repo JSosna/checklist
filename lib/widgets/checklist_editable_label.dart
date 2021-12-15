@@ -71,7 +71,7 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Edit text"),
-        content: ChecklistTextFormField(
+        content: ChecklistTextField(
           autofocus: true,
           controller: controller,
         ),

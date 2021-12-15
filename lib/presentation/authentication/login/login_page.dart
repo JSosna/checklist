@@ -111,14 +111,14 @@ class _LoginPageState extends State<LoginPage> {
 
   List<Widget> _buildForms() {
     return [
-      ChecklistTextFormField(
+      ChecklistTextField(
         controller: _emailController,
         validator: _emailValidator,
         label: translate(LocaleKeys.authentication_email),
         textInputType: TextInputType.emailAddress,
       ),
       const SizedBox(height: Dimens.marginMedium),
-      ChecklistTextFormField(
+      ChecklistTextField(
         controller: _passwordController,
         validator: _passwordValidator,
         label: translate(LocaleKeys.authentication_password),
