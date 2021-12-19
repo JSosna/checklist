@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/picker/cubit/group_picker_cubit.dart';
 import 'package:checklist/presentation/groups/picker/group_picker_loader_cubit/group_picker_loader_cubit.dart';
@@ -59,7 +60,9 @@ class _GroupPickerPageState extends State<GroupPickerPage> {
                 children: [
                   _buildBackButton(),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: Dimens.marginExtraLarge),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimens.marginExtraLarge,
+                    ),
                     child: ChecklistTextField(
                       controller: _groupNameController,
                       onChanged: (text) {
@@ -100,22 +103,29 @@ class _GroupPickerPageState extends State<GroupPickerPage> {
   Widget _buildList(GroupPickerLoaded state) {
     return Stack(
       children: [
-        ListView.builder(
-          itemCount: state.groups.length,
-          itemBuilder: (context, index) {
-            final groupName = state.groups[index].name;
-
-            if (groupName != null) {
-              return ListTile(
-                title: Text(groupName),
-                onTap: () {
-                  context.router.pop(state.groups[index]);
-                },
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
+        RefreshIndicator(
+          color: context.isDarkTheme ? Colors.white : Colors.black,
+          onRefresh: () async {
+            BlocProvider.of<GroupPickerLoaderCubit>(context)
+                .reloadGroups(_groupNameController.text);
           },
+          child: ListView.builder(
+            itemCount: state.groups.length,
+            itemBuilder: (context, index) {
+              final groupName = state.groups[index].name;
+
+              if (groupName != null) {
+                return ListTile(
+                  title: Text(groupName),
+                  onTap: () {
+                    context.router.pop(state.groups[index]);
+                  },
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
         ),
         Center(
           child: BlocBuilder<GroupPickerLoaderCubit, GroupPickerLoaderState>(

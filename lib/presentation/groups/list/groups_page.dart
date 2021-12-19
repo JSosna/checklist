@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
@@ -84,35 +85,41 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 
   Widget _buildList(GroupsLoaded state) {
-    return ListView.builder(
-      itemCount: state.groups.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: ChecklistGroupIcon(
-            group: state.groups[index],
-          ),
-          tileColor: Colors.grey.withOpacity(0.5),
-          title: Text(state.groups[index].name ?? ""),
-          onTap: () async {
-            final groupId = state.groups[index].id;
-
-            if (groupId != null) {
-              final shouldUpdate = await context.router
-                  .push(GroupDetailsRoute(groupId: groupId));
-
-              if (shouldUpdate == true) {
-                if (!mounted) return;
-
-                try {
-                  BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
-                } catch (e) {
-                  Fimber.d("BlocProvider error");
+    return RefreshIndicator(
+      color: context.isDarkTheme ? Colors.white : Colors.black,
+      onRefresh: () async {
+        await BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
+      },
+      child: ListView.builder(
+        itemCount: state.groups.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: ChecklistGroupIcon(
+              group: state.groups[index],
+            ),
+            tileColor: Colors.grey.withOpacity(0.5),
+            title: Text(state.groups[index].name ?? ""),
+            onTap: () async {
+              final groupId = state.groups[index].id;
+    
+              if (groupId != null) {
+                final shouldUpdate = await context.router
+                    .push(GroupDetailsRoute(groupId: groupId));
+    
+                if (shouldUpdate == true) {
+                  if (!mounted) return;
+    
+                  try {
+                    BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
+                  } catch (e) {
+                    Fimber.d("BlocProvider error");
+                  }
                 }
               }
-            }
-          },
-        );
-      },
+            },
+          );
+        },
+      ),
     );
   }
 }
