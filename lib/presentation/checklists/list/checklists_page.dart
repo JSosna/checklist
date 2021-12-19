@@ -54,6 +54,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: context.isDarkTheme ? Colors.white : Colors.black,
           heroTag: "add checklist",
           child: const Icon(Icons.add),
           onPressed: () {

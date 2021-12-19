@@ -79,7 +79,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             children: [
               ..._buildTopPart(state),
               const SizedBox(height: Dimens.marginLarge),
-              const Divider(height: 0),
+              const Divider(height: 0, thickness: 2.0),
               Expanded(child: _buildTabs(state)),
             ],
           ),

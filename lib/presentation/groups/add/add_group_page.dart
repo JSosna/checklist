@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/groups/add/cubit/add_group_cubit.dart';
 import 'package:checklist/style/dimens.dart';
@@ -61,21 +62,14 @@ class _AddGroupPageState extends State<AddGroupPage> {
           child: Scaffold(
             backgroundColor: Colors.transparent,
             body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.marginLargeDouble,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildBackButton(),
-                    _buildJoinGroupPart(),
-                    const Divider(height: Dimens.marginExtraLargeDouble),
-                    Expanded(child: _buildCreateGroupPart()),
-                    const SizedBox(height: Dimens.marginLarge),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildBackButton(),
+                  Expanded(
+                    child: _buildContent(),
+                  ),
+                ],
               ),
             ),
           ),
@@ -93,27 +87,60 @@ class _AddGroupPageState extends State<AddGroupPage> {
     );
   }
 
+  Widget _buildContent() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimens.marginLargeDouble,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildJoinGroupPart(),
+          const Divider(
+            height: Dimens.marginExtraLargeDouble,
+            thickness: 2.0,
+          ),
+          Expanded(child: _buildCreateGroupPart()),
+          const SizedBox(height: Dimens.marginLarge),
+        ],
+      ),
+    );
+  }
+
   Widget _buildJoinGroupPart() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text("Join existing group"),
+        Text(
+          "Join existing group",
+          style: context.typo.largeBold(
+            color: context.isDarkTheme ? Colors.white : Colors.black,
+          ),
+        ),
+        const SizedBox(height: Dimens.marginLargeDouble),
         Row(
           children: [
             Expanded(
-              child: ChecklistTextField(controller: joinGroupController),
+              child: ChecklistTextField(
+                label: "Share code",
+                controller: joinGroupController,
+              ),
             ),
-            IconButton(
-              onPressed: () {
-                final shareCode = joinGroupController.text.trim();
+            Padding(
+              padding: const EdgeInsets.only(top: Dimens.marginSmall),
+              child: IconButton(
+                onPressed: () {
+                  final shareCode = joinGroupController.text.trim();
 
-                // TODO: Use text form validator
-                if (shareCode.length == 6) {
-                  BlocProvider.of<AddGroupCubit>(context)
-                      .joinToExistingGroup(shareCode);
-                }
-              },
-              icon: const Icon(Icons.arrow_forward),
+                  // TODO: Use text form validator
+                  if (shareCode.length == 6) {
+                    BlocProvider.of<AddGroupCubit>(context)
+                        .joinToExistingGroup(shareCode);
+                  }
+                },
+                icon: const Icon(Icons.arrow_forward),
+              ),
             )
           ],
         ),
@@ -125,10 +152,17 @@ class _AddGroupPageState extends State<AddGroupPage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text("Create new group"),
-        const SizedBox(height: Dimens.marginExtraLargeDouble),
-        const Text("Name"),
-        ChecklistTextField(controller: newGroupNameController),
+        Text(
+          "Create new group",
+          style: context.typo.largeBold(
+            color: context.isDarkTheme ? Colors.white : Colors.black,
+          ),
+        ),
+        const SizedBox(height: Dimens.marginLargeDouble),
+        ChecklistTextField(
+          label: "Name",
+          controller: newGroupNameController,
+        ),
         const Spacer(),
         ChecklistRoundedButton(
           text: "Create",

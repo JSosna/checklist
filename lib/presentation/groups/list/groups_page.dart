@@ -47,6 +47,7 @@ class _GroupsPageState extends State<GroupsPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: context.isDarkTheme ? Colors.white : Colors.black,
           heroTag: "add group",
           child: const Icon(Icons.add),
           onPressed: () async {
