@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
-import 'package:checklist/presentation/checklists/list/widgets/checklist_list_item.dart';
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
@@ -97,9 +96,9 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
               title: Text(state.groupsWithChecklists[index].group.name ?? ""),
               children: state.groupsWithChecklists[index].checklists
                   .map(
-                    (e) => ChecklistListItem(
-                      checklist: e,
-                      onPressed: () async {
+                    (e) => ListTile(
+                      title: Text(e.name ?? ""),
+                      onTap: () async {
                         final checklistId = e.id;
 
                         if (checklistId != null) {

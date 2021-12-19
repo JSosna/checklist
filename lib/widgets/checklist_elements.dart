@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/checklists/checklist_element.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_dialog.dart';
-import 'package:checklist/widgets/checklist_list_item.dart';
+import 'package:checklist/widgets/checklist_dismissible_list_item.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -71,7 +71,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
               });
             },
             itemBuilder: (context, index) {
-              return ChecklistListItem(
+              return ChecklistDismissibleListItem(
                 key: ValueKey(currentElements[index].name),
                 element: currentElements[index],
                 onPressed: () {

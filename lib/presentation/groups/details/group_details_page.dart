@@ -8,6 +8,7 @@ import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
+import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
@@ -208,18 +209,21 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           itemCount: state.detailedGroup.checklists.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.all(Dimens.marginLarge),
-              child: ListTile(
-                tileColor: Colors.grey.withOpacity(0.5),
-                title: Text(state.detailedGroup.checklists[index].name ?? ""),
-                onTap: () async {
+              padding: const EdgeInsets.all(Dimens.marginMedium),
+              child: ChecklistListItem(
+                onPressed: () {
                   final checklistId = state.detailedGroup.checklists[index].id;
 
-                  if (checklistId != null) {
-                    context.router
-                        .push(ChecklistDetailsRoute(checklistId: checklistId));
-                  }
+                if (checklistId != null) {
+                  context.router
+                      .push(ChecklistDetailsRoute(checklistId: checklistId));
+                }
                 },
+                child: Row(
+                  children: [
+                    Text(state.detailedGroup.checklists[index].name ?? ""),
+                  ],
+                ),
               ),
             );
           },
@@ -257,27 +261,30 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
     return ListView.builder(
       itemCount: state.detailedGroup.members.length,
       itemBuilder: (context, index) {
-        return GroupMemberListItem(
-          name: state.detailedGroup.members[index].name ?? "",
-          isCurrentUser:
-              state.currentUserId == state.detailedGroup.members[index].uid,
-          onDelete: () {
-            final memberId = state.detailedGroup.members[index].uid;
+        return Padding(
+          padding: const EdgeInsets.all(Dimens.marginMedium),
+          child: GroupMemberListItem(
+            name: state.detailedGroup.members[index].name ?? "",
+            isCurrentUser:
+                state.currentUserId == state.detailedGroup.members[index].uid,
+            onDelete: () {
+              final memberId = state.detailedGroup.members[index].uid;
 
-            if (memberId != null) {
-              BlocProvider.of<GroupDetailsCubit>(context)
-                  .removeMember(widget.groupId, memberId);
-            }
-          },
-          onHandOverAdmin: () {
-            final memberId = state.detailedGroup.members[index].uid;
+              if (memberId != null) {
+                BlocProvider.of<GroupDetailsCubit>(context)
+                    .removeMember(widget.groupId, memberId);
+              }
+            },
+            onHandOverAdmin: () {
+              final memberId = state.detailedGroup.members[index].uid;
 
-            if (memberId != null) {
-              BlocProvider.of<GroupDetailsCubit>(context)
-                  .handOverAdmin(widget.groupId, memberId);
-            }
-          },
-          isCurrentUserAdmin: state.detailedGroup.isCurrentUserAdmin,
+              if (memberId != null) {
+                BlocProvider.of<GroupDetailsCubit>(context)
+                    .handOverAdmin(widget.groupId, memberId);
+              }
+            },
+            isCurrentUserAdmin: state.detailedGroup.isCurrentUserAdmin,
+          ),
         );
       },
     );

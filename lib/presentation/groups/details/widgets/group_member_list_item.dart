@@ -1,4 +1,4 @@
-import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
@@ -26,12 +26,10 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(Dimens.marginLarge),
-      child: ListTile(
-        tileColor: Colors.grey.withOpacity(0.5),
-        title: Text(widget.name),
-        trailing: _buildTrailing(),
+    return ChecklistListItem(
+      onPressed: () {},
+      child: Row(
+        children: [Expanded(child: Text(widget.name)), _buildTrailing()],
       ),
     );
   }
