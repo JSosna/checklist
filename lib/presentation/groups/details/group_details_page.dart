@@ -148,6 +148,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
   Widget _buildMoreMenu(GroupDetailsLoaded state) {
     return Material(
       elevation: 8,
+      borderRadius: BorderRadius.circular(8.0),
       child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -186,8 +187,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const TabBar(
-            tabs: [Tab(text: "lists"), Tab(text: "members")],
+          TabBar(
+            indicatorColor: context.isDarkTheme ? Colors.white : Colors.black,
+            labelColor: context.isDarkTheme ? Colors.white : Colors.black,
+            tabs: const [Tab(text: "lists"), Tab(text: "members")],
           ),
           Expanded(
             child: TabBarView(
@@ -214,10 +217,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
                 onPressed: () {
                   final checklistId = state.detailedGroup.checklists[index].id;
 
-                if (checklistId != null) {
-                  context.router
-                      .push(ChecklistDetailsRoute(checklistId: checklistId));
-                }
+                  if (checklistId != null) {
+                    context.router
+                        .push(ChecklistDetailsRoute(checklistId: checklistId));
+                  }
                 },
                 child: Row(
                   children: [
@@ -230,27 +233,31 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: FloatingActionButton.extended(
-            heroTag: "group details add checklist",
-            onPressed: () async {
-              final shouldUpdate = await context.router.push(
-                AddChecklistRoute(
-                  initialGroup: state.detailedGroup.group,
-                ),
-              );
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: Dimens.marginLarge),
+            child: FloatingActionButton.extended(
+              backgroundColor: context.isDarkTheme ? Colors.white : Colors.black,
+              heroTag: "group details add checklist",
+              onPressed: () async {
+                final shouldUpdate = await context.router.push(
+                  AddChecklistRoute(
+                    initialGroup: state.detailedGroup.group,
+                  ),
+                );
 
-              if (shouldUpdate == true) {
-                if (!mounted) return;
+                if (shouldUpdate == true) {
+                  if (!mounted) return;
 
-                try {
-                  BlocProvider.of<GroupDetailsCubit>(context)
-                      .loadDetails(widget.groupId);
-                } catch (e) {
-                  Fimber.d("BlocProvider error");
+                  try {
+                    BlocProvider.of<GroupDetailsCubit>(context)
+                        .loadDetails(widget.groupId);
+                  } catch (e) {
+                    Fimber.d("BlocProvider error");
+                  }
                 }
-              }
-            },
-            label: const Text("Add checklist"),
+              },
+              label: const Text("Create new list"),
+            ),
           ),
         ),
       ],

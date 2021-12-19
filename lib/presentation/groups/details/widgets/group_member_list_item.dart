@@ -73,6 +73,7 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
   Widget _buildMoreMenu() {
     return Material(
       elevation: 8,
+      borderRadius: BorderRadius.circular(8.0),
       child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
