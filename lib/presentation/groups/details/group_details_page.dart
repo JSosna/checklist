@@ -6,6 +6,7 @@ import 'package:checklist/presentation/groups/details/widgets/group_member_list_
 import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
+import 'package:checklist/widgets/checklist_dialog_menu_item.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
@@ -153,24 +154,24 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ListTile(
-              title: const Text('share'),
-              onTap: () {
+            ChecklistDialogMenuItem(
+              text: "share",
+              onPressed: () {
                 context.router.push(ShareGroupRoute(groupId: widget.groupId));
               },
             ),
-            ListTile(
-              title: const Text('leave group'),
+            ChecklistDialogMenuItem(
+              text: "leave group",
               enabled: !state.detailedGroup.isCurrentUserAdmin,
-              onTap: () {
+              onPressed: () {
                 BlocProvider.of<GroupDetailsCubit>(context)
                     .leaveGroup(widget.groupId);
               },
             ),
-            ListTile(
-              title: const Text('delete group'),
+            ChecklistDialogMenuItem(
+              text: "delete group",
               enabled: state.detailedGroup.isCurrentUserAdmin,
-              onTap: () {
+              onPressed: () {
                 BlocProvider.of<GroupDetailsCubit>(context)
                     .deleteGroup(widget.groupId);
               },
@@ -236,7 +237,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           child: Padding(
             padding: const EdgeInsets.only(bottom: Dimens.marginLarge),
             child: FloatingActionButton.extended(
-              backgroundColor: context.isDarkTheme ? Colors.white : Colors.black,
+              backgroundColor:
+                  context.isDarkTheme ? Colors.white : Colors.black,
               heroTag: "group details add checklist",
               onPressed: () async {
                 final shouldUpdate = await context.router.push(

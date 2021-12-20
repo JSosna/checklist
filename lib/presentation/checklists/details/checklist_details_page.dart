@@ -4,6 +4,7 @@ import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/details/cubit/checklist_details_cubit.dart';
 import 'package:checklist/presentation/checklists/details/widgets/checklist_elements.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
+import 'package:checklist/widgets/checklist_dialog_menu_item.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
@@ -160,9 +161,9 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ListTile(
-              title: const Text('toggle checkboxes'),
-              onTap: () {
+            ChecklistDialogMenuItem(
+              text: "toggle checkboxes",
+              onPressed: () {
                 BlocProvider.of<ChecklistDetailsCubit>(context).toggleCheckable(
                   widget.checklistId,
                   isUserAdmin: state.isUserAdmin,
@@ -173,10 +174,9 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
                 });
               },
             ),
-            ListTile(
-              title: const Text('delete list'),
-              enabled: state.isUserAdmin,
-              onTap: () {
+            ChecklistDialogMenuItem(
+              text: "delete list",
+              onPressed: () {
                 final groupId = state.checklist.assignedGroupId;
 
                 if (groupId != null) {
@@ -191,6 +191,7 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
                   _showMoreMenu = false;
                 });
               },
+              enabled: state.isUserAdmin,
             ),
           ],
         ),

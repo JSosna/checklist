@@ -1,3 +1,4 @@
+import 'package:checklist/widgets/checklist_dialog_menu_item.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -78,9 +79,9 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ListTile(
-              title: const Text('hand over admin'),
-              onTap: () {
+            ChecklistDialogMenuItem(
+              text: "hand over admin",
+              onPressed: () {
                 setState(() {
                   _showMoreMenu = false;
                 });
@@ -88,9 +89,9 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
                 widget.onHandOverAdmin();
               },
             ),
-            ListTile(
-              title: const Text('remove member'),
-              onTap: () {
+            ChecklistDialogMenuItem(
+              text: "remove member",
+              onPressed: () {
                 setState(() {
                   _showMoreMenu = false;
                 });

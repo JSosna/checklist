@@ -47,7 +47,10 @@ class _ChecklistDismissibleListItemState
           color: Colors.red,
           child: const Align(
             alignment: Alignment.centerRight,
-            child: Icon(Icons.delete),
+            child: Padding(
+              padding: EdgeInsets.only(right: Dimens.marginMedium),
+              child: Icon(Icons.delete),
+            ),
           ),
         ),
         onDismissed: (direction) {
