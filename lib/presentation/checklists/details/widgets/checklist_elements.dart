@@ -44,6 +44,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: Dimens.marginSmall),
         Align(
           alignment: Alignment.centerRight,
           child: IconButton(

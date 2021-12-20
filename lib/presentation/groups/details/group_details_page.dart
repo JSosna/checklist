@@ -79,8 +79,6 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ..._buildTopPart(state),
-              const SizedBox(height: Dimens.marginLarge),
-              const Divider(height: 0, thickness: 2.0),
               Expanded(child: _buildTabs(state)),
             ],
           ),
@@ -100,9 +98,19 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             },
             icon: const Icon(Icons.arrow_back),
           ),
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "List",
+                style: context.typo.extraLargeBold(),
+              ),
+            ),
+          ),
           _buildMoreButton(state),
         ],
       ),
+      const SizedBox(height: Dimens.marginLarge),
       Align(
         child: ChecklistEditableLabel(
           text: state.detailedGroup.group.name ?? "",
@@ -115,6 +123,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           },
         ),
       ),
+      const SizedBox(height: Dimens.marginLarge),
+      const Divider(height: 0, thickness: 2.0),
     ];
   }
 

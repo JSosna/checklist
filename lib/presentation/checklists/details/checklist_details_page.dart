@@ -3,6 +3,7 @@ import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/details/cubit/checklist_details_cubit.dart';
 import 'package:checklist/presentation/checklists/details/widgets/checklist_elements.dart';
+import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_dialog_menu_item.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
@@ -107,9 +108,19 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
             },
             icon: const Icon(Icons.arrow_back),
           ),
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "Group",
+                style: context.typo.extraLargeBold(),
+              ),
+            ),
+          ),
           _buildMoreButton(state),
         ],
       ),
+      const SizedBox(height: Dimens.marginLarge),
       Align(
         child: ChecklistEditableLabel(
           text: state.checklist.name ?? "",
@@ -122,6 +133,8 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
           },
         ),
       ),
+      const SizedBox(height: Dimens.marginLarge),
+      const Divider(height: 0.0, thickness: 2.0),
     ];
   }
 
