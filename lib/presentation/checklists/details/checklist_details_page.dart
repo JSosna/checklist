@@ -112,8 +112,10 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                "Group",
-                style: context.typo.extraLargeBold(),
+                "List",
+                style: context.typo.extraLargeBold(
+                  color: context.isDarkTheme ? Colors.white : Colors.black,
+                ),
               ),
             ),
           ),

@@ -9,9 +9,11 @@ import 'package:provider/provider.dart';
 
 class ChecklistBlurredBackgroundWrapper extends StatefulWidget {
   final Widget child;
+  final bool center;
 
   const ChecklistBlurredBackgroundWrapper({
     required this.child,
+    this.center = false,
   });
 
   @override
@@ -88,8 +90,8 @@ class _ChecklistBlurredBackgroundWrapperState
         _mainVerticalPositionAnimation.value * (size.height + offset);
 
     return Positioned(
-      right: positionX,
-      top: positionY,
+      right: widget.center ? (size.width / 2) - blobSize / 2 : positionX,
+      top: widget.center ? (size.height / 2) - blobSize / 2 : positionY,
       child: _buildBlob(blobSize, sigma),
     );
   }

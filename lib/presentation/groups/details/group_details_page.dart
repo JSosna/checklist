@@ -102,8 +102,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                "List",
-                style: context.typo.extraLargeBold(),
+                "Group",
+                style: context.typo.extraLargeBold(
+                  color: context.isDarkTheme ? Colors.white : Colors.black,
+                ),
               ),
             ),
           ),

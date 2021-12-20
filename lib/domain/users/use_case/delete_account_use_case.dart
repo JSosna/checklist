@@ -28,10 +28,10 @@ class DeleteAccountUseCase {
         return;
       }
 
+      // TODO: Fresh login reminder && Confirmation
+      await _authenticationRepository.deleteUser();
       await _deleteGroups(user.groupsIds);
       await _usersRepository.deleteUser(userId: userId);
-
-      _authenticationRepository.deleteUser();
     } catch (e, stack) {
       Fimber.e("Delete account error", ex: e, stacktrace: stack);
     }
