@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/checklists/checklist_element.dart';
+import 'package:checklist/presentation/checklists/details/widgets/checklist_dismissible_list_item.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_dialog.dart';
-import 'package:checklist/widgets/checklist_dismissible_list_item.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -48,7 +48,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
           alignment: Alignment.centerRight,
           child: IconButton(
             onPressed: () {
-              _showNewElementModal();
+              _showElementModal();
             },
             icon: const Icon(Icons.add),
             padding: EdgeInsets.zero,
@@ -75,7 +75,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
                 key: ValueKey(currentElements[index].name),
                 element: currentElements[index],
                 onPressed: () {
-                  _showNewElementModal(index, currentElements[index]);
+                  _showElementModal(index, currentElements[index]);
                 },
                 onDismissed: () {
                   setState(() {
@@ -100,7 +100,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
     );
   }
 
-  void _showNewElementModal([int? index, ChecklistElement? existingElement]) {
+  void _showElementModal([int? index, ChecklistElement? existingElement]) {
     final titleController = TextEditingController(text: existingElement?.name);
     final descriptionController =
         TextEditingController(text: existingElement?.description);
@@ -126,7 +126,8 @@ class _ChecklistElementsState extends State<ChecklistElements> {
 
             final title = titleController.text.trim();
 
-            if (index != null &&
+            if (existingElement?.name != title &&
+                index != null &&
                 widget.elements.any((element) => element.name == title)) {
               Fluttertoast.showToast(
                 msg: "Element with this name already exists",

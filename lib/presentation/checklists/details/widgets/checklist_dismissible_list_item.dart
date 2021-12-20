@@ -1,4 +1,5 @@
 import 'package:checklist/domain/checklists/checklist_element.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:flutter/material.dart';
 
@@ -21,10 +22,12 @@ class ChecklistDismissibleListItem extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ChecklistDismissibleListItem> createState() => _ChecklistDismissibleListItemState();
+  State<ChecklistDismissibleListItem> createState() =>
+      _ChecklistDismissibleListItemState();
 }
 
-class _ChecklistDismissibleListItemState extends State<ChecklistDismissibleListItem> {
+class _ChecklistDismissibleListItemState
+    extends State<ChecklistDismissibleListItem> {
   bool checked = false;
 
   @override
@@ -36,7 +39,7 @@ class _ChecklistDismissibleListItemState extends State<ChecklistDismissibleListI
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Dimens.marginMedium).copyWith(top: 0.0),
+      padding: const EdgeInsets.all(Dimens.marginMedium),
       child: Dismissible(
         key: widget.key ?? ValueKey(widget.element.name),
         direction: DismissDirection.endToStart,
@@ -61,6 +64,9 @@ class _ChecklistDismissibleListItemState extends State<ChecklistDismissibleListI
                 children: [
                   if (widget.checkable)
                     Checkbox(
+                      checkColor:
+                          context.isDarkTheme ? Colors.black : Colors.white,
+                          activeColor: context.isDarkTheme ? Colors.white : Colors.black,
                       value: widget.checked,
                       onChanged: (isChecked) {
                         setState(() {

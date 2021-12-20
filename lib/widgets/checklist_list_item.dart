@@ -28,7 +28,9 @@ class ChecklistListItem extends StatelessWidget {
           height: height,
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.marginLarge, vertical: Dimens.marginSmall),
+              horizontal: Dimens.marginLarge,
+              vertical: Dimens.marginSmall,
+            ),
             child: child,
           ),
         ),
