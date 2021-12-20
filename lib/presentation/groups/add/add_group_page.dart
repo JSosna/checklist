@@ -118,7 +118,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
             color: context.isDarkTheme ? Colors.white : Colors.black,
           ),
         ),
-        const SizedBox(height: Dimens.marginLargeDouble),
+        const SizedBox(height: Dimens.marginExtraLargeDouble),
         Row(
           children: [
             Expanded(
@@ -158,7 +158,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
             color: context.isDarkTheme ? Colors.white : Colors.black,
           ),
         ),
-        const SizedBox(height: Dimens.marginLargeDouble),
+        const SizedBox(height: Dimens.marginExtraLargeDouble),
         ChecklistTextField(
           label: "Name",
           controller: newGroupNameController,

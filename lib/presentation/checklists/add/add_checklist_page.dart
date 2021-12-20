@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/groups/group.dart';
+import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/presentation/checklists/add/cubit/add_checklist_cubit.dart';
 import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
@@ -88,17 +89,23 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
 
   Widget _buildContent() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimens.marginExtraLarge),
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.marginLargeDouble),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text("Create new checklist"),
+          Text(
+            "Create new checklist",
+            style: context.typo.largeBold(
+              color: context.isDarkTheme ? Colors.white : Colors.black,
+            ),
+          ),
           const SizedBox(height: Dimens.marginExtraLargeDouble),
-          const Text("Group"),
           ChecklistPicker(
+            label: "Group",
             text: _group?.name ?? "",
             onPressed: () async {
-              final result = await context.router.push(const GroupPickerRoute());
+              final result =
+                  await context.router.push(const GroupPickerRoute());
 
               if (result is Group) {
                 setState(() {
@@ -108,11 +115,20 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
             },
           ),
           const SizedBox(height: Dimens.marginExtraLargeDouble),
-          const Text("Name"),
-          ChecklistTextField(controller: _nameController),
+          ChecklistTextField(
+            label: "Name",
+            controller: _nameController,
+          ),
           const SizedBox(height: Dimens.marginExtraLargeDouble),
-          const Text("Checkable"),
+          Text(
+            "Checkable",
+            style: context.typo.mediumBold(
+              color: context.isDarkTheme ? Colors.white : Colors.black,
+            ),
+          ),
           Checkbox(
+            checkColor: context.isDarkTheme ? Colors.black : Colors.white,
+            activeColor: context.isDarkTheme ? Colors.white : Colors.black,
             value: checkable,
             onChanged: (checked) {
               setState(() {
