@@ -1,0 +1,4 @@
+enum ChecklistQuickAction {
+  createList,
+  createGroup,
+}
