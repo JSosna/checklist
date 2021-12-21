@@ -14,16 +14,15 @@ class GroupPickerPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
-    final GroupPickerLoaderCubit groupPickerLoaderCubit = cubitFactory.get();
 
     return MultiBlocProvider(
       providers: [
         BlocProvider<GroupPickerCubit>(
           create: (context) =>
-              cubitFactory.getGroupPickerCubit(groupPickerLoaderCubit),
+              cubitFactory.getGroupPickerCubit(cubitFactory.get()),
         ),
         BlocProvider<GroupPickerLoaderCubit>(
-          create: (context) => groupPickerLoaderCubit,
+          create: (context) => cubitFactory.get(),
         ),
       ],
       child: this,
