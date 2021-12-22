@@ -3,7 +3,9 @@ import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
+import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
+import 'package:checklist/widgets/checklist_empty_list_view.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   Widget _buildPage(ChecklistsState state) {
     if (state is ChecklistsLoading) {
       return _buildLoader();
-    } else if (state is ChecklistsLoaded) {
+    } else if (state is ChecklistsLoaded || state is ChecklistsEmpty) {
       return _buildContent(state);
     } else {
       return _buildError();
@@ -49,7 +51,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
     );
   }
 
-  Widget _buildContent(ChecklistsLoaded state) {
+  Widget _buildContent(ChecklistsState state) {
     return ChecklistBlurredBackgroundWrapper(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -61,23 +63,40 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
             context.router.push(AddChecklistRoute());
           },
         ),
-        body: Stack(
-          children: [
-            _buildList(state),
-            BlocBuilder<ChecklistsLoaderCubit, ChecklistsLoaderState>(
-              builder: (context, state) {
-                if (state is ChecklistsLoaderLoading) {
-                  return const Center(
-                    child: ChecklistLoadingIndicator(),
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            )
-          ],
+        body: state is ChecklistsLoaded
+            ? _buildNotEmptyContent(state)
+            : _buildEmptyView(),
+      ),
+    );
+  }
+
+  Widget _buildEmptyView() {
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(Dimens.marginMedium),
+        child: ChecklistEmptyListView(
+          hint: "Create a new list!",
         ),
       ),
+    );
+  }
+
+  Widget _buildNotEmptyContent(ChecklistsLoaded state) {
+    return Stack(
+      children: [
+        _buildList(state),
+        BlocBuilder<ChecklistsLoaderCubit, ChecklistsLoaderState>(
+          builder: (context, state) {
+            if (state is ChecklistsLoaderLoading) {
+              return const Center(
+                child: ChecklistLoadingIndicator(),
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
+        )
+      ],
     );
   }
 

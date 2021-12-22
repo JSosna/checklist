@@ -18,4 +18,6 @@ class ChecklistsLoaded extends ChecklistsState {
   List<Object> get props => [groupsWithChecklists];
 }
 
+class ChecklistsEmpty extends ChecklistsState {}
+
 class ChecklistLoadingError extends ChecklistsState {}
