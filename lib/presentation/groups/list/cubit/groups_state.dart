@@ -18,4 +18,6 @@ class GroupsLoaded extends GroupsState {
   List<Object> get props => [groups];
 }
 
+class GroupsEmpty extends GroupsState {}
+
 class GroupsError extends GroupsState {}

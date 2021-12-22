@@ -18,7 +18,11 @@ class GroupsCubit extends Cubit<GroupsState> {
       : super(GroupsLoading()) {
     _reloadSubscription = _groupsLoaderCubit.stream.listen((event) {
       if (event is GroupsLoaderLoaded) {
-        emit(GroupsLoaded(event.groups));
+        if (event.groups.isEmpty) {
+          emit(GroupsEmpty());
+        } else {
+          emit(GroupsLoaded(event.groups));
+        }
       }
     });
   }
@@ -35,7 +39,11 @@ class GroupsCubit extends Cubit<GroupsState> {
     final groups = await _loadGroupsUseCase.loadGroups();
 
     if (groups != null) {
-      emit(GroupsLoaded(groups));
+      if (groups.isEmpty) {
+        emit(GroupsEmpty());
+      } else {
+        emit(GroupsLoaded(groups));
+      }
     } else {
       emit(GroupsError());
     }

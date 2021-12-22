@@ -20,10 +20,11 @@ class ChecklistsCubit extends Cubit<ChecklistsState> {
   ) : super(ChecklistsLoading()) {
     _reloadSubscription = _checklistsLoaderCubit.stream.listen((event) {
       if (event is ChecklistsLoaderLoaded) {
-        if (event.groupsWithChecklists.isEmpty) {
-          emit(ChecklistsEmpty());
-        } else {
+        if (event.groupsWithChecklists
+            .any((element) => element.checklists.isNotEmpty)) {
           emit(ChecklistsLoaded(event.groupsWithChecklists));
+        } else {
+          emit(ChecklistsEmpty());
         }
       }
     });
@@ -42,7 +43,12 @@ class ChecklistsCubit extends Cubit<ChecklistsState> {
         await _loadGroupsWithChecklistsUseCase.getGroupsWithChecklists();
 
     if (groupsWithChecklists != null) {
-      emit(ChecklistsLoaded(groupsWithChecklists));
+      if (groupsWithChecklists
+          .any((element) => element.checklists.isNotEmpty)) {
+        emit(ChecklistsLoaded(groupsWithChecklists));
+      } else {
+        emit(ChecklistsEmpty());
+      }
     } else {
       emit(ChecklistLoadingError());
     }

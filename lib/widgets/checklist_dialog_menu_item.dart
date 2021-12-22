@@ -17,12 +17,16 @@ class ChecklistDialogMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(8.0),
-      onTap: onPressed,
+      onTap: enabled ? onPressed : null,
       child: ListTile(
         title: Text(
           text,
           style: context.typo.mediumBold(
-            color: context.isDarkTheme ? Colors.white : Colors.black,
+            color: !enabled
+                ? Colors.grey
+                : context.isDarkTheme
+                    ? Colors.white
+                    : Colors.black,
           ),
         ),
         enabled: enabled,

@@ -3,7 +3,9 @@ import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
+import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
+import 'package:checklist/widgets/checklist_empty_list_view.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_group_icon.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
@@ -30,7 +32,7 @@ class _GroupsPageState extends State<GroupsPage> {
       builder: (context, state) {
         if (state is GroupsLoading) {
           return const ChecklistLoadingView();
-        } else if (state is GroupsLoaded) {
+        } else if (state is GroupsLoaded || state is GroupsEmpty) {
           return _buildContent(state);
         } else {
           return const ChecklistErrorView(
@@ -42,7 +44,7 @@ class _GroupsPageState extends State<GroupsPage> {
     );
   }
 
-  Widget _buildContent(GroupsLoaded state) {
+  Widget _buildContent(GroupsState state) {
     return ChecklistBlurredBackgroundWrapper(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -66,22 +68,37 @@ class _GroupsPageState extends State<GroupsPage> {
           },
         ),
         body: Center(
-          child: Stack(
-            children: [
-              _buildList(state),
-              BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
-                builder: (context, state) {
-                  if (state is GroupsLoaderLoading) {
-                    return const Center(child: ChecklistLoadingIndicator());
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
-              ),
-            ],
-          ),
+          child: state is GroupsLoaded
+              ? _buildGroupsNotEmptyView(state)
+              : _buildEmptyView(),
         ),
       ),
+    );
+  }
+
+  Widget _buildEmptyView() {
+    return const Padding(
+      padding: EdgeInsets.all(Dimens.marginMedium),
+      child: ChecklistEmptyListView(
+        hint: "Create a new group!",
+      ),
+    );
+  }
+
+  Widget _buildGroupsNotEmptyView(GroupsLoaded state) {
+    return Stack(
+      children: [
+        _buildList(state),
+        BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
+          builder: (context, state) {
+            if (state is GroupsLoaderLoading) {
+              return const Center(child: ChecklistLoadingIndicator());
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
+        ),
+      ],
     );
   }
 
@@ -102,14 +119,14 @@ class _GroupsPageState extends State<GroupsPage> {
             title: Text(state.groups[index].name ?? ""),
             onTap: () async {
               final groupId = state.groups[index].id;
-    
+
               if (groupId != null) {
                 final shouldUpdate = await context.router
                     .push(GroupDetailsRoute(groupId: groupId));
-    
+
                 if (shouldUpdate == true) {
                   if (!mounted) return;
-    
+
                   try {
                     BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
                   } catch (e) {

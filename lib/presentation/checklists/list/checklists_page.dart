@@ -27,19 +27,15 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<ChecklistsCubit, ChecklistsState>(
       builder: (context, state) {
-        return _buildPage(state);
+        if (state is ChecklistsLoading) {
+          return _buildLoader();
+        } else if (state is ChecklistsLoaded || state is ChecklistsEmpty) {
+          return _buildContent(state);
+        } else {
+          return _buildError();
+        }
       },
     );
-  }
-
-  Widget _buildPage(ChecklistsState state) {
-    if (state is ChecklistsLoading) {
-      return _buildLoader();
-    } else if (state is ChecklistsLoaded || state is ChecklistsEmpty) {
-      return _buildContent(state);
-    } else {
-      return _buildError();
-    }
   }
 
   Widget _buildLoader() {
@@ -59,12 +55,12 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
           backgroundColor: context.isDarkTheme ? Colors.white : Colors.black,
           heroTag: "add checklist",
           child: const Icon(Icons.add),
-          onPressed: () {
+          onPressed: () async {
             context.router.push(AddChecklistRoute());
           },
         ),
         body: state is ChecklistsLoaded
-            ? _buildNotEmptyContent(state)
+            ? _buildChecklistsNotEmptyView(state)
             : _buildEmptyView(),
       ),
     );
@@ -81,7 +77,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
     );
   }
 
-  Widget _buildNotEmptyContent(ChecklistsLoaded state) {
+  Widget _buildChecklistsNotEmptyView(ChecklistsLoaded state) {
     return Stack(
       children: [
         _buildList(state),
