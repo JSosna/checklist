@@ -7,6 +7,7 @@ class ChecklistListItem extends StatelessWidget {
   final VoidCallback onPressed;
   final double height;
   final Widget? leading;
+  final bool roundedCorners;
 
   const ChecklistListItem({
     Key? key,
@@ -14,17 +15,20 @@ class ChecklistListItem extends StatelessWidget {
     required this.onPressed,
     this.height = 55,
     this.leading,
+    this.roundedCorners = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius:
+          roundedCorners ? BorderRadius.circular(8) : BorderRadius.zero,
       color: context.isDarkTheme
           ? Colors.grey[800]?.withOpacity(0.5)
           : Colors.blueGrey[300]?.withOpacity(0.5),
       child: InkWell(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius:
+            roundedCorners ? BorderRadius.circular(8) : BorderRadius.zero,
         onTap: onPressed,
         child: SizedBox(
           height: height,

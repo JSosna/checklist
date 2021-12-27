@@ -1,6 +1,7 @@
 import 'package:checklist/domain/checklists/checklist_element.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistDismissibleListItem extends StatefulWidget {
@@ -40,58 +41,61 @@ class _ChecklistDismissibleListItemState
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(Dimens.marginMedium),
-      child: Dismissible(
-        key: widget.key ?? ValueKey(widget.element.name),
-        direction: DismissDirection.endToStart,
-        background: Container(
-          color: Colors.red,
-          child: const Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.only(right: Dimens.marginMedium),
-              child: Icon(Icons.delete),
-            ),
-          ),
-        ),
-        onDismissed: (direction) {
-          widget.onDismissed();
-        },
-        child: Container(
-          width: double.infinity,
-          color: Colors.grey.withOpacity(0.5),
-          child: InkWell(
-            onTap: widget.onPressed,
-            child: Padding(
-              padding: const EdgeInsets.all(Dimens.marginMedium),
-              child: Row(
-                children: [
-                  if (widget.checkable)
-                    Checkbox(
-                      checkColor:
-                          context.isDarkTheme ? Colors.black : Colors.white,
-                          activeColor: context.isDarkTheme ? Colors.white : Colors.black,
-                      value: widget.checked,
-                      onChanged: (isChecked) {
-                        setState(() {
-                          widget.onCheckedChanged?.call(isChecked);
-                          checked = true;
-                        });
-                      },
-                    ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(widget.element.name ?? ""),
-                      Text(widget.element.description ?? ""),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: Dismissible(
+          key: widget.key ?? ValueKey(widget.element.name),
+          direction: DismissDirection.endToStart,
+          background: _buildBackground(),
+          onDismissed: (direction) {
+            widget.onDismissed();
+          },
+          child: _buildContent(),
         ),
       ),
+    );
+  }
+
+  Widget _buildBackground() {
+    return Container(
+      color: Colors.red,
+      child: const Align(
+        alignment: Alignment.centerRight,
+        child: Padding(
+          padding: EdgeInsets.only(right: Dimens.marginMedium),
+          child: Icon(Icons.delete),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return ChecklistListItem(
+      roundedCorners: false,
+      onPressed: widget.onPressed,
+      leading: widget.checkable ? _buildCheckbox() : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(widget.element.name ?? ""),
+          Text(widget.element.description ?? ""),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCheckbox() {
+    return Checkbox(
+      checkColor: context.isDarkTheme ? Colors.black : Colors.white,
+      activeColor: context.isDarkTheme ? Colors.white : Colors.black,
+      value: widget.checked,
+      onChanged: (isChecked) {
+        setState(() {
+          widget.onCheckedChanged?.call(isChecked);
+          checked = true;
+        });
+      },
     );
   }
 }
