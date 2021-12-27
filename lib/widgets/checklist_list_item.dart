@@ -6,12 +6,14 @@ class ChecklistListItem extends StatelessWidget {
   final Widget child;
   final VoidCallback onPressed;
   final double height;
+  final Widget? leading;
 
   const ChecklistListItem({
     Key? key,
     required this.child,
     required this.onPressed,
     this.height = 55,
+    this.leading,
   }) : super(key: key);
 
   @override
@@ -31,7 +33,15 @@ class ChecklistListItem extends StatelessWidget {
               horizontal: Dimens.marginLarge,
               vertical: Dimens.marginSmall,
             ),
-            child: child,
+            child: Row(
+              children: [
+                if (leading != null) ...[
+                  leading!,
+                  const SizedBox(width: Dimens.marginMedium)
+                ],
+                child,
+              ],
+            ),
           ),
         ),
       ),

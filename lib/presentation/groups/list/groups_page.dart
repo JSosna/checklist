@@ -8,6 +8,7 @@ import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_empty_list_view.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_group_icon.dart';
+import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
 import 'package:fimber/fimber.dart';
@@ -86,19 +87,22 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 
   Widget _buildGroupsNotEmptyView(GroupsLoaded state) {
-    return Stack(
-      children: [
-        _buildList(state),
-        BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
-          builder: (context, state) {
-            if (state is GroupsLoaderLoading) {
-              return const Center(child: ChecklistLoadingIndicator());
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(Dimens.marginMedium),
+      child: Stack(
+        children: [
+          _buildList(state),
+          BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
+            builder: (context, state) {
+              if (state is GroupsLoaderLoading) {
+                return const Center(child: ChecklistLoadingIndicator());
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -111,33 +115,36 @@ class _GroupsPageState extends State<GroupsPage> {
       child: ListView.builder(
         itemCount: state.groups.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            leading: ChecklistGroupIcon(
-              group: state.groups[index],
-            ),
-            tileColor: Colors.grey.withOpacity(0.5),
-            title: Text(state.groups[index].name ?? ""),
-            onTap: () async {
-              final groupId = state.groups[index].id;
-
-              if (groupId != null) {
-                final shouldUpdate = await context.router
-                    .push(GroupDetailsRoute(groupId: groupId));
-
-                if (shouldUpdate == true) {
-                  if (!mounted) return;
-
-                  try {
-                    BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
-                  } catch (e) {
-                    Fimber.d("BlocProvider error");
-                  }
-                }
-              }
-            },
-          );
+          return _buildElement(context, state, index);
         },
       ),
+    );
+  }
+
+  Widget _buildElement(BuildContext context, GroupsLoaded state, int index) {
+    return ChecklistListItem(
+      leading: ChecklistGroupIcon(
+        group: state.groups[index],
+      ),
+      onPressed: () async {
+        final groupId = state.groups[index].id;
+
+        if (groupId != null) {
+          final shouldUpdate =
+              await context.router.push(GroupDetailsRoute(groupId: groupId));
+
+          if (shouldUpdate == true) {
+            if (!mounted) return;
+
+            try {
+              BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
+            } catch (e) {
+              Fimber.d("BlocProvider error");
+            }
+          }
+        }
+      },
+      child: Text(state.groups[index].name ?? ""),
     );
   }
 }
