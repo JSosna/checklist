@@ -3,6 +3,7 @@ import 'package:checklist/domain/checklists/checklist_element.dart';
 import 'package:checklist/presentation/checklists/details/widgets/checklist_dismissible_list_item.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_dialog.dart';
+import 'package:checklist/widgets/checklist_empty_list_view.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -56,48 +57,76 @@ class _ChecklistElementsState extends State<ChecklistElements> {
             splashRadius: 20.0,
           ),
         ),
-        Expanded(
-          child: ReorderableListView.builder(
-            itemCount: currentElements.length,
-            onReorder: (oldIndex, newIndex) {
-              setState(() {
-                final element = currentElements.removeAt(oldIndex);
-                if (oldIndex < newIndex) {
-                  currentElements.insert(newIndex - 1, element);
-                } else {
-                  currentElements.insert(newIndex, element);
-                }
+        _buildContent(),
+      ],
+    );
+  }
 
-                widget.onItemsUpdated(currentElements);
-              });
-            },
-            itemBuilder: (context, index) {
-              return ChecklistDismissibleListItem(
-                key: ValueKey(currentElements[index].name),
-                element: currentElements[index],
-                onPressed: () {
-                  _showElementModal(index, currentElements[index]);
-                },
-                onDismissed: () {
-                  setState(() {
-                    currentElements.removeAt(index);
-                    widget.onItemsUpdated(currentElements);
-                  });
-                },
-                checkable: widget.checkable,
-                checked: currentElements[index].checked,
-                onCheckedChanged: (checked) {
-                  setState(() {
-                    currentElements[index] =
-                        currentElements[index].copyWith(checked: checked);
-                    widget.onItemsUpdated(currentElements);
-                  });
-                },
-              );
-            },
+  Widget _buildContent() {
+    if (currentElements.isNotEmpty) {
+      return _buildList();
+    } else {
+      return _buildEmptyView();
+    }
+  }
+
+  Widget _buildEmptyView() {
+    return Expanded(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.marginMedium)
+              .copyWith(bottom: Dimens.marginExtraLargeDouble * 2),
+          child: const ChecklistEmptyListView(
+            hint: "Create a new element!",
           ),
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildList() {
+    return Expanded(
+      child: ReorderableListView.builder(
+        itemCount: currentElements.length,
+        onReorder: (oldIndex, newIndex) {
+          setState(() {
+            final element = currentElements.removeAt(oldIndex);
+            if (oldIndex < newIndex) {
+              currentElements.insert(newIndex - 1, element);
+            } else {
+              currentElements.insert(newIndex, element);
+            }
+
+            widget.onItemsUpdated(currentElements);
+          });
+        },
+        itemBuilder: _buildListItem,
+      ),
+    );
+  }
+
+  Widget _buildListItem(BuildContext context, int index) {
+    return ChecklistDismissibleListItem(
+      key: ValueKey(currentElements[index].name),
+      element: currentElements[index],
+      onPressed: () {
+        _showElementModal(index, currentElements[index]);
+      },
+      onDismissed: () {
+        setState(() {
+          currentElements.removeAt(index);
+          widget.onItemsUpdated(currentElements);
+        });
+      },
+      checkable: widget.checkable,
+      checked: currentElements[index].checked,
+      onCheckedChanged: (checked) {
+        setState(() {
+          currentElements[index] =
+              currentElements[index].copyWith(checked: checked);
+          widget.onItemsUpdated(currentElements);
+        });
+      },
     );
   }
 
@@ -121,48 +150,65 @@ class _ChecklistElementsState extends State<ChecklistElements> {
             ChecklistTextField(controller: descriptionController),
           ],
           onSubmit: () {
-            if (_formKey.currentState?.validate() == false) {
-              return;
-            }
-
-            final title = titleController.text.trim();
-
-            if (existingElement?.name != title &&
-                index != null &&
-                widget.elements.any((element) => element.name == title)) {
-              Fluttertoast.showToast(
-                msg: "Element with this name already exists",
-                gravity: ToastGravity.TOP,
-                backgroundColor: Colors.red,
-                toastLength: Toast.LENGTH_LONG,
-              );
-              return;
-            }
-
-            if (index != null && existingElement != null) {
-              final element = existingElement.copyWith(
-                name: titleController.text.trim(),
-                description: descriptionController.text.trim(),
-              );
-
-              currentElements[index] = element;
-            } else {
-              final element = ChecklistElement(
-                index: 0,
-                name: titleController.text.trim(),
-                description: descriptionController.text.trim(),
-              );
-
-              currentElements.insert(0, element);
-            }
-
-            setState(() {
-              widget.onItemsUpdated(currentElements);
-            });
-            context.router.pop();
+            _onEditItemSubmit(
+              context,
+              index,
+              existingElement,
+              titleController,
+              descriptionController,
+            );
           },
         ),
       ),
     );
+  }
+
+  void _onEditItemSubmit(
+    BuildContext context,
+    int? index,
+    ChecklistElement? existingElement,
+    TextEditingController titleController,
+    TextEditingController descriptionController,
+  ) {
+    if (_formKey.currentState?.validate() == false) {
+      return;
+    }
+
+    final title = titleController.text.trim();
+
+    if (existingElement?.name != title &&
+        index != null &&
+        widget.elements.any((element) => element.name == title)) {
+      Fluttertoast.showToast(
+        msg: "Element with this name already exists",
+        gravity: ToastGravity.TOP,
+        backgroundColor: Colors.red,
+        toastLength: Toast.LENGTH_LONG,
+      );
+      return;
+    }
+
+    if (index != null && existingElement != null) {
+      final element = existingElement.copyWith(
+        name: titleController.text.trim(),
+        description: descriptionController.text.trim(),
+      );
+
+      currentElements[index] = element;
+    } else {
+      final element = ChecklistElement(
+        index: 0,
+        name: titleController.text.trim(),
+        description: descriptionController.text.trim(),
+      );
+
+      currentElements.insert(0, element);
+    }
+
+    setState(() {
+      widget.onItemsUpdated(currentElements);
+    });
+
+    context.router.pop();
   }
 }

@@ -19,8 +19,8 @@ class ChecklistListItem extends StatelessWidget {
     return Material(
       borderRadius: BorderRadius.circular(8),
       color: context.isDarkTheme
-          ? Colors.grey[850]?.withOpacity(0.5)
-          : Colors.blueGrey[200]?.withOpacity(0.5),
+          ? Colors.grey[800]?.withOpacity(0.5)
+          : Colors.blueGrey[300]?.withOpacity(0.5),
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: onPressed,
