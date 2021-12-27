@@ -57,5 +57,9 @@
         "biometric_authentication": "uwierzytelnianie biometryczne",
         "username": "nazwa użytkownika",
         "logout": "wyloguj się"
+    },
+    "quick_actions": {
+        "create_new_checklist": "Stwórz nową listę",
+        "create_new_group": "Stwórz nową grupę"
     }
 }

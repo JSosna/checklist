@@ -18,13 +18,15 @@ import 'package:checklist/presentation/splash/bloc/splash_bloc.dart';
 import 'package:checklist/presentation/tab/cubit/authentication_cubit.dart';
 import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 Future<void> registerBlocModule(GetIt injector) async {
   final initialTheme = await injector.get<ThemeStorage>().loadThemeMode();
+  const quickActions = QuickActions();
 
   injector.registerFactory(() => ThemeCubit(initialTheme, injector.get()));
   injector.registerFactory(() => AuthenticationCubit(injector.get()));
-  injector.registerFactory(() => SplashBloc(injector.get(), injector.get()));
+  injector.registerFactory(() => SplashBloc(quickActions, injector.get(), injector.get()));
   injector.registerFactory(() => LoginCubit(injector.get(), injector.get()));
   injector.registerFactory(() => RegisterCubit(injector.get()));
   injector.registerFactory(() => OnboardingCubit(injector.get()));

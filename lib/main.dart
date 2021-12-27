@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:checklist/app_initializers/app_initializer.dart';
 import 'package:checklist/checklist_app.dart';
+import 'package:checklist/domain/quick_actions/checklist_quick_actions.dart';
+import 'package:checklist/domain/quick_actions/quick_action_provider.dart';
 
 import 'package:checklist/injection/bloc_factory.dart';
 import 'package:checklist/injection/cubit_factory.dart';
@@ -41,6 +43,9 @@ Future<void> main() async {
           ),
           Provider<BlurredBackgroundStateProvider>(
             create: (context) => BlurredBackgroundStateProvider(),
+          ),
+          Provider<QuickActionProvider>(
+            create: (context) => QuickActionProvider(),
           ),
         ],
         child: EasyLocalization(

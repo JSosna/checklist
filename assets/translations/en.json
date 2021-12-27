@@ -57,5 +57,9 @@
         "biometric_authentication": "biometric authentication",
         "username": "username",
         "logout": "logout"
+    },
+    "quick_actions": {
+        "create_new_checklist": "Create new list",
+        "create_new_group": "Create new group"
     }
 }

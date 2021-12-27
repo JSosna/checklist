@@ -16,24 +16,22 @@ class TabPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
-    final ChecklistsLoaderCubit checklistsLoaderCubit = cubitFactory.get();
-    final GroupsLoaderCubit groupsLoaderCubit = cubitFactory.get();
-
+    
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationCubit>(
           create: (context) => cubitFactory.get(),
         ),
         BlocProvider<ChecklistsLoaderCubit>(
-          create: (context) => checklistsLoaderCubit,
+          create: (context) => cubitFactory.get(),
         ),
         BlocProvider<ChecklistsCubit>(
           create: (context) =>
-              cubitFactory.getChecklistsCubit(checklistsLoaderCubit),
+              cubitFactory.getChecklistsCubit(cubitFactory.get()),
         ),
-        BlocProvider<GroupsLoaderCubit>(create: (context) => groupsLoaderCubit),
+        BlocProvider<GroupsLoaderCubit>(create: (context) => cubitFactory.get()),
         BlocProvider<GroupsCubit>(
-          create: (context) => cubitFactory.getGroupsCubit(groupsLoaderCubit),
+          create: (context) => cubitFactory.getGroupsCubit(cubitFactory.get()),
         ),
       ],
       child: this,

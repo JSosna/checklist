@@ -19,10 +19,9 @@ class ShareGroupPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     final CubitFactory cubitFactory = CubitFactory.of(context);
-    final ShareGroupCubit shareGroupCubit = cubitFactory.get();
 
     return BlocProvider<ShareGroupCubit>(
-      create: (context) => shareGroupCubit,
+      create: (context) => cubitFactory.get(),
       child: this,
     );
   }
