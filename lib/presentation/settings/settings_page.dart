@@ -9,6 +9,7 @@ import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
+import 'package:checklist/widgets/checklist_page_title.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_settings_text_input.dart';
 import 'package:checklist/widgets/checklist_switch.dart';
@@ -76,6 +77,8 @@ class _SettingsPageState extends State<SettingsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: Dimens.marginLarge),
+          const ChecklistPageTitle("settings"),
+          const SizedBox(height: Dimens.marginMedium),
           ChecklistSettingsTextInput(
             title: translate(LocaleKeys.settings_username),
             value: state.user?.name ?? "",

@@ -11,6 +11,7 @@ import 'package:checklist/widgets/checklist_group_icon.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
+import 'package:checklist/widgets/checklist_page_title.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,19 +88,30 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 
   Widget _buildGroupsNotEmptyView(GroupsLoaded state) {
-    return Padding(
-      padding: const EdgeInsets.all(Dimens.marginMedium),
-      child: Stack(
+    return SafeArea(
+      child: Column(
         children: [
-          _buildList(state),
-          BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
-            builder: (context, state) {
-              if (state is GroupsLoaderLoading) {
-                return const Center(child: ChecklistLoadingIndicator());
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
+          const SizedBox(height: Dimens.marginLarge),
+          const ChecklistPageTitle("groups"),
+          const SizedBox(height: Dimens.marginMedium),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(Dimens.marginMedium),
+              child: Stack(
+                children: [
+                  _buildList(state),
+                  BlocBuilder<GroupsLoaderCubit, GroupsLoaderState>(
+                    builder: (context, state) {
+                      if (state is GroupsLoaderLoading) {
+                        return const Center(child: ChecklistLoadingIndicator());
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
