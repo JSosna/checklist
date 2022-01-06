@@ -134,29 +134,32 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 
   Widget _buildElement(BuildContext context, GroupsLoaded state, int index) {
-    return ChecklistListItem(
-      leading: ChecklistGroupIcon(
-        group: state.groups[index],
-      ),
-      onPressed: () async {
-        final groupId = state.groups[index].id;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Dimens.marginMedium),
+      child: ChecklistListItem(
+        leading: ChecklistGroupIcon(
+          group: state.groups[index],
+        ),
+        onPressed: () async {
+          final groupId = state.groups[index].id;
 
-        if (groupId != null) {
-          final shouldUpdate =
-              await context.router.push(GroupDetailsRoute(groupId: groupId));
+          if (groupId != null) {
+            final shouldUpdate =
+                await context.router.push(GroupDetailsRoute(groupId: groupId));
 
-          if (shouldUpdate == true) {
-            if (!mounted) return;
+            if (shouldUpdate == true) {
+              if (!mounted) return;
 
-            try {
-              BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
-            } catch (e) {
-              Fimber.d("BlocProvider error");
+              try {
+                BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
+              } catch (e) {
+                Fimber.d("BlocProvider error");
+              }
             }
           }
-        }
-      },
-      child: Text(state.groups[index].name ?? ""),
+        },
+        child: Text(state.groups[index].name ?? ""),
+      ),
     );
   }
 }

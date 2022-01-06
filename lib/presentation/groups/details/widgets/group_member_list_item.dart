@@ -1,3 +1,4 @@
+import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_dialog_menu_item.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +28,17 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return ChecklistListItem(
-      onPressed: () {},
-      child: Row(
-        children: [Expanded(child: Text(widget.name)), _buildTrailing()],
-      ),
+    return Stack(
+      children: [
+        ChecklistListItem(
+          onPressed: () {},
+          child: Text(widget.name),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: _buildTrailing(),
+        ),
+      ],
     );
   }
 
@@ -44,28 +51,31 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
   }
 
   Widget _buildMenu() {
-    return PortalEntry(
-      visible: _showMoreMenu,
-      portal: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          setState(() {
-            _showMoreMenu = false;
-          });
-        },
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(top: Dimens.marginSmall - 2.0),
       child: PortalEntry(
         visible: _showMoreMenu,
-        portalAnchor: Alignment.topRight,
-        childAnchor: Alignment.center,
-        portal: _buildMoreMenu(),
-        child: IconButton(
-          onPressed: () {
+        portal: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
             setState(() {
-              _showMoreMenu = !_showMoreMenu;
+              _showMoreMenu = false;
             });
           },
-          icon: const Icon(Icons.more_vert),
+        ),
+        child: PortalEntry(
+          visible: _showMoreMenu,
+          portalAnchor: Alignment.topRight,
+          childAnchor: Alignment.center,
+          portal: _buildMoreMenu(),
+          child: IconButton(
+            onPressed: () {
+              setState(() {
+                _showMoreMenu = !_showMoreMenu;
+              });
+            },
+            icon: const Icon(Icons.more_vert),
+          ),
         ),
       ),
     );
