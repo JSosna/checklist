@@ -30,8 +30,8 @@ class ChecklistListItem extends StatelessWidget {
         borderRadius:
             roundedCorners ? BorderRadius.circular(8) : BorderRadius.zero,
         onTap: onPressed,
-        child: SizedBox(
-          height: height,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: height),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: Dimens.marginLarge,
@@ -43,7 +43,7 @@ class ChecklistListItem extends StatelessWidget {
                   leading!,
                   const SizedBox(width: Dimens.marginMedium)
                 ],
-                child,
+                Expanded(child: child),
               ],
             ),
           ),

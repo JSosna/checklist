@@ -72,14 +72,20 @@ class _ChecklistDismissibleListItemState
   Widget _buildContent() {
     return ChecklistListItem(
       roundedCorners: false,
+      height: 60,
       onPressed: widget.onPressed,
       leading: widget.checkable ? _buildCheckbox() : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(widget.element.name ?? ""),
-          Text(widget.element.description ?? ""),
+          Text(
+            widget.element.name ?? "",
+            style: context.typo.mediumBold(color: context.isDarkTheme ? Colors.white : Colors.black),
+          ),
+          if (widget.element.description?.isNotEmpty == true)
+            Text(widget.element.description ?? ""),
         ],
       ),
     );
