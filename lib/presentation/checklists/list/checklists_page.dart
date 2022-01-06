@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:checklist/domain/checklists/checklist.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
@@ -6,6 +7,7 @@ import 'package:checklist/routing/router.gr.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_empty_list_view.dart';
+import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
@@ -111,34 +113,43 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
               initiallyExpanded: true,
               title: Text(state.groupsWithChecklists[index].group.name ?? ""),
               children: state.groupsWithChecklists[index].checklists
-                  .map(
-                    (e) => ListTile(
-                      title: Text(e.name ?? ""),
-                      onTap: () async {
-                        final checklistId = e.id;
-
-                        if (checklistId != null) {
-                          final shouldUpdate = await context.router.push(
-                            ChecklistDetailsRoute(checklistId: checklistId),
-                          );
-
-                          if (shouldUpdate == true) {
-                            if (!mounted) return;
-                            try {
-                              BlocProvider.of<ChecklistsLoaderCubit>(context)
-                                  .reloadChecklists();
-                            } catch (e) {
-                              Fimber.d("BlocProvider error");
-                            }
-                          }
-                        }
-                      },
-                    ),
-                  )
+                  .map(_buildListItem)
                   .toList(),
             );
           } else {
             return const SizedBox.shrink();
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildListItem(Checklist checklist) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: Dimens.marginMedium,
+        right: Dimens.marginMedium,
+        bottom: Dimens.marginMedium,
+      ),
+      child: ChecklistListItem(
+        child: Text(checklist.name ?? ""),
+        onPressed: () async {
+          final checklistId = checklist.id;
+
+          if (checklistId != null) {
+            final shouldUpdate = await context.router.push(
+              ChecklistDetailsRoute(checklistId: checklistId),
+            );
+
+            if (shouldUpdate == true) {
+              if (!mounted) return;
+              try {
+                BlocProvider.of<ChecklistsLoaderCubit>(context)
+                    .reloadChecklists();
+              } catch (e) {
+                Fimber.d("BlocProvider error");
+              }
+            }
           }
         },
       ),
