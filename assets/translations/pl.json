@@ -9,7 +9,8 @@
         "create": "Stwórz",
         "list": "Lista",
         "lists": "listy",
-        "share": "udostępnij"
+        "share": "udostępnij",
+        "error_internet_connection": "Wystąpił błąd, sprawdź połączenie z internetem"
     },
     "tab": {
         "lists": "listy",
@@ -94,6 +95,8 @@
         "error_loading_details": "Wystąpił błąd podczas ładowania szczegółów, sprawdź połączenie z internetem i spróbuj ponownie",
         "leave_group": "opuść grupę",
         "delete_group": "usuń grupę",
-        "members": "członkowie"
+        "members": "członkowie",
+        "copied_share_code": "Skopiowano kod!",
+        "share_description": "Udostępnij ten kod swoim znajomym, aby pozwolić im dołączyć do grupy!"
     }
 }

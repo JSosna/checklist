@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/groups/share/cubit/share_group_cubit.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,8 +49,8 @@ class _ShareGroupPageState extends State<ShareGroupPage> {
         } else if (state is ShareGroupLoaded) {
           return _buildContent(state);
         } else {
-          return const ChecklistErrorView(
-            message: "Error, check your internet connection or try later",
+          return ChecklistErrorView(
+            message: LocaleKeys.general_error_internet_connection.tr(),
           );
         }
       },
@@ -86,7 +88,7 @@ class _ShareGroupPageState extends State<ShareGroupPage> {
                                 ClipboardData(text: state.shareCode),
                               );
                               Fluttertoast.showToast(
-                                msg: "Copied share code!",
+                                msg: LocaleKeys.groups_copied_share_code.tr(),
                                 gravity: ToastGravity.TOP,
                                 backgroundColor: context.isDarkTheme
                                     ? Colors.white
@@ -124,7 +126,7 @@ class _ShareGroupPageState extends State<ShareGroupPage> {
         padding: const EdgeInsets.all(Dimens.marginLargeDouble)
             .copyWith(bottom: Dimens.marginExtraLargeDouble),
         child: Text(
-          "Share this group code with your friends to add them to the group!",
+          LocaleKeys.groups_share_description.tr(),
           textAlign: TextAlign.center,
           style: context.typo.small(
             color: context.isDarkTheme ? Colors.white : Colors.black,

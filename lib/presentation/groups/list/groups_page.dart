@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/groups/list/cubit/groups_cubit.dart';
 import 'package:checklist/presentation/groups/list/groups_loader_cubit/groups_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
@@ -12,6 +13,7 @@ import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
 import 'package:checklist/widgets/checklist_page_title.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,9 +39,8 @@ class _GroupsPageState extends State<GroupsPage> {
         } else if (state is GroupsLoaded || state is GroupsEmpty) {
           return _buildContent(state);
         } else {
-          return const ChecklistErrorView(
-            message:
-                "Error while loading the list, check your internet connection or try later",
+          return ChecklistErrorView(
+            message: LocaleKeys.checklist_error_loading_list.tr(),
           );
         }
       },
@@ -79,10 +80,10 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 
   Widget _buildEmptyView() {
-    return const Padding(
-      padding: EdgeInsets.all(Dimens.marginMedium),
+    return Padding(
+      padding: const EdgeInsets.all(Dimens.marginMedium),
       child: ChecklistEmptyListView(
-        hint: "Create a new group!",
+        hint: LocaleKeys.groups_create_new_group.tr(),
       ),
     );
   }
@@ -92,7 +93,7 @@ class _GroupsPageState extends State<GroupsPage> {
       child: Column(
         children: [
           const SizedBox(height: Dimens.marginLarge),
-          const ChecklistPageTitle("groups"),
+          ChecklistPageTitle(LocaleKeys.tab_groups.tr()),
           const SizedBox(height: Dimens.marginMedium),
           Expanded(
             child: Padding(

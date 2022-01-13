@@ -1,12 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/groups/picker/cubit/group_picker_cubit.dart';
 import 'package:checklist/presentation/groups/picker/group_picker_loader_cubit/group_picker_loader_cubit.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -143,8 +145,8 @@ class _GroupPickerPageState extends State<GroupPickerPage> {
   }
 
   Widget _buildError() {
-    return const Center(
-      child: Text("Error loading groups"),
+    return Center(
+      child: Text(LocaleKeys.checklist_error_loading_list.tr()),
     );
   }
 }

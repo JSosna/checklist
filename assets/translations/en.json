@@ -9,7 +9,8 @@
         "create": "Create",
         "list": "List",
         "lists": "lists",
-        "share": "share"
+        "share": "share",
+        "error_internet_connection": "Error, check your internet connection and again try later"
     },
     "tab": {
         "lists": "lists",
@@ -95,6 +96,8 @@
         "error_loading_details": "Error while loading the details, check your internet connection or try later",
         "leave_group": "leave group",
         "delete_group": "delete group",
-        "members": "members"
+        "members": "members",
+        "copied_share_code": "Copied share code!",
+        "share_description": "Share this code with your friends to let them join the group!"
     }
 }
