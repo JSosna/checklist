@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:checklist/app_initializers/app_initializer.dart';
 import 'package:checklist/checklist_app.dart';
-
 import 'package:checklist/injection/bloc_factory.dart';
 import 'package:checklist/injection/cubit_factory.dart';
 import 'package:checklist/injection/modules.dart';

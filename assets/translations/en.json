@@ -1,7 +1,15 @@
 {
     "general": {
         "checklist": "CHECKLIST",
-        "submit": "submit"
+        "submit": "submit",
+        "nothing_to_show": "Nothing to show...",
+        "group": "Group",
+        "name": "Name",
+        "checkboxes": "Checkboxes",
+        "create": "Create",
+        "list": "List",
+        "lists": "lists",
+        "share": "share"
     },
     "tab": {
         "lists": "lists",
@@ -50,12 +58,43 @@
         "password_too_short": "password must be at least 4 characters long",
         "username_too_short": "username must be at least 4 characters long",
         "password_special": "password must have at least one special character",
-        "passwords_do_not_match": "passwords do not match"
+        "passwords_do_not_match": "passwords do not match",
+        "too_long": "Too long!",
+        "this_field_is_required": "This field is required"
     },
     "settings": {
         "dark_mode": "dark mode",
         "biometric_authentication": "biometric authentication",
         "username": "username",
-        "logout": "logout"
+        "logout": "logout",
+        "logout2": "logout2",
+        "delete_account": "delete account"
+    },
+    "editable_label": {
+        "edit_label": "Edit text"
+    },
+    "checklist": {
+        "new_checklist_error": "Error while creating a new list!",
+        "create_new_checklist": "Create a new list",
+        "error_loading_list": "Error while loading the list, check your internet connection and try again later",
+        "toggle_checkboxes": "toggle checkboxes",
+        "delete_list": "delete list",
+        "create_new_element": "Create a new element!",
+        "edit_item": "Edit item",
+        "add_new_item": "Add new item",
+        "element_already_exists": "Element with this name already exists"
+    },
+    "groups": {
+        "error_while_joining_group": "Error while joining group!",
+        "error_while_creating_group": "Error while creating group!",
+        "join_existing_group": "Join existing group",
+        "share_code": "Share code",
+        "create_new_group": "Create a new group",
+        "hand_over_admin": "hand over admin",
+        "remove_member": "remove member",
+        "error_loading_details": "Error while loading the details, check your internet connection or try later",
+        "leave_group": "leave group",
+        "delete_group": "delete group",
+        "members": "members"
     }
 }

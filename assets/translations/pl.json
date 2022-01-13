@@ -1,7 +1,15 @@
 {
     "general": {
         "checklist": "CHECKLIST",
-        "submit": "potwierdź"
+        "submit": "potwierdź",
+        "nothing_to_show": "Nic tu nie ma...",
+        "group": "Grupa",
+        "name": "Nazwa",
+        "checkboxes": "Pola wyboru",
+        "create": "Stwórz",
+        "list": "Lista",
+        "lists": "listy",
+        "share": "udostępnij"
     },
     "tab": {
         "lists": "listy",
@@ -50,12 +58,42 @@
         "password_too_short": "hasło musi mieć przynajmniej 4 znaki długości",
         "username_too_short": "nazwa użytkownika musi mieć przynajmniej 4 znaki długości",
         "password_special": "hasło musi mieć przynajmniej jeden znak specjalny",
-        "passwords_do_not_match": "hasła nie są takie same"
+        "passwords_do_not_match": "hasła nie są takie same",
+        "too_long": "Za długie!",
+        "this_field_is_required": "To pole jest wymagane"
     },
     "settings": {
         "dark_mode": "ciemny tryb",
         "biometric_authentication": "uwierzytelnianie biometryczne",
         "username": "nazwa użytkownika",
-        "logout": "wyloguj się"
+        "logout": "wyloguj się",
+        "delete_account": "usuń konto"
+    },
+    "editable_label": {
+        "edit_label": "Edytuj tekst"
+    },
+    "checklist": {
+        "new_checklist_error": "Wystąpił błąd podczas tworzenia nowej listy!",
+        "create_new_checklist": "Stwórz nową listę",
+        "error_loading_list": "Wystąpił błąd podczas ładowania listy, sprawdź połączenie z internetem i spróbuj ponownie",
+        "toggle_checkboxes": "przełącz pola wyboru",
+        "delete_list": "usuń listę",
+        "create_new_element": "Stwórz nowy element!",
+        "edit_item": "Edytuj element",
+        "add_new_item": "Dodaj nowy element",
+        "element_already_exists": "Element z taką nazwą już istnieje"
+    },
+    "groups": {
+        "error_while_joining_group": "Nie udało się dołączyć do grupy!",
+        "error_while_creating_group": "Nie udało się stworzyć do grupy!",
+        "join_existing_group": "Dołącz do istniejącej grupy",
+        "share_code": "Kod udostępnienia",
+        "create_new_group": "Stwórz nową grupę",
+        "hand_over_admin": "przekaż status administratora",
+        "remove_member": "usuń użytkownika",
+        "error_loading_details": "Wystąpił błąd podczas ładowania szczegółów, sprawdź połączenie z internetem i spróbuj ponownie",
+        "leave_group": "opuść grupę",
+        "delete_group": "usuń grupę",
+        "members": "członkowie"
     }
 }

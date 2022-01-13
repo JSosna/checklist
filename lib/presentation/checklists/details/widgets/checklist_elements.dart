@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/checklists/checklist_element.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/checklists/details/widgets/checklist_dismissible_list_item.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_dialog.dart';
 import 'package:checklist/widgets/checklist_empty_list_view.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -30,9 +32,9 @@ class _ChecklistElementsState extends State<ChecklistElements> {
 
   final _titleValidator = MultiValidator([
     RequiredValidator(
-      errorText: "This field is required",
+      errorText: LocaleKeys.validation_this_field_is_required.tr(),
     ),
-    MaxLengthValidator(100, errorText: "Too long!"),
+    MaxLengthValidator(100, errorText: LocaleKeys.validation_too_long.tr()),
   ]);
 
   @override
@@ -76,8 +78,8 @@ class _ChecklistElementsState extends State<ChecklistElements> {
         child: Padding(
           padding: const EdgeInsets.all(Dimens.marginMedium)
               .copyWith(bottom: Dimens.marginExtraLargeDouble * 2),
-          child: const ChecklistEmptyListView(
-            hint: "Create a new element!",
+          child: ChecklistEmptyListView(
+            hint: LocaleKeys.checklist_create_new_element.tr(),
           ),
         ),
       ),
@@ -140,7 +142,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
       builder: (context) => Form(
         key: _formKey,
         child: ChecklistDialog(
-          title: index != null ? "Edit item" : "Add new item",
+          title: index != null ? LocaleKeys.checklist_edit_item.tr() : LocaleKeys.checklist_add_new_item.tr(),
           children: [
             ChecklistTextField(
               controller: titleController,
@@ -180,7 +182,7 @@ class _ChecklistElementsState extends State<ChecklistElements> {
         index != null &&
         widget.elements.any((element) => element.name == title)) {
       Fluttertoast.showToast(
-        msg: "Element with this name already exists",
+        msg: LocaleKeys.checklist_element_already_exists.tr(),
         gravity: ToastGravity.TOP,
         backgroundColor: Colors.red,
         toastLength: Toast.LENGTH_LONG,

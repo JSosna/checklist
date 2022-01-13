@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/groups/group.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/checklists/add/cubit/add_checklist_cubit.dart';
 import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
@@ -10,8 +11,10 @@ import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
 import 'package:checklist/widgets/checklist_picker.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddChecklistPage extends StatefulWidget implements AutoRouteWrapper {
   final Group? initialGroup;
@@ -55,7 +58,12 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
           BlocProvider.of<ChecklistsLoaderCubit>(context).reloadChecklists();
           context.router.pop(true);
         } else if (state is ErrorWhileCreatingChecklist) {
-          // TODO: show error toast
+          Fluttertoast.showToast(
+            msg: LocaleKeys.checklist_new_checklist_error.tr(),
+            gravity: ToastGravity.TOP,
+            backgroundColor: Colors.red,
+            toastLength: Toast.LENGTH_LONG,
+          );
         }
       },
       builder: (context, state) {
@@ -94,14 +102,14 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Create new checklist",
+            LocaleKeys.checklist_create_new_checklist.tr(),
             style: context.typo.largeBold(
               color: context.isDarkTheme ? Colors.white : Colors.black,
             ),
           ),
           const SizedBox(height: Dimens.marginExtraLargeDouble),
           ChecklistPicker(
-            label: "Group",
+            label: LocaleKeys.general_group.tr(),
             text: _group?.name ?? "",
             onPressed: () async {
               final result =
@@ -116,12 +124,12 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
           ),
           const SizedBox(height: Dimens.marginExtraLargeDouble),
           ChecklistTextField(
-            label: "Name",
+            label: LocaleKeys.general_name.tr(),
             controller: _nameController,
           ),
           const SizedBox(height: Dimens.marginExtraLargeDouble),
           Text(
-            "Checkable",
+            LocaleKeys.general_checkboxes.tr(),
             style: context.typo.mediumBold(
               color: context.isDarkTheme ? Colors.white : Colors.black,
             ),
@@ -138,7 +146,7 @@ class _AddChecklistPageState extends State<AddChecklistPage> {
           ),
           const Spacer(),
           ChecklistRoundedButton(
-            text: "Create",
+            text: LocaleKeys.general_create.tr(),
             onPressed: () {
               // TODO: Use text form validator
               final name = _nameController.text.trim();

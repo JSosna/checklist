@@ -1,6 +1,8 @@
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_dialog_menu_item.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
@@ -90,7 +92,7 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ChecklistDialogMenuItem(
-              text: "hand over admin",
+              text: LocaleKeys.groups_hand_over_admin.tr(),
               onPressed: () {
                 setState(() {
                   _showMoreMenu = false;
@@ -100,7 +102,7 @@ class _GroupMemberListItemState extends State<GroupMemberListItem> {
               },
             ),
             ChecklistDialogMenuItem(
-              text: "remove member",
+              text: LocaleKeys.groups_remove_member.tr(),
               onPressed: () {
                 setState(() {
                   _showMoreMenu = false;

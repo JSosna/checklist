@@ -1,6 +1,8 @@
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_dialog.dart';
 import 'package:checklist/widgets/checklist_text_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -26,9 +28,9 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
 
   final nameValidator = MultiValidator([
     RequiredValidator(
-      errorText: "This field is required",
+      errorText: LocaleKeys.validation_this_field_is_required.tr(),
     ),
-    MaxLengthValidator(30, errorText: "Too long!")
+    MaxLengthValidator(30, errorText: LocaleKeys.validation_too_long.tr())
   ]);
 
   @override
@@ -78,7 +80,7 @@ class _ChecklistEditableLabelState extends State<ChecklistEditableLabel> {
     showDialog(
       context: context,
       builder: (context) => ChecklistDialog(
-        title: "Edit text",
+        title: LocaleKeys.editable_label_edit_label.tr(),
         children: [
           Form(
             key: _formKey,

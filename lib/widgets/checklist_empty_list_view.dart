@@ -1,5 +1,7 @@
 import 'package:checklist/extension/context_extensions.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/style/dimens.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistEmptyListView extends StatelessWidget {
@@ -13,7 +15,7 @@ class ChecklistEmptyListView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Nothing to show...",
+          LocaleKeys.general_nothing_to_show.tr(),
           style: context.typo.largeBold(
             color: context.isDarkTheme ? Colors.white : Colors.black,
           ),

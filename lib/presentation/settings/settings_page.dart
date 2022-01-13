@@ -77,14 +77,19 @@ class _SettingsPageState extends State<SettingsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: Dimens.marginLarge),
-          const ChecklistPageTitle("settings"),
+          ChecklistPageTitle(LocaleKeys.tab_settings.tr()),
           const SizedBox(height: Dimens.marginMedium),
           ChecklistSettingsTextInput(
             title: translate(LocaleKeys.settings_username),
             value: state.user?.name ?? "",
             validator: MultiValidator([
-              RequiredValidator(errorText: "This field is required"),
-              MaxLengthValidator(21, errorText: "Too long!")
+              RequiredValidator(
+                errorText: LocaleKeys.validation_this_field_is_required.tr(),
+              ),
+              MaxLengthValidator(
+                21,
+                errorText: LocaleKeys.validation_too_long.tr(),
+              )
             ]),
             onChanged: (newValue) {
               BlocProvider.of<SettingsCubit>(context).changeUsername(newValue);
@@ -103,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const SizedBox(height: Dimens.marginMedium),
           ChecklistRoundedButton.negative(
-            text: "delete account",
+            text: LocaleKeys.settings_delete_account.tr(),
             onPressed: () {
               BlocProvider.of<SettingsCubit>(context).deleteAccount();
             },

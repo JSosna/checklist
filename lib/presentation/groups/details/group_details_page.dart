@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/groups/details/cubit/group_details_cubit.dart';
 import 'package:checklist/presentation/groups/details/widgets/group_member_list_item.dart';
 import 'package:checklist/routing/router.gr.dart';
@@ -11,6 +12,7 @@ import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,9 +63,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
         } else if (state is GroupDetailsLoaded) {
           return _buildDetails(state);
         } else {
-          return const ChecklistErrorView(
-            message:
-                "Error while loading the details, check your internet connection or try later",
+          return ChecklistErrorView(
+            message: LocaleKeys.groups_error_loading_details.tr(),
           );
         }
       },
@@ -102,7 +103,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                "Group",
+                LocaleKeys.general_group.tr(),
                 style: context.typo.extraLargeBold(
                   color: context.isDarkTheme ? Colors.white : Colors.black,
                 ),
@@ -167,13 +168,13 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             ChecklistDialogMenuItem(
-              text: "share",
+              text: LocaleKeys.general_share.tr(),
               onPressed: () {
                 context.router.push(ShareGroupRoute(groupId: widget.groupId));
               },
             ),
             ChecklistDialogMenuItem(
-              text: "leave group",
+              text: LocaleKeys.groups_leave_group.tr(),
               enabled: !state.detailedGroup.isCurrentUserAdmin,
               onPressed: () {
                 BlocProvider.of<GroupDetailsCubit>(context)
@@ -181,7 +182,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
               },
             ),
             ChecklistDialogMenuItem(
-              text: "delete group",
+              text: LocaleKeys.groups_delete_group.tr(),
               enabled: state.detailedGroup.isCurrentUserAdmin,
               onPressed: () {
                 BlocProvider.of<GroupDetailsCubit>(context)
@@ -203,7 +204,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
           TabBar(
             indicatorColor: context.isDarkTheme ? Colors.white : Colors.black,
             labelColor: context.isDarkTheme ? Colors.white : Colors.black,
-            tabs: const [Tab(text: "lists"), Tab(text: "members")],
+            tabs: [
+              Tab(text: LocaleKeys.general_lists.tr()),
+              Tab(text: LocaleKeys.groups_members.tr())
+            ],
           ),
           Expanded(
             child: TabBarView(
@@ -270,7 +274,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage>
                   }
                 }
               },
-              label: const Text("Create new list"),
+              label: Text(LocaleKeys.checklist_create_new_checklist.tr()),
             ),
           ),
         ),

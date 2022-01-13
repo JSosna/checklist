@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/domain/checklists/checklist.dart';
 import 'package:checklist/extension/context_extensions.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:checklist/presentation/checklists/list/cubit/checklists_cubit.dart';
 import 'package:checklist/routing/router.gr.dart';
@@ -10,6 +11,7 @@ import 'package:checklist/widgets/checklist_empty_list_view.dart';
 import 'package:checklist/widgets/checklist_list_item.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_page_title.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,11 +72,11 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   }
 
   Widget _buildEmptyView() {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(Dimens.marginMedium),
+        padding: const EdgeInsets.all(Dimens.marginMedium),
         child: ChecklistEmptyListView(
-          hint: "Create a new list!",
+          hint: LocaleKeys.checklist_create_new_checklist.tr(),
         ),
       ),
     );
@@ -85,7 +87,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
       child: Column(
         children: [
           const SizedBox(height: Dimens.marginLarge),
-          const ChecklistPageTitle("lists"),
+          ChecklistPageTitle(LocaleKeys.general_lists.tr()),
           const SizedBox(height: Dimens.marginMedium),
           Expanded(
             child: Stack(
@@ -169,8 +171,8 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   }
 
   Widget _buildError() {
-    return const Scaffold(
-      body: Center(child: Text("Error loading list, try again later!")),
+    return Scaffold(
+      body: Center(child: Text(LocaleKeys.checklist_error_loading_list.tr())),
     );
   }
 }

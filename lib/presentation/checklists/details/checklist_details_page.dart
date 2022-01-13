@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:checklist/extension/context_extensions.dart';
 import 'package:checklist/injection/cubit_factory.dart';
+import 'package:checklist/localization/keys.g.dart';
 import 'package:checklist/presentation/checklists/details/cubit/checklist_details_cubit.dart';
 import 'package:checklist/presentation/checklists/details/widgets/checklist_elements.dart';
 import 'package:checklist/style/dimens.dart';
@@ -9,6 +10,7 @@ import 'package:checklist/widgets/checklist_dialog_menu_item.dart';
 import 'package:checklist/widgets/checklist_editable_label.dart';
 import 'package:checklist/widgets/checklist_error_view.dart';
 import 'package:checklist/widgets/checklist_loading_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -64,9 +66,8 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
     } else if (state is ChecklistDetailsLoaded) {
       return _buildDetails(state);
     } else {
-      return const ChecklistErrorView(
-        message:
-            "Error while loading the list, check your internet connection or try later",
+      return ChecklistErrorView(
+        message: LocaleKeys.checklist_error_loading_list.tr(),
       );
     }
   }
@@ -112,7 +113,7 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                "List",
+                LocaleKeys.general_list.tr(),
                 style: context.typo.extraLargeBold(
                   color: context.isDarkTheme ? Colors.white : Colors.black,
                 ),
@@ -177,7 +178,7 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ChecklistDialogMenuItem(
-              text: "toggle checkboxes",
+              text: LocaleKeys.checklist_toggle_checkboxes.tr(),
               onPressed: () {
                 BlocProvider.of<ChecklistDetailsCubit>(context).toggleCheckable(
                   widget.checklistId,
@@ -190,7 +191,7 @@ class _ChecklistDetailsPageState extends State<ChecklistDetailsPage> {
               },
             ),
             ChecklistDialogMenuItem(
-              text: "delete list",
+              text: LocaleKeys.checklist_delete_list.tr(),
               onPressed: () {
                 final groupId = state.checklist.assignedGroupId;
 
