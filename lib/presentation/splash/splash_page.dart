@@ -8,6 +8,7 @@ import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashPage extends StatefulWidget implements AutoRouteWrapper {
@@ -35,6 +36,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
+        _setUiOverlay();
         if (state is OpenHome) {
           context.router.replace(const TabRouter());
         } else if (state is OpenLogin) {
@@ -58,6 +60,14 @@ class _SplashPageState extends State<SplashPage> {
           ),
         ),
       ),
+    );
+  }
+
+  void _setUiOverlay() {
+    SystemChrome.setSystemUIOverlayStyle(
+      context.isDarkTheme
+          ? SystemUiOverlayStyle.light
+          : SystemUiOverlayStyle.dark,
     );
   }
 }
