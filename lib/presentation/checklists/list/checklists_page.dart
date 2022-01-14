@@ -61,7 +61,12 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
           heroTag: "add checklist",
           child: const Icon(Icons.add),
           onPressed: () async {
-            context.router.push(AddChecklistRoute());
+            final reload = await context.router.push(AddChecklistRoute());
+            if (reload == true) {
+              if (!mounted) return;
+              await BlocProvider.of<ChecklistsLoaderCubit>(context)
+                  .reloadChecklists();
+            }
           },
         ),
         body: state is ChecklistsLoaded

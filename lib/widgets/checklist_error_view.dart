@@ -14,6 +14,7 @@ class ChecklistErrorView extends StatelessWidget {
         body: Center(
           child: Text(
             message,
+            textAlign: TextAlign.center,
           ),
         ),
       ),
