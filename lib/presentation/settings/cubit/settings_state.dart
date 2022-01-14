@@ -7,9 +7,11 @@ abstract class SettingsState extends Equatable {
   List<Object> get props => [];
 }
 
-class SettingsInitializing extends SettingsState {}
+class SettingsLoading extends SettingsState {}
 
 class SettingsUpdating extends SettingsState {}
+
+class AccountDeleteFailed extends SettingsState {}
 
 class SettingsLoaded extends SettingsState {
   final ChecklistSettings settings;

@@ -25,5 +25,5 @@ abstract class AuthenticationRepository {
 
   Future<void> changeUsername(String newValue);
 
-  Future<void> deleteUser();
+  Future<bool> deleteUser({required String password});
 }

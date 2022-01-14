@@ -20,7 +20,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     this._settingsStorage,
     this._changeUsernameUseCase,
     this._deleteAccountUseCase,
-  ) : super(SettingsInitializing());
+  ) : super(SettingsLoading());
 
   Future<void> initializeSettings() async {
     final settings = _settingsStorage.getAppSettings();
@@ -44,8 +44,22 @@ class SettingsCubit extends Cubit<SettingsState> {
     await _changeUsernameUseCase.changeUsername(username: newUsername);
   }
 
-  Future<void> deleteAccount() async {
-    emit(SettingsInitializing());
-    await _deleteAccountUseCase.deleteAccount();
+  Future<void> deleteAccount(String password) async {
+    if (state is! SettingsLoaded) return;
+
+    final currentState = state as SettingsLoaded;
+
+    try {
+      emit(SettingsLoading());
+      await _deleteAccountUseCase.deleteAccount(password: password);
+    } catch (e) {
+      emit(AccountDeleteFailed());
+      emit(
+        SettingsLoaded(
+          settings: currentState.settings,
+          user: currentState.user,
+        ),
+      );
+    }
   }
 }

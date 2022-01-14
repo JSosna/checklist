@@ -8,14 +8,17 @@ import 'package:checklist/presentation/settings/cubit/settings_cubit.dart';
 import 'package:checklist/presentation/theme_cubit/theme_cubit.dart';
 import 'package:checklist/style/dimens.dart';
 import 'package:checklist/widgets/checklist_blurred_background_wrapper.dart';
+import 'package:checklist/widgets/checklist_dialog.dart';
 import 'package:checklist/widgets/checklist_loading_indicator.dart';
 import 'package:checklist/widgets/checklist_page_title.dart';
 import 'package:checklist/widgets/checklist_rounded_button.dart';
 import 'package:checklist/widgets/checklist_settings_text_input.dart';
 import 'package:checklist/widgets/checklist_switch.dart';
+import 'package:checklist/widgets/checklist_text_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class SettingsPage extends StatefulWidget implements AutoRouteWrapper {
@@ -35,6 +38,16 @@ class SettingsPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _controller = TextEditingController();
+
+  final passwordValidator = MultiValidator([
+    RequiredValidator(
+      errorText: LocaleKeys.validation_this_field_is_required.tr(),
+    ),
+    MaxLengthValidator(30, errorText: LocaleKeys.validation_too_long.tr()),
+  ]);
+
   @override
   void initState() {
     super.initState();
@@ -48,7 +61,17 @@ class _SettingsPageState extends State<SettingsPage> {
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: Center(
-            child: BlocBuilder<SettingsCubit, SettingsState>(
+            child: BlocConsumer<SettingsCubit, SettingsState>(
+              listener: (context, state) {
+                if (state is AccountDeleteFailed) {
+                  Fluttertoast.showToast(
+                    msg: LocaleKeys.authentication_errors_account_delete_failed
+                        .tr(),
+                    gravity: ToastGravity.TOP,
+                    backgroundColor: Colors.red,
+                  );
+                }
+              },
               buildWhen: (previous, current) {
                 return current is! SettingsUpdating;
               },
@@ -109,8 +132,13 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: Dimens.marginMedium),
           ChecklistRoundedButton.negative(
             text: LocaleKeys.settings_delete_account.tr(),
-            onPressed: () {
-              BlocProvider.of<SettingsCubit>(context).deleteAccount();
+            onPressed: () async {
+              final password = await _openPasswordDialog();
+
+              if (password != null) {
+                if (!mounted) return;
+                BlocProvider.of<SettingsCubit>(context).deleteAccount(password);
+              }
             },
           ),
           const SizedBox(height: Dimens.marginLarge),
@@ -141,6 +169,32 @@ class _SettingsPageState extends State<SettingsPage> {
         await BlocProvider.of<SettingsCubit>(context)
             .toggleBiometricsOption(state.user);
       },
+    );
+  }
+
+  Future<String?> _openPasswordDialog() async {
+    return showDialog<String?>(
+      context: context,
+      builder: (context) => ChecklistDialog(
+        title: LocaleKeys.editable_label_edit_label.tr(),
+        children: [
+          Form(
+            key: _formKey,
+            child: ChecklistTextField(
+              autofocus: true,
+              controller: _controller,
+              validator: passwordValidator,
+            ),
+          ),
+        ],
+        onSubmit: () {
+          final password = _controller.text;
+
+          if (_formKey.currentState?.validate() == true) {
+            Navigator.of(context).pop(password);
+          }
+        },
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:checklist/domain/authentication/authentication_result.dart';
 import 'package:checklist/domain/users/user.dart';
 import 'package:fimber/fimber.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:local_auth/local_auth.dart';
 
 class FirebaseAuthenticationRepository extends AuthenticationRepository {
@@ -30,7 +31,8 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         );
       }
     } on firebase.FirebaseAuthException catch (e) {
-      return AuthenticationError(authenticationErrorType: _mapErrorCode(e.code));
+      return AuthenticationError(
+          authenticationErrorType: _mapErrorCode(e.code));
     } catch (e, stack) {
       Fimber.e("Login error", ex: e, stacktrace: stack);
     }
@@ -63,7 +65,8 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         );
       }
     } on firebase.FirebaseAuthException catch (e) {
-      return AuthenticationError(authenticationErrorType: _mapErrorCode(e.code));
+      return AuthenticationError(
+          authenticationErrorType: _mapErrorCode(e.code));
     } catch (e, stack) {
       Fimber.e("Register error", ex: e, stacktrace: stack);
     }
@@ -125,7 +128,8 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
 
   @override
   Future<void> changeUsername(String newValue) async {
-    await firebase.FirebaseAuth.instance.currentUser?.updateDisplayName(newValue);
+    await firebase.FirebaseAuth.instance.currentUser
+        ?.updateDisplayName(newValue);
   }
 
   AuthenticationErrorType _mapErrorCode(String errorCode) {
@@ -148,11 +152,19 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<void> deleteUser() async {
-    try {
-      await firebase.FirebaseAuth.instance.currentUser?.delete();
-    } catch (e, stack) {
-      Fimber.e("Delete account error", ex: e, stacktrace: stack);
-    }
+  Future<bool> deleteUser({required String password}) async {
+    final email = getCurrentUser()?.email;
+
+    if (email == null) return false;
+
+    final credential = EmailAuthProvider.credential(
+      email: email,
+      password: password,
+    );
+
+    await firebase.FirebaseAuth.instance.currentUser
+        ?.reauthenticateWithCredential(credential);
+    await firebase.FirebaseAuth.instance.currentUser?.delete();
+    return true;
   }
 }
