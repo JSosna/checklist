@@ -5,6 +5,7 @@ import 'package:checklist/domain/groups/group_with_checklists.dart';
 import 'package:checklist/domain/groups/use_case/load_groups_with_checklists_use_case.dart';
 import 'package:checklist/presentation/checklists/list/checklists_loader_cubit/cubit/checklists_loader_cubit.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fimber/fimber.dart';
 
 part 'checklists_state.dart';
 

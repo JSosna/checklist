@@ -27,7 +27,7 @@ class _GroupsPageState extends State<GroupsPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<GroupsCubit>(context).loadGroups();
+    BlocProvider.of<GroupsLoaderCubit>(context).reloadGroups();
   }
 
   @override

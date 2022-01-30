@@ -1,4 +1,3 @@
-
 import 'package:checklist/domain/groups/groups_repository.dart';
 import 'package:checklist/domain/groups/use_case/generate_share_code_use_case.dart';
 

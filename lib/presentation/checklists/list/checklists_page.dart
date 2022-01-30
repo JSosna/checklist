@@ -25,7 +25,7 @@ class _ChecklistsPageState extends State<ChecklistsPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<ChecklistsCubit>(context).loadChecklists();
+    BlocProvider.of<ChecklistsLoaderCubit>(context).reloadChecklists();
   }
 
   @override
