@@ -24,7 +24,7 @@ Future<void> registerBlocModule(GetIt injector) async {
 
   injector.registerFactory(() => ThemeCubit(initialTheme, injector.get()));
   injector.registerFactory(() => AuthenticationCubit(injector.get()));
-  injector.registerFactory(() => SplashBloc(injector.get()));
+  injector.registerFactory(() => SplashBloc(injector.get(), injector.get()));
   injector.registerFactory(() => LoginCubit(injector.get(), injector.get()));
   injector.registerFactory(() => RegisterCubit(injector.get()));
   injector.registerFactory(() => OnboardingCubit(injector.get()));
